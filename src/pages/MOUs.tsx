@@ -8,67 +8,67 @@ const MOUs = () => {
       name: 'Indian Institute of Technology (IIT)',
       type: 'Academic Institution',
       description: 'Collaborative research programs and student exchange initiatives in emerging technologies.',
-      students: '2,500+',
+      students: '500+',
       programs: 'AI, ML, Data Science'
     },
     {
       name: 'National Institute of Technology (NIT)',
       type: 'Academic Institution', 
       description: 'Joint internship programs and curriculum development for computer science students.',
-      students: '1,800+',
+      students: '800+',
       programs: 'Web Dev, Mobile Apps'
     },
     {
       name: 'Manipal Institute of Technology',
       type: 'Academic Institution',
       description: 'Industry-academia collaboration for practical training and skill development.',
-      students: '3,200+',
+      students: '200+',
       programs: 'Full Stack, DevOps'
     },
     {
       name: 'SRM Institute of Science and Technology',
       type: 'Academic Institution',
       description: 'Comprehensive internship programs and career development initiatives.',
-      students: '4,100+',
+      students: '1,100+',
       programs: 'Cloud Computing, Cybersecurity'
     },
     {
       name: 'VIT University',
       type: 'Academic Institution',
       description: 'Technical training partnerships and placement assistance programs.',
-      students: '2,900+',
+      students: '900+',
       programs: 'IoT, Blockchain'
     },
     {
       name: 'Lovely Professional University',
       type: 'Academic Institution',
       description: 'Student training programs and industry-ready skill development.',
-      students: '5,000+',
+      students: '1,000+',
       programs: 'Digital Marketing, UI/UX'
     }
   ];
 
   const industryPartners = [
     {
-      name: 'Tech Mahindra',
+      name: 'ZARZO',
       type: 'Industry Partner',
       description: 'Providing real-world project opportunities and mentorship for interns.',
       focus: 'Enterprise Solutions'
     },
     {
-      name: 'Wipro Technologies',
+      name: 'CAREERHUBS',
       type: 'Industry Partner', 
       description: 'Collaborative training programs and direct recruitment opportunities.',
       focus: 'Digital Transformation'
     },
     {
-      name: 'Infosys Limited',
+      name: 'Anshu PVT. LTD.',
       type: 'Industry Partner',
       description: 'Joint certification programs and career advancement pathways.',
       focus: 'Software Development'
     },
     {
-      name: 'TCS (Tata Consultancy Services)',
+      name: 'Aringo tech',
       type: 'Industry Partner',
       description: 'Internship placements and professional development programs.',
       focus: 'Consulting Services'
@@ -271,11 +271,11 @@ const MOUs = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <div className="flex items-center justify-center">
                   <Mail className="h-5 w-5 mr-2" />
-                  <span>partnerships@codeclause.com</span>
+                  <span>viziopath@gmail.com</span>
                 </div>
                 <div className="flex items-center justify-center">
                   <Phone className="h-5 w-5 mr-2" />
-                  <span>+91 80 6218 1320</span>
+                  <span>+91 6203757233</span>
                 </div>
               </div>
               

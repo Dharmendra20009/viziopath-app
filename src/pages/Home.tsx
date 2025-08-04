@@ -41,6 +41,18 @@ const Home = () => {
     { name: 'Data Science', icon: Database, color: 'bg-orange-100 text-orange-600' },
     { name: 'Digital Marketing', icon: TrendingUp, color: 'bg-pink-100 text-pink-600' },
     { name: 'UI/UX Design', icon: PenTool, color: 'bg-indigo-100 text-indigo-600' },
+    { name: 'Marketing Management', icon: BarChart, color: 'bg-yellow-100 text-yellow-600' },
+  { name: 'Human Resource Management', icon: Users, color: 'bg-red-100 text-red-600' },
+  { name: 'Finance & Accounting', icon: DollarSign, color: 'bg-lime-100 text-lime-600' },
+  { name: 'Operations Management', icon: Settings, color: 'bg-slate-100 text-slate-600' },
+  { name: 'International Business', icon: Globe, color: 'bg-cyan-100 text-cyan-600' },
+  { name: 'Business Analytics', icon: PieChart, color: 'bg-teal-100 text-teal-600' },
+  { name: 'Entrepreneurship', icon: Briefcase, color: 'bg-violet-100 text-violet-600' },
+  { name: 'Supply Chain Management', icon: Truck, color: 'bg-amber-100 text-amber-600' },
+  { name: 'Retail Management', icon: ShoppingCart, color: 'bg-rose-100 text-rose-600' },
+  { name: 'Healthcare Management', icon: HeartPulse, color: 'bg-emerald-100 text-emerald-600' },
+  { name: 'Event Management', icon: Calendar, color: 'bg-fuchsia-100 text-fuchsia-600' },
+  { name: 'Hospitality & Tourism', icon: Plane, color: 'bg-sky-100 text-sky-600' },
   ];
 
   const certifications = [
@@ -296,7 +308,7 @@ const Home = () => {
             className="text-center"
           >
             <img
-              src="https://avatars.githubusercontent.com/u/105506295?v=4"
+
               alt="Dharmendra Gupta"
               className="w-24 h-24 rounded-full mx-auto border-4 border-blue-600 mb-4 shadow-lg"
             />

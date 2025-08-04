@@ -111,10 +111,10 @@ const TopAchievers = () => {
   ];
 
   const stats = [
-    { number: '35,000+', label: 'Top Tier Finishers' },
-    { number: '85%', label: 'Placement Rate' },
-    { number: '₹12L+', label: 'Average Package' },
-    { number: '500+', label: 'Partner Companies' }
+    { number: '1,35,000+', label: 'Top Tier Finishers' },
+    { number: '65%', label: 'Placement Rate' },
+    { number: '₹4L+', label: 'Average Package' },
+    { number: '8+', label: 'Partner Companies' }
   ];
 
   return (
