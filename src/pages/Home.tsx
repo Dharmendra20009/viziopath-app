@@ -1,21 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { 
-  Award, 
-  Users, 
-  Globe, 
-  Building, 
-  BookOpen, 
-  Code, 
-  Smartphone, 
+import {
+  Award,
+  Users,
+  Globe,
+  Building,
+  BookOpen,
+  Code,
+  Smartphone,
   Database,
   TrendingUp,
   PenTool,
   CheckCircle,
   ArrowRight,
-  Star
+  Star,
+  BarChart,
+  DollarSign,
+  Settings,
+  PieChart,
+  Briefcase,
+  Truck,
+  ShoppingCart,
+  HeartPulse,
+  Calendar,
+  Plane
 } from 'lucide-react';
+
+
 
 const Home = () => {
   const stats = [
