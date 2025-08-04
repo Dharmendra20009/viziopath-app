@@ -1,0 +1,378 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Calendar, MapPin, Users, Clock, Play, ExternalLink } from 'lucide-react';
+
+const Speakers = () => {
+  const upcomingEvents = [
+    {
+      id: 1,
+      title: 'Future of AI in Healthcare',
+      speaker: 'Dr. Sarah Johnson',
+      speakerRole: 'AI Research Director, Google Health',
+      date: '2025-02-15',
+      time: '2:00 PM IST',
+      venue: 'Virtual Event',
+      attendees: 500,
+      description: 'Exploring how artificial intelligence is revolutionizing healthcare delivery and patient outcomes.',
+      image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800',
+      registrationOpen: true
+    },
+    {
+      id: 2,
+      title: 'Building Scalable Cloud Architecture',
+      speaker: 'Michael Chen',
+      speakerRole: 'Cloud Architect, Amazon Web Services',
+      date: '2025-02-22',
+      time: '3:00 PM IST',
+      venue: 'Pune Office + Virtual',
+      attendees: 300,
+      description: 'Best practices for designing and implementing scalable cloud solutions for modern applications.',
+      image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800',
+      registrationOpen: true
+    },
+    {
+      id: 3,
+      title: 'Product Management in Tech Startups',
+      speaker: 'Priya Sharma',
+      speakerRole: 'VP Product, Stripe',
+      date: '2025-03-01',
+      time: '4:00 PM IST',
+      venue: 'Virtual Event',
+      attendees: 400,
+      description: 'Insights into product strategy, user research, and growth metrics in high-growth tech companies.',
+      image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800',
+      registrationOpen: true
+    }
+  ];
+
+  const pastEvents = [
+    {
+      id: 1,
+      title: 'Machine Learning in Production',
+      speaker: 'Dr. Raj Patel',
+      speakerRole: 'ML Engineer, Tesla',
+      date: '2025-01-15',
+      attendees: 750,
+      recording: '#',
+      highlights: ['MLOps best practices', 'Model deployment strategies', 'Monitoring ML systems'],
+      image: 'https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800'
+    },
+    {
+      id: 2,
+      title: 'The Future of Web Development',
+      speaker: 'Lisa Wong',
+      speakerRole: 'Frontend Architect, Meta',
+      date: '2025-01-08',
+      attendees: 600,
+      recording: '#',
+      highlights: ['Next.js 15 features', 'Performance optimization', 'Modern CSS techniques'],
+      image: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800'
+    },
+    {
+      id: 3,
+      title: 'Cybersecurity Trends 2025',
+      speaker: 'David Kumar',
+      speakerRole: 'Security Lead, Microsoft',
+      date: '2024-12-20',
+      attendees: 450,
+      recording: '#',
+      highlights: ['Zero-trust architecture', 'AI-powered threat detection', 'Cloud security'],
+      image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800'
+    },
+    {
+      id: 4,
+      title: 'Design Systems at Scale',
+      speaker: 'Anna Rodriguez',
+      speakerRole: 'Design Director, Airbnb',
+      date: '2024-12-10',
+      attendees: 380,
+      recording: '#',
+      highlights: ['Component libraries', 'Design tokens', 'Cross-team collaboration'],
+      image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800'
+    }
+  ];
+
+  const speakers = [
+    {
+      name: 'Dr. Sarah Johnson',
+      role: 'AI Research Director',
+      company: 'Google Health',
+      bio: 'Leading AI research initiatives in healthcare with 15+ years of experience in machine learning and medical applications.',
+      image: 'https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=400',
+      expertise: ['Artificial Intelligence', 'Healthcare Technology', 'Machine Learning']
+    },
+    {
+      name: 'Michael Chen',
+      role: 'Cloud Architect',
+      company: 'Amazon Web Services',
+      bio: 'Expert in cloud infrastructure and scalable system design, helping enterprises migrate to cloud-native architectures.',
+      image: 'https://images.pexels.com/photos/3777946/pexels-photo-3777946.jpeg?auto=compress&cs=tinysrgb&w=400',
+      expertise: ['Cloud Architecture', 'DevOps', 'System Design']
+    },
+    {
+      name: 'Priya Sharma',
+      role: 'VP Product',
+      company: 'Stripe',
+      bio: 'Product leader with expertise in fintech, growth strategies, and building products that scale to millions of users.',
+      image: 'https://images.pexels.com/photos/3756681/pexels-photo-3756681.jpeg?auto=compress&cs=tinysrgb&w=400',
+      expertise: ['Product Management', 'Fintech', 'Growth Strategy']
+    },
+    {
+      name: 'Dr. Raj Patel',
+      role: 'ML Engineer',
+      company: 'Tesla',
+      bio: 'Machine learning expert focusing on autonomous systems and production ML pipelines for self-driving cars.',
+      image: 'https://images.pexels.com/photos/3778212/pexels-photo-3778212.jpeg?auto=compress&cs=tinysrgb&w=400',
+      expertise: ['Machine Learning', 'Autonomous Systems', 'MLOps']
+    }
+  ];
+
+  return (
+    <div className="min-h-screen">
+      {/* Hero Section */}
+      <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center"
+          >
+            <h1 className="text-5xl font-bold mb-6">Speakers & Trainings</h1>
+            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
+              Learn from industry leaders and technology experts through our comprehensive training programs and speaker series.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Upcoming Events */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Upcoming Events</h2>
+            <p className="text-xl text-gray-600">Join our next sessions with industry experts</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {upcomingEvents.map((event, index) => (
+              <motion.div
+                key={event.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-gradient-to-br from-blue-50 to-white rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 overflow-hidden"
+              >
+                <div className="relative">
+                  <img
+                    src={event.image}
+                    alt={event.title}
+                    className="w-full h-48 object-cover"
+                  />
+                  <div className="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                    Upcoming
+                  </div>
+                </div>
+
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">{event.title}</h3>
+                  <p className="text-blue-600 font-semibold mb-1">{event.speaker}</p>
+                  <p className="text-gray-600 text-sm mb-4">{event.speakerRole}</p>
+
+                  <div className="space-y-2 mb-4">
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Calendar className="h-4 w-4 mr-2" />
+                      {new Date(event.date).toLocaleDateString('en-US', { 
+                        weekday: 'long', 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                      })}
+                    </div>
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Clock className="h-4 w-4 mr-2" />
+                      {event.time}
+                    </div>
+                    <div className="flex items-center text-sm text-gray-600">
+                      <MapPin className="h-4 w-4 mr-2" />
+                      {event.venue}
+                    </div>
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Users className="h-4 w-4 mr-2" />
+                      {event.attendees} expected attendees
+                    </div>
+                  </div>
+
+                  <p className="text-gray-600 mb-6">{event.description}</p>
+
+                  {event.registrationOpen && (
+                    <button className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                      Register Now
+                    </button>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Speakers */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Featured Speakers</h2>
+            <p className="text-xl text-gray-600">Industry leaders sharing their expertise with our community</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {speakers.map((speaker, index) => (
+              <motion.div
+                key={speaker.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+              >
+                <img
+                  src={speaker.image}
+                  alt={speaker.name}
+                  className="w-full h-64 object-cover"
+                />
+                <div className="p-6">
+                  <h3 className="text-xl font-bold text-gray-900 mb-1">{speaker.name}</h3>
+                  <p className="text-blue-600 font-semibold mb-1">{speaker.role}</p>
+                  <p className="text-gray-600 text-sm mb-3">{speaker.company}</p>
+                  <p className="text-gray-600 text-sm mb-4">{speaker.bio}</p>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {speaker.expertise.map((skill) => (
+                      <span
+                        key={skill}
+                        className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full"
+                      >
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Past Events */}
+      <section className="py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Past Events</h2>
+            <p className="text-xl text-gray-600">Catch up on sessions you might have missed</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {pastEvents.map((event, index) => (
+              <motion.div
+                key={event.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-gray-50 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+              >
+                <div className="md:flex">
+                  <div className="md:w-1/2">
+                    <img
+                      src={event.image}
+                      alt={event.title}
+                      className="w-full h-48 md:h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-6 md:w-1/2">
+                    <div className="flex items-center mb-2">
+                      <span className="bg-gray-500 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">
+                        Past Event
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {new Date(event.date).toLocaleDateString()}
+                      </span>
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{event.title}</h3>
+                    <p className="text-blue-600 font-semibold mb-1">{event.speaker}</p>
+                    <p className="text-gray-600 text-sm mb-4">{event.speakerRole}</p>
+
+                    <div className="mb-4">
+                      <h4 className="font-semibold text-gray-900 mb-2">Key Highlights:</h4>
+                      <ul className="text-sm text-gray-600 space-y-1">
+                        {event.highlights.map((highlight, i) => (
+                          <li key={i} className="flex items-center">
+                            <div className="w-1.5 h-1.5 bg-blue-600 rounded-full mr-2 flex-shrink-0"></div>
+                            {highlight}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-sm text-gray-600">{event.attendees} attendees</span>
+                      <a
+                        href={event.recording}
+                        className="flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm"
+                      >
+                        <Play className="h-4 w-4 mr-1" />
+                        Watch Recording
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Call to Action */}
+      <section className="py-20 bg-gradient-to-r from-blue-600 to-teal-600 text-white">
+        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-4xl font-bold mb-6">Want to Speak at Viziopath?</h2>
+            <p className="text-xl text-blue-100 mb-8">
+              Share your expertise with our global community of learners and professionals.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                Become a Speaker
+              </button>
+              <button className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+                View All Events
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default Speakers;
