@@ -92,9 +92,22 @@ const About = () => {
                 and real-world experience that prepares them for successful careers in technology and beyond.
               </p>
               <p className="text-lg text-gray-600">
-                Today, we're proud to have trained over 73,000 interns from 300+ colleges across 43 countries, 
+                Today, we're proud to have trained over 13,661 interns from 187+ colleges across 13 countries, 
                 with recognition from AICTE and other prestigious organizations.
               </p>
+              {/* CEO & Founder Section */}
+              <div className="mt-10 flex items-center gap-4">
+                <img
+                  src="https://avatars.githubusercontent.com/u/105506295?v=4"
+                  alt="Dharmendra Gupta"
+                  className="w-20 h-20 rounded-full border-4 border-blue-600 shadow-lg"
+                />
+                <div>
+                  <h3 className="text-2xl font-bold text-gray-900">Dharmendra Gupta</h3>
+                  <p className="text-blue-700 font-semibold">CEO &amp; Founder</p>
+                  <p className="text-gray-600 text-sm mt-1">Leading Viziopath with a passion for empowering students and bridging the gap between education and industry.</p>
+                </div>
+              </div>
             </motion.div>
             
             <motion.div
