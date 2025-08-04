@@ -319,16 +319,7 @@ const Home = () => {
             viewport={{ once: true }}
             className="text-center"
           >
-            <img
-
-              alt="Dharmendra Gupta"
-              className="w-24 h-24 rounded-full mx-auto border-4 border-blue-600 mb-4 shadow-lg"
-            />
-            <h3 className="text-2xl font-bold text-gray-900 mb-1">Dharmendra Gupta</h3>
-            <p className="text-blue-700 font-semibold mb-2">CEO &amp; Founder</p>
-            <p className="text-gray-600 text-lg mb-4">
-              Leading Viziopath with a vision to empower students and bridge the gap between education and industry.
-            </p>
+           
             <a
               href="mailto:viziopath@gmail.com"
               className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
