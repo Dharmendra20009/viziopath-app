@@ -1,6 +1,9 @@
-import { FaBars, FaTimes, FaUserCircle } from 'react-icons/fa';
+import { useState } from 'react';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 const Header = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
@@ -21,7 +24,10 @@ const Header = () => {
         </div>
 
         <div className="flex lg:hidden">
-          <button className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white">
+          <button
+            onClick={() => setIsMenuOpen(true)}
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
+          >
             <FaBars className="h-6 w-6" />
           </button>
         </div>
@@ -44,14 +50,18 @@ const Header = () => {
         </div>
       </nav>
 
-      <div className="lg:hidden">
-        <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="lg:hidden fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="/" className="-m-1.5 p-1.5 font-sans text-xl font-bold text-sky-500">
               Elevatr
             </a>
-            <button className="-m-2.5 rounded-md p-2.5 text-white">
-              <FaTimes className="h-6 w-6" />
+            <button
+              onClick={() => setIsMenuOpen(false)}
+              className="-m-2.5 rounded-md p-2.5 text-white"
+            >
+              <FaTimes className="h-6 w-6 text-white" />
             </button>
           </div>
 
@@ -63,6 +73,7 @@ const Header = () => {
                     key={item.name}
                     href={item.href}
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-white hover:bg-gray-800"
+                    onClick={() => setIsMenuOpen(false)} // Close menu when clicking link
                   >
                     {item.name}
                   </a>
@@ -70,19 +81,26 @@ const Header = () => {
               </div>
 
               <div className="py-6 space-y-2">
-                <button className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-white hover:bg-gray-800 w-full text-left">
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-white hover:bg-gray-800 w-full text-left"
+                >
                   Log in
                 </button>
-                <button className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-indigo-400 hover:bg-gray-800 w-full text-left">
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-indigo-400 hover:bg-gray-800 w-full text-left"
+                >
                   Sign up
                 </button>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </header>
   );
 };
 
 export default Header;
+sxxs
