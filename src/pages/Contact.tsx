@@ -30,25 +30,25 @@ const Contact = () => {
       icon: MapPin,
       title: 'Office Address',
       details: [
-        '403, Lane A-5, Kalashri Bungalow',
-        'Ghule Nagar, Vadgaon Budruk',
-        'Pune, Maharashtra 411041'
+        'Viziopath Technologies Pvt. Ltd.',
+        'Khushi Tola, Near Khiriya Ghat',
+        'Bettiah, Bihar 845438, India'
       ]
     },
     {
       icon: Phone,
       title: 'Phone Numbers',
       details: [
-        '+91 80 6218 1320',
-        '+91 77758 10097 (WhatsApp)'
+        '+91 6203757233',
+        '+91 6203757233 (WhatsApp)'
       ]
     },
     {
       icon: Mail,
       title: 'Email Addresses',
       details: [
-        'queries.internship@codeclause.com',
-        'support@viziopath.com'
+        'viziopath@gmail.com',
+        'support@viziopath.info'
       ]
     },
     {
@@ -126,6 +126,23 @@ const Contact = () => {
                 </div>
               </motion.div>
             ))}
+            {/* CEO & Founder Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: contactInfo.length * 0.1 }}
+              className="text-center bg-gray-50 p-8 rounded-2xl hover:shadow-lg transition-shadow flex flex-col items-center"
+            >
+              <img
+                src="https://avatars.githubusercontent.com/u/105506295?v=4"
+                alt="Dharmendra Gupta"
+                className="w-16 h-16 rounded-full border-2 border-blue-600 mb-4"
+              />
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">Dharmendra Gupta</h3>
+              <p className="text-blue-700 font-semibold mb-1">CEO &amp; Founder</p>
+              <p className="text-gray-600 text-sm">For leadership, vision, and partnership queries, contact directly at <a href="mailto:viziopath@gmail.com" className="text-blue-600 underline">viziopath@gmail.com</a></p>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -255,7 +272,7 @@ const Contact = () => {
                 </div>
                 <div className="h-64 bg-gray-200 flex items-center justify-center">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3783.1838363584327!2d73.78074197526157!3d18.505644982542955!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bec8f0d0b2a5%3A0x6b6b3b3b3b3b3b3b!2sVadgaon%20Budruk%2C%20Pune%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1234567890123"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3582.234964234019!2d84.5117553150277!3d26.80278598317613!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39935c1e2e2e2e2f%3A0x7e7e7e7e7e7e7e7e!2sKhushi%20Tola%2C%20Bettiah%2C%20Bihar%20845438%2C%20India!5e0!3m2!1sen!2sin!4v1691145600000"
                     width="100%"
                     height="256"
                     style={{ border: 0 }}
