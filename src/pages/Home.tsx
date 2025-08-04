@@ -19,10 +19,10 @@ import {
 
 const Home = () => {
   const stats = [
-    { number: '73,898+', label: 'Interns', icon: Users },
-    { number: '300+', label: 'Colleges', icon: Building },
-    { number: '35,000+', label: 'Top Tier Finishers', icon: Award },
-    { number: '43+', label: 'Countries', icon: Globe },
+    { number: '12,898+', label: 'Interns', icon: Users },
+    { number: '187+', label: 'Colleges', icon: Building },
+    { number: '135,000+', label: 'Top Tier Finishers', icon: Award },
+    { number: '13+', label: 'Countries', icon: Globe },
   ];
 
   const highlights = [
@@ -49,20 +49,20 @@ const Home = () => {
 
   const testimonials = [
     {
-      name: "Priya Sharma",
-      role: "Software Engineer at Google",
+      name: "Anjali Singh",
+      role: "Operations Manager at ZARZO",
       content: "Viziopath transformed my career. The mentorship and real-world projects prepared me for big tech challenges.",
       rating: 5
     },
     {
-      name: "Rahul Patel",
+      name: "Ranjeet Kumar",
       role: "Full Stack Developer",
       content: "Amazing experience! The hands-on training and industry connections helped me land my dream job.",
       rating: 5
     },
     {
       name: "Sneha Gupta",
-      role: "Data Scientist at Microsoft",
+      role: "Data Scientist",
       content: "The AI program at Viziopath is exceptional. Expert mentors and cutting-edge curriculum.",
       rating: 5
     }
@@ -282,6 +282,35 @@ const Home = () => {
                 </motion.div>
               ))}
             </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Founder Section */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center"
+          >
+            <img
+              src="https://avatars.githubusercontent.com/u/105506295?v=4"
+              alt="Dharmendra Gupta"
+              className="w-24 h-24 rounded-full mx-auto border-4 border-blue-600 mb-4 shadow-lg"
+            />
+            <h3 className="text-2xl font-bold text-gray-900 mb-1">Dharmendra Gupta</h3>
+            <p className="text-blue-700 font-semibold mb-2">CEO &amp; Founder</p>
+            <p className="text-gray-600 text-lg mb-4">
+              Leading Viziopath with a vision to empower students and bridge the gap between education and industry.
+            </p>
+            <a
+              href="mailto:viziopath@gmail.com"
+              className="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+            >
+              Contact Dharmendra Gupta
+            </a>
           </motion.div>
         </div>
       </section>
