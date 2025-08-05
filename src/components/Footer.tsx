@@ -32,7 +32,7 @@ const Footer = () => {
               </div>
               <div className="flex flex-col">
                 <span className="text-xl font-bold">Viziopath</span>
-                <span className="text-sm text-gray-400">Powered by CodeClause</span>
+                <span className="text-sm text-gray-400">Empowering Future Innovators</span>
               </div>
             </div>
             <p className="text-gray-300 mb-4 max-w-md">
@@ -73,19 +73,19 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
             <div className="space-y-2 text-gray-300">
-              <p>403, Lane A-5, Kalashri Bungalow</p>
-              <p>Ghule Nagar, Vadgaon Budruk</p>
-              <p>Pune, Maharashtra 411041</p>
-              <p className="pt-2">Phone: +91 80 6218 1320</p>
-              <p>WhatsApp: +91 77758 10097</p>
-              <p>Email: queries.internship@codeclause.com</p>
+              <p>viziopath </p>
+              <p>Khushi Tola, Near Khiriya Ghat</p>
+              <p>Betiiah, Bihar, 845438, India</p>
+              <p className="pt-2">Phone: +91 8210381000</p>
+              <p>WhatsApp: +91 6203757233</p>
+              <p>Email: viziopath@gmail.com</p>
             </div>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center">
           <p className="text-gray-400">
-            © 2025 Viziopath (Powered by CodeClause). All rights reserved.
+            © 2025 Viziopath Empowering Future Minds. All rights reserved.
           </p>
         </div>
       </div>
