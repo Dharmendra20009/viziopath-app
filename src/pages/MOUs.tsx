@@ -19,11 +19,11 @@ const MOUs = () => {
       programs: 'Web Dev, Mobile Apps'
     },
     {
-      name: 'Manipal Institute of Technology',
+      name: 'Maharishi Markandeshwar (Deemed to be University)',
       type: 'Academic Institution',
       description: 'Industry-academia collaboration for practical training and skill development.',
-      students: '200+',
-      programs: 'Full Stack, DevOps'
+      students: '800+',
+      programs: 'Data Science, Cybersecurity, Cloud Computing, Digital Marketing, UI/UX, Banking and Finance'
     },
     {
       name: 'SRM Institute of Science and Technology',
