@@ -11,14 +11,14 @@ const Gallery = () => {
   const images = [
     {
       id: 1,
-      src: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Web Development Workshop',
+      src: '/Gupta.JPG',
+      title: 'Business Analytics Workshop',
       category: 'Trainings',
-      description: 'Students learning modern web development technologies'
+      description: 'Students learning modern Business Analytics techniques'
     },
     {
       id: 2,
-      src: 'https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800',
+      src: '/Logo2.0.JPG',
       title: 'Team Collaboration Session',
       category: 'Intern Life',
       description: 'Interns working together on innovative projects'
