@@ -19,16 +19,16 @@ const Gallery = () => {
     {
       id: 2,
       src: '/Logo2.0.JPG',
-      title: 'Team Collaboration Session',
-      category: 'Intern Life',
-      description: 'Interns working together on innovative projects'
+      title: 'Our Brand Logo',
+      category: 'Brand Identity',
+      description: 'The official logo representing our brand values, mission, and vision.'
     },
     {
       id: 3,
-      src: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'AI & Machine Learning Seminar',
+      src: 'tr.jpg',
+      title: 'Problem-Solving Ideathon 2025',
       category: 'Events',
-      description: 'Industry experts sharing insights on AI trends'
+      description: 'Presented an innovative AI solution with the help of Viziopath; industry experts shared insights on latest AI trends.'
     },
     {
       id: 4,
