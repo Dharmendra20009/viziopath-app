@@ -85,7 +85,7 @@ const About = () => {
               <p className="text-lg text-gray-600 mb-6">
                 Founded with a vision to bridge the gap between academic learning and industry requirements, 
                 Viziopath has emerged as a leading platform for technical training and internships. 
-                Powered by CodeClause, we combine technological expertise with educational excellence.
+                Powered by Innovation and Industry Insight, we combine technological expertise with educational excellence.
               </p>
               <p className="text-lg text-gray-600 mb-6">
                 Our journey began with a simple belief: every student deserves access to quality education 
