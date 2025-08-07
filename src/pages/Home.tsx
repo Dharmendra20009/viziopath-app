@@ -149,7 +149,7 @@ const Home = () => {
           >
             <h2 className="text-4xl font-bold text-gray-900 mb-6">What Makes Us Different?</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              <strong>Viziopath, powered by CodeClause:</strong> Where Technology Meets Talent.
+              <strong>Viziopath, powered by Viziopath Innovations:</strong> Where Technology Meets Talent.
             </p>
             <p className="text-lg text-gray-600 max-w-4xl mx-auto">
               Our internship program focuses on real-world tech innovation, mentorship from industry leaders, 
