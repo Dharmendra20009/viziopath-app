@@ -126,11 +126,11 @@ const Apply = () => {
               </p>
               <div className="flex items-center space-x-6">
                 <div className="text-center">
-                  <div className="text-3xl font-bold">73,898+</div>
+                  <div className="text-3xl font-bold">12,898+</div>
                   <div className="text-blue-200">Success Stories</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold">85%</div>
+                  <div className="text-3xl font-bold">65%</div>
                   <div className="text-blue-200">Placement Rate</div>
                 </div>
               </div>
@@ -283,7 +283,7 @@ const Apply = () => {
                       value={formData.linkedin}
                       onChange={handleInputChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                      placeholder="https://linkedin.com/in/yourprofile"
+                      placeholder="https://www.linkedin.com/in/vizio-path-93b59536a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
                     />
                   </div>
                 </div>
