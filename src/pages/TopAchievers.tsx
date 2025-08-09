@@ -6,7 +6,7 @@ const TopAchievers = () => {
   const achievers = [
     {
       id: 1,
-      name: 'Priya Sharma',
+      name: 'Harshit Sharma',
       domain: 'Artificial Intelligence',
       company: 'Google',
       position: 'AI Engineer',

@@ -98,7 +98,7 @@ const About = () => {
               {/* CEO & Founder Section */}
               <div className="mt-10 flex items-center gap-4">
                 <img
-                  src="https://avatars.githubusercontent.com/u/105506295?v=4"
+                  src="/ceo.JPG"
                   alt="Dharmendra Gupta"
                   className="w-20 h-20 rounded-full border-4 border-blue-600 shadow-lg"
                 />
