@@ -30,7 +30,7 @@ const Contact = () => {
       icon: MapPin,
       title: 'Office Address',
       details: [
-        'Viziopath Technologies Pvt. Ltd.',
+        'Viziopath',
         'Khushi Tola, Near Khiriya Ghat',
         'Bettiah, Bihar 845438, India'
       ]
