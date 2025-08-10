@@ -126,23 +126,6 @@ const Contact = () => {
                 </div>
               </motion.div>
             ))}
-            {/* CEO & Founder Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: contactInfo.length * 0.1 }}
-              className="text-center bg-gray-50 p-8 rounded-2xl hover:shadow-lg transition-shadow flex flex-col items-center"
-            >
-              <img
-                src="https://avatars.githubusercontent.com/u/105506295?v=4"
-                alt="Dharmendra Gupta"
-                className="w-16 h-16 rounded-full border-2 border-blue-600 mb-4"
-              />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Dharmendra Gupta</h3>
-              <p className="text-blue-700 font-semibold mb-1">CEO &amp; Founder</p>
-              <p className="text-gray-600 text-sm">For leadership, vision, and partnership queries, contact directly at <a href="mailto:viziopath@gmail.com" className="text-blue-600 underline">viziopath@gmail.com</a></p>
-            </motion.div>
           </div>
         </div>
       </section>
