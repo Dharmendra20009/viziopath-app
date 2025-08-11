@@ -19,9 +19,9 @@ const Gallery = () => {
     {
       id: 2,
       src: '/event.jpg',
-      title: 'Our Brand Logo',
-      category: 'Brand Identity',
-      description: 'The official logo representing our brand values, mission, and vision.'
+      title: 'Our Event',
+      category: 'Events',
+      description: 'The official Event representing our brand values, mission, and vision.'
     },
     {
       id: 3,
