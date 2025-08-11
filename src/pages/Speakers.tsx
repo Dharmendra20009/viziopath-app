@@ -303,7 +303,7 @@ const Speakers = () => {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">Past Events</h2>
+            <h2 className="text-4xl font-bold text-gray-900 mb-6">Workshops & Events</h2>
             <p className="text-xl text-gray-600">Catch up on sessions you might have missed</p>
           </motion.div>
 
@@ -349,7 +349,7 @@ const Speakers = () => {
                   <div className="p-6 md:w-1/2">
                     <div className="flex items-center mb-2">
                       <span className="bg-gray-500 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">
-                        Past Event
+                        Workshops & Events
                       </span>
                       <span className="text-sm text-gray-500">
                         {new Date(event.date).toLocaleDateString()}
