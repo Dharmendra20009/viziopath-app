@@ -18,7 +18,7 @@ const Gallery = () => {
     },
     {
       id: 2,
-      src: '/Logo2.0.JPG',
+      src: '/event.jpg',
       title: 'Our Brand Logo',
       category: 'Brand Identity',
       description: 'The official logo representing our brand values, mission, and vision.'
