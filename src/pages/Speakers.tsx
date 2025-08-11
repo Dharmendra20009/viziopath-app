@@ -115,26 +115,26 @@ const Speakers = () => {
 
   // Workshops data
   const shortPrograms = [
-    { id: 'excel', name: 'MS Excel', originalPrice: 399, finalPrice: 199, discount: 50 },
-    { id: 'word', name: 'MS Word', originalPrice: 399, finalPrice: 199, discount: 50 },
-    { id: 'ppt', name: 'MS PowerPoint', originalPrice: 399, finalPrice: 199, discount: 50 },
-    { id: 'pbi', name: 'Power BI', originalPrice: 799, finalPrice: 389, discount: 51 },
-    { id: 'seo', name: 'SEO', originalPrice: 899, finalPrice: 449, discount: 50 },
-    { id: 'mkt', name: 'Marketing', originalPrice: 1299, finalPrice: 649, discount: 50 },
-    { id: 'dm', name: 'Digital Marketing', originalPrice: 1999, finalPrice: 999, discount: 50 },
-    { id: 'ops', name: 'Operations Management', originalPrice: 1999, finalPrice: 999, discount: 50 },
-    { id: 'ent', name: 'Entrepreneurship', originalPrice: 1999, finalPrice: 999, discount: 50 },
-    { id: 'bnf', name: 'Banking and finance', originalPrice: 2399, finalPrice: 1199, discount: 50 },
-    { id: 'ba', name: 'Business Analytics', originalPrice: 2399, finalPrice: 1199, discount: 50 },
+    { id: 'excel', name: 'MS Excel', originalPrice: 399, finalPrice: 199, discount: 50, image: 'https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master Excel formulas, pivot tables, and data analysis techniques' },
+    { id: 'word', name: 'MS Word', originalPrice: 399, finalPrice: 199, discount: 50, image: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn advanced document formatting and professional writing skills' },
+    { id: 'ppt', name: 'MS PowerPoint', originalPrice: 399, finalPrice: 199, discount: 50, image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Create stunning presentations with advanced design techniques' },
+    { id: 'pbi', name: 'Power BI', originalPrice: 799, finalPrice: 389, discount: 51, image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Transform data into interactive visualizations and reports' },
+    { id: 'seo', name: 'SEO', originalPrice: 899, finalPrice: 449, discount: 50, image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master search engine optimization strategies and techniques' },
+    { id: 'mkt', name: 'Marketing', originalPrice: 1299, finalPrice: 649, discount: 50, image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn modern marketing principles and campaign strategies' },
+    { id: 'dm', name: 'Digital Marketing', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master digital channels, social media, and online advertising' },
+    { id: 'ops', name: 'Operations Management', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Optimize business processes and operational efficiency' },
+    { id: 'ent', name: 'Entrepreneurship', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Build and scale successful business ventures' },
+    { id: 'bnf', name: 'Banking and Finance', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Understand financial markets and banking operations' },
+    { id: 'ba', name: 'Business Analytics', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Transform data into actionable business insights' },
   ];
 
   const bcaPrograms = [
-    { id: 'web', name: 'Web development', originalPrice: 1599, finalPrice: 799, discount: 50 },
-    { id: 'dbm', name: 'Database Management', originalPrice: 1399, finalPrice: 699, discount: 50 },
-    { id: 'py', name: 'Python', originalPrice: 1399, finalPrice: 699, discount: 50 },
-    { id: 'mysql', name: 'MySQL', originalPrice: 1399, finalPrice: 699, discount: 50 },
-    { id: 'html', name: 'HTML', originalPrice: 1399, finalPrice: 699, discount: 50 },
-    { id: 'da', name: 'Data Analytics', originalPrice: 2399, finalPrice: 1199, discount: 50 },
+    { id: 'web', name: 'Web Development', originalPrice: 1599, finalPrice: 799, discount: 50, image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Build modern, responsive websites with latest technologies' },
+    { id: 'dbm', name: 'Database Management', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Design and manage efficient database systems' },
+    { id: 'py', name: 'Python Programming', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn Python fundamentals and advanced programming concepts' },
+    { id: 'mysql', name: 'MySQL Database', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master MySQL database administration and optimization' },
+    { id: 'html', name: 'HTML & CSS', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Create beautiful web pages with HTML5 and CSS3' },
+    { id: 'da', name: 'Data Analytics', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Analyze data patterns and extract meaningful insights' },
   ];
 
   const startWorkshopPayment = async (amountInRupees: number, programName: string) => {
@@ -248,7 +248,7 @@ const Speakers = () => {
             <p className="text-gray-600">Short, intensive workshops to quickly upskill</p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {shortPrograms.map((p, idx) => (
               <motion.div
                 key={p.id}
@@ -256,26 +256,46 @@ const Speakers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: (idx % 6) * 0.05 }}
-                className="bg-white rounded-xl shadow hover:shadow-lg transition-shadow p-6 flex flex-col"
+                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
               >
-                <div className="relative">
-                  <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                    {p.discount}% off
+                <div className="md:flex">
+                  <div className="md:w-1/2">
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="w-full h-48 md:h-full object-cover"
+                    />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">{p.name}</h3>
-                </div>
-                <div className="mt-3 space-y-1">
-                  <div className="text-gray-500 line-through text-sm">₹{p.originalPrice}</div>
-                  <div className="text-red-600 font-bold text-xl">₹{p.finalPrice}</div>
-                </div>
-                <div className="mt-auto pt-4">
-                  <button
-                    disabled={isPaying}
-                    onClick={() => startWorkshopPayment(p.finalPrice, p.name)}
-                    className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
-                  >
-                    Enroll
-                  </button>
+                  <div className="p-6 md:w-1/2">
+                    <div className="flex items-center mb-2">
+                      <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">
+                        Programs
+                      </span>
+                      <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        {p.discount}% off
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{p.name}</h3>
+                    <p className="text-gray-600 text-sm mb-4">{p.description}</p>
+
+                    <div className="mb-4">
+                      <div className="space-y-1">
+                        <div className="text-gray-500 line-through text-sm">₹{p.originalPrice}</div>
+                        <div className="text-red-600 font-bold text-xl">₹{p.finalPrice}</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <button
+                        disabled={isPaying}
+                        onClick={() => startWorkshopPayment(p.finalPrice, p.name)}
+                        className="bg-blue-600 text-white py-2.5 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
+                      >
+                        Enroll Now
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             ))}
@@ -296,7 +316,7 @@ const Speakers = () => {
             <p className="text-gray-600">Curated programs for Tech students</p>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {bcaPrograms.map((p, idx) => (
               <motion.div
                 key={p.id}
@@ -304,26 +324,46 @@ const Speakers = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: (idx % 6) * 0.05 }}
-                className="bg-gray-50 rounded-xl shadow hover:shadow-lg transition-shadow p-6 flex flex-col"
+                className="bg-gray-50 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
               >
-                <div className="relative">
-                  <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                    {p.discount}% off
+                <div className="md:flex">
+                  <div className="md:w-1/2">
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="w-full h-48 md:h-full object-cover"
+                    />
                   </div>
-                  <h3 className="text-lg font-semibold text-gray-900">{p.name}</h3>
-                </div>
-                <div className="mt-3 space-y-1">
-                  <div className="text-gray-500 line-through text-sm">₹{p.originalPrice}</div>
-                  <div className="text-red-600 font-bold text-xl">₹{p.finalPrice}</div>
-                </div>
-                <div className="mt-auto pt-4">
-                  <button
-                    disabled={isPaying}
-                    onClick={() => startWorkshopPayment(p.finalPrice, p.name)}
-                    className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
-                  >
-                    Enroll
-                  </button>
+                  <div className="p-6 md:w-1/2">
+                    <div className="flex items-center mb-2">
+                      <span className="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">
+                        Tech Programs
+                      </span>
+                      <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        {p.discount}% off
+                      </div>
+                    </div>
+                    
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{p.name}</h3>
+                    <p className="text-gray-600 text-sm mb-4">{p.description}</p>
+
+                    <div className="mb-4">
+                      <div className="space-y-1">
+                        <div className="text-gray-500 line-through text-sm">₹{p.originalPrice}</div>
+                        <div className="text-red-600 font-bold text-xl">₹{p.finalPrice}</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <button
+                        disabled={isPaying}
+                        onClick={() => startWorkshopPayment(p.finalPrice, p.name)}
+                        className="bg-teal-600 text-white py-2.5 px-4 rounded-lg font-semibold hover:bg-teal-700 transition-colors disabled:opacity-50"
+                      >
+                        Enroll Now
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </motion.div>
             ))}
