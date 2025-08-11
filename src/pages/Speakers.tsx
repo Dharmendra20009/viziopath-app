@@ -99,6 +99,7 @@ const Speakers = () => {
   const [playingEventId, setPlayingEventId] = useState<number | null>(null);
   const [isPaying, setIsPaying] = useState(false);
   const [paidEventIds, setPaidEventIds] = useState<number[]>([]);
+  const [playingProgramId, setPlayingProgramId] = useState<string | null>(null);
 
   // Load Razorpay script once
   useEffect(() => {
@@ -115,26 +116,26 @@ const Speakers = () => {
 
   // Workshops data
   const shortPrograms = [
-    { id: 'excel', name: 'MS Excel', originalPrice: 399, finalPrice: 199, discount: 50, image: 'https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master Excel formulas, pivot tables, and data analysis techniques' },
-    { id: 'word', name: 'MS Word', originalPrice: 399, finalPrice: 199, discount: 50, image: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn advanced document formatting and professional writing skills' },
-    { id: 'ppt', name: 'MS PowerPoint', originalPrice: 399, finalPrice: 199, discount: 50, image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Create stunning presentations with advanced design techniques' },
-    { id: 'pbi', name: 'Power BI', originalPrice: 799, finalPrice: 389, discount: 51, image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Transform data into interactive visualizations and reports' },
-    { id: 'seo', name: 'SEO', originalPrice: 899, finalPrice: 449, discount: 50, image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master search engine optimization strategies and techniques' },
-    { id: 'mkt', name: 'Marketing', originalPrice: 1299, finalPrice: 649, discount: 50, image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn modern marketing principles and campaign strategies' },
-    { id: 'dm', name: 'Digital Marketing', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master digital channels, social media, and online advertising' },
-    { id: 'ops', name: 'Operations Management', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Optimize business processes and operational efficiency' },
-    { id: 'ent', name: 'Entrepreneurship', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Build and scale successful business ventures' },
-    { id: 'bnf', name: 'Banking and Finance', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Understand financial markets and banking operations' },
-    { id: 'ba', name: 'Business Analytics', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Transform data into actionable business insights' },
+    { id: 'excel', name: 'MS Excel', originalPrice: 399, finalPrice: 199, discount: 50, image: 'https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master Excel formulas, pivot tables, and data analysis techniques', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'word', name: 'MS Word', originalPrice: 399, finalPrice: 199, discount: 50, image: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn advanced document formatting and professional writing skills', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'ppt', name: 'MS PowerPoint', originalPrice: 399, finalPrice: 199, discount: 50, image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Create stunning presentations with advanced design techniques', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'pbi', name: 'Power BI', originalPrice: 799, finalPrice: 389, discount: 51, image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Transform data into interactive visualizations and reports', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'seo', name: 'SEO', originalPrice: 899, finalPrice: 449, discount: 50, image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master search engine optimization strategies and techniques', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'mkt', name: 'Marketing', originalPrice: 1299, finalPrice: 649, discount: 50, image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn modern marketing principles and campaign strategies', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'dm', name: 'Digital Marketing', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master digital channels, social media, and online advertising', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'ops', name: 'Operations Management', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Optimize business processes and operational efficiency', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'ent', name: 'Entrepreneurship', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Build and scale successful business ventures', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'bnf', name: 'Banking and Finance', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Understand financial markets and banking operations', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'ba', name: 'Business Analytics', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Transform data into actionable business insights', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
   ];
 
   const bcaPrograms = [
-    { id: 'web', name: 'Web Development', originalPrice: 1599, finalPrice: 799, discount: 50, image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Build modern, responsive websites with latest technologies' },
-    { id: 'dbm', name: 'Database Management', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Design and manage efficient database systems' },
-    { id: 'py', name: 'Python Programming', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn Python fundamentals and advanced programming concepts' },
-    { id: 'mysql', name: 'MySQL Database', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master MySQL database administration and optimization' },
-    { id: 'html', name: 'HTML & CSS', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Create beautiful web pages with HTML5 and CSS3' },
-    { id: 'da', name: 'Data Analytics', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Analyze data patterns and extract meaningful insights' },
+    { id: 'web', name: 'Web Development', originalPrice: 1599, finalPrice: 799, discount: 50, image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Build modern, responsive websites with latest technologies', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'dbm', name: 'Database Management', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Design and manage efficient database systems', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'py', name: 'Python Programming', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn Python fundamentals and advanced programming concepts', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'mysql', name: 'MySQL Database', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master MySQL database administration and optimization', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'html', name: 'HTML & CSS', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Create beautiful web pages with HTML5 and CSS3', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'da', name: 'Data Analytics', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Analyze data patterns and extract meaningful insights', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
   ];
 
   const startWorkshopPayment = async (amountInRupees: number, programName: string) => {
@@ -259,12 +260,29 @@ const Speakers = () => {
                 className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
               >
                 <div className="md:flex">
-                  <div className="md:w-1/2">
-                    <img
-                      src={p.image}
-                      alt={p.name}
-                      className="w-full h-48 md:h-full object-cover"
-                    />
+                  <div className="md:w-1/2 relative">
+                    {playingProgramId === p.id ? (
+                      <video
+                        controls
+                        className="w-full h-48 md:h-full object-cover"
+                        src={p.video}
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <img
+                        src={p.image}
+                        alt={p.name}
+                        className="w-full h-48 md:h-full object-cover"
+                      />
+                    )}
+                    <button
+                      onClick={() => setPlayingProgramId(prev => prev === p.id ? null : p.id)}
+                      className="absolute top-2 right-2 bg-black bg-opacity-70 text-white p-2 rounded-full hover:bg-opacity-90 transition-all"
+                      title={playingProgramId === p.id ? "Hide Video" : "Play Video"}
+                    >
+                      <Play className="h-4 w-4" />
+                    </button>
                   </div>
                   <div className="p-6 md:w-1/2">
                     <div className="flex items-center mb-2">
@@ -327,12 +345,29 @@ const Speakers = () => {
                 className="bg-gray-50 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden"
               >
                 <div className="md:flex">
-                  <div className="md:w-1/2">
-                    <img
-                      src={p.image}
-                      alt={p.name}
-                      className="w-full h-48 md:h-full object-cover"
-                    />
+                  <div className="md:w-1/2 relative">
+                    {playingProgramId === p.id ? (
+                      <video
+                        controls
+                        className="w-full h-48 md:h-full object-cover"
+                        src={p.video}
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <img
+                        src={p.image}
+                        alt={p.name}
+                        className="w-full h-48 md:h-full object-cover"
+                      />
+                    )}
+                    <button
+                      onClick={() => setPlayingProgramId(prev => prev === p.id ? null : p.id)}
+                      className="absolute top-2 right-2 bg-black bg-opacity-70 text-white p-2 rounded-full hover:bg-opacity-90 transition-all"
+                      title={playingProgramId === p.id ? "Hide Video" : "Play Video"}
+                    >
+                      <Play className="h-4 w-4" />
+                    </button>
                   </div>
                   <div className="p-6 md:w-1/2">
                     <div className="flex items-center mb-2">
