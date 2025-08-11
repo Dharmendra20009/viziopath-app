@@ -244,8 +244,8 @@ const Speakers = () => {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">1–2 Week Programs</h2>
-            <p className="text-gray-600">Short, intensive workshops to quickly upskill</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-3">Programs</h2>
+            <p className="text-gray-600">intensive workshops to quickly upskill</p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
