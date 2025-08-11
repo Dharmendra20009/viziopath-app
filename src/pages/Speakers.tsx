@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Users, Clock, Play, ExternalLink } from 'lucide-react';
 
@@ -53,7 +53,8 @@ const Speakers = () => {
       speakerRole: 'ML Engineer, Tesla',
       date: '2025-09-05',
       attendees: 750,
-      recording: '#',
+      recording: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
+      isOnline: true,
       highlights: ['MLOps best practices', 'Model deployment strategies', 'Monitoring ML systems'],
       image: 'https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
@@ -65,6 +66,7 @@ const Speakers = () => {
       date: '2025-09-05',
       attendees: 600,
       recording: '#',
+      isOnline: false,
       highlights: ['Next.js 15 features', 'Performance optimization', 'Modern CSS techniques'],
       image: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
@@ -76,6 +78,7 @@ const Speakers = () => {
       date: '2024-09-05',
       attendees: 450,
       recording: '#',
+      isOnline: false,
       highlights: ['Zero-trust architecture', 'AI-powered threat detection', 'Cloud security'],
       image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800'
     },
@@ -87,10 +90,28 @@ const Speakers = () => {
       date: '2024-09-05',
       attendees: 380,
       recording: '#',
+      isOnline: false,
       highlights: ['Component libraries', 'Design tokens', 'Cross-team collaboration'],
       image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800'
     }
   ];
+
+  const [playingEventId, setPlayingEventId] = useState<number | null>(null);
+  const [isPaying, setIsPaying] = useState(false);
+  const [paidEventIds, setPaidEventIds] = useState<number[]>([]);
+
+  // Load Razorpay script once
+  useEffect(() => {
+    const scriptId = 'razorpay-checkout-js';
+    if (document.getElementById(scriptId)) return;
+    const script = document.createElement('script');
+    script.id = scriptId;
+    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
+
+  // Note: Video unlock happens only after successful payment
 
   const speakers = [
     {
@@ -273,7 +294,7 @@ const Speakers = () => {
         </div>
       </section>
 
-      {/* Past Events */}
+      {/* Courses and Workshops */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
@@ -298,11 +319,32 @@ const Speakers = () => {
               >
                 <div className="md:flex">
                   <div className="md:w-1/2">
-                    <img
-                      src={event.image}
-                      alt={event.title}
-                      className="w-full h-48 md:h-full object-cover"
-                    />
+                    {paidEventIds.includes(event.id) && playingEventId === event.id && event.recording ? (
+                      /\.(mp4|webm|ogg)(\?.*)?$/i.test(String(event.recording)) ? (
+                        <video
+                          controls
+                          className="w-full h-48 md:h-full object-cover"
+                          src={event.recording}
+                        >
+                          Your browser does not support the video tag.
+                        </video>
+                      ) : (
+                        <iframe
+                          className="w-full h-48 md:h-full"
+                          src={event.recording}
+                          title={`${event.title} recording`}
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                        />
+                      )
+                    ) : (
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        className="w-full h-48 md:h-full object-cover"
+                      />
+                    )}
                   </div>
                   <div className="p-6 md:w-1/2">
                     <div className="flex items-center mb-2">
@@ -332,13 +374,80 @@ const Speakers = () => {
 
                     <div className="flex items-center justify-between">
                       <span className="text-sm text-gray-600">{event.attendees} attendees</span>
-                      <a
-                        href={event.recording}
-                        className="flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm"
-                      >
-                        <Play className="h-4 w-4 mr-1" />
-                        Watch Recording
-                      </a>
+                      {event.recording ? (
+                        <div className="flex items-center gap-4">
+                          {paidEventIds.includes(event.id) ? (
+                            <button
+                              onClick={() => setPlayingEventId(prev => prev === event.id ? null : event.id)}
+                              className="flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm"
+                            >
+                              <Play className="h-4 w-4 mr-1" />
+                              {playingEventId === event.id ? 'Hide Video' : 'Watch Recording'}
+                            </button>
+                          ) : (
+                            <button
+                              disabled={isPaying}
+                              onClick={async () => {
+                                try {
+                                  setIsPaying(true);
+                                  const orderRes = await fetch('/api/create-order', { method: 'POST' });
+                                  const order = await orderRes.json();
+                                  const options: any = {
+                                    key: (import.meta as any).env.VITE_RAZORPAY_KEY_ID,
+                                    name: 'Viziopath',
+                                    description: event.title,
+                                    order_id: order.id,
+                                    handler: async (response: any) => {
+                                      const verifyRes = await fetch('/api/verify-payment', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({
+                                          order_id: response.razorpay_order_id,
+                                          payment_id: response.razorpay_payment_id,
+                                          signature: response.razorpay_signature,
+                                          userId: 1,
+                                        }),
+                                      });
+                                      const verify = await verifyRes.json();
+                                      if (verify.ok) {
+                                        setPaidEventIds(prev => Array.from(new Set([...prev, event.id])));
+                                        setPlayingEventId(event.id);
+                                      } else {
+                                        alert('Payment verification failed');
+                                      }
+                                    },
+                                    theme: { color: '#2563eb' },
+                                    prefill: {},
+                                  };
+                                  // @ts-ignore
+                                  const rzp = new window.Razorpay(options);
+                                  rzp.open();
+                                } catch (e) {
+                                  alert('Unable to start payment');
+                                } finally {
+                                  setIsPaying(false);
+                                }
+                              }}
+                              className="flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm disabled:opacity-50"
+                            >
+                              Pay & Unlock
+                            </button>
+                          )}
+                          {paidEventIds.includes(event.id) && /^https?:\/\//i.test(String(event.recording)) && (
+                            <a
+                              href={String(event.recording)}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm"
+                            >
+                              <ExternalLink className="h-4 w-4 mr-1" />
+                              Open
+                            </a>
+                          )}
+                        </div>
+                      ) : (
+                        <span className="text-sm text-gray-400">Recording coming soon</span>
+                      )}
                     </div>
                   </div>
                 </div>

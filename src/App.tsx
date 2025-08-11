@@ -10,6 +10,7 @@ import TopAchievers from './pages/TopAchievers';
 import Speakers from './pages/Speakers';
 import Apply from './pages/Apply';
 import Contact from './pages/Contact';
+import VideoPage from './pages/VideoPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/top-achievers" element={<TopAchievers />} />
             <Route path="/speakers" element={<Speakers />} />
+            <Route path="/video" element={<VideoPage />} />
             <Route path="/apply" element={<Apply />} />
             <Route path="/contact" element={<Contact />} />
           </Routes>
