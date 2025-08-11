@@ -113,6 +113,75 @@ const Speakers = () => {
 
   // Note: Video unlock happens only after successful payment
 
+  // Workshops data
+  const shortPrograms = [
+    { id: 'excel', name: 'MS Excel', originalPrice: 399, finalPrice: 199, discount: 50 },
+    { id: 'word', name: 'MS Word', originalPrice: 399, finalPrice: 199, discount: 50 },
+    { id: 'ppt', name: 'MS PowerPoint', originalPrice: 399, finalPrice: 199, discount: 50 },
+    { id: 'pbi', name: 'Power BI', originalPrice: 799, finalPrice: 389, discount: 51 },
+    { id: 'seo', name: 'SEO', originalPrice: 899, finalPrice: 449, discount: 50 },
+    { id: 'mkt', name: 'Marketing', originalPrice: 1299, finalPrice: 649, discount: 50 },
+    { id: 'dm', name: 'Digital Marketing', originalPrice: 1999, finalPrice: 999, discount: 50 },
+    { id: 'ops', name: 'Operations Management', originalPrice: 1999, finalPrice: 999, discount: 50 },
+    { id: 'ent', name: 'Entrepreneurship', originalPrice: 1999, finalPrice: 999, discount: 50 },
+    { id: 'bnf', name: 'Banking and finance', originalPrice: 2399, finalPrice: 1199, discount: 50 },
+    { id: 'ba', name: 'Business Analytics', originalPrice: 2399, finalPrice: 1199, discount: 50 },
+  ];
+
+  const bcaPrograms = [
+    { id: 'web', name: 'Web development', originalPrice: 1599, finalPrice: 799, discount: 50 },
+    { id: 'dbm', name: 'Database Management', originalPrice: 1399, finalPrice: 699, discount: 50 },
+    { id: 'py', name: 'Python', originalPrice: 1399, finalPrice: 699, discount: 50 },
+    { id: 'mysql', name: 'MySQL', originalPrice: 1399, finalPrice: 699, discount: 50 },
+    { id: 'html', name: 'HTML', originalPrice: 1399, finalPrice: 699, discount: 50 },
+    { id: 'da', name: 'Data Analytics', originalPrice: 2399, finalPrice: 1199, discount: 50 },
+  ];
+
+  const startWorkshopPayment = async (amountInRupees: number, programName: string) => {
+    try {
+      setIsPaying(true);
+      const orderRes = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: Math.round(amountInRupees * 100), currency: 'INR', receipt: `ws_${programName}_${Date.now()}` }),
+      });
+      const order = await orderRes.json();
+      const options: any = {
+        key: (import.meta as any).env.VITE_RAZORPAY_KEY_ID,
+        name: 'Viziopath',
+        description: programName,
+        order_id: order.id,
+        handler: async (response: any) => {
+          const verifyRes = await fetch('/api/verify-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              order_id: response.razorpay_order_id,
+              payment_id: response.razorpay_payment_id,
+              signature: response.razorpay_signature,
+              userId: 1,
+            }),
+          });
+          const verify = await verifyRes.json();
+          if (verify.ok) {
+            alert('Enrollment successful!');
+          } else {
+            alert('Payment verification failed');
+          }
+        },
+        theme: { color: '#2563eb' },
+        prefill: {},
+      };
+      // @ts-ignore
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (e) {
+      alert('Unable to start payment');
+    } finally {
+      setIsPaying(false);
+    }
+  };
+
   const speakers = [
     {
       name: 'Dr. Sarah Johnson',
@@ -163,6 +232,102 @@ const Speakers = () => {
               Learn from industry leaders and technology experts through our comprehensive training programs and speaker series.
             </p>
           </motion.div>
+        </div>
+      </section>
+
+      {/* 1–2 Week Programs */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-3">1–2 Week Programs</h2>
+            <p className="text-gray-600">Short, intensive workshops to quickly upskill</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {shortPrograms.map((p, idx) => (
+              <motion.div
+                key={p.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: (idx % 6) * 0.05 }}
+                className="bg-white rounded-xl shadow hover:shadow-lg transition-shadow p-6 flex flex-col"
+              >
+                <div className="relative">
+                  <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                    {p.discount}% off
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">{p.name}</h3>
+                </div>
+                <div className="mt-3 space-y-1">
+                  <div className="text-gray-500 line-through text-sm">₹{p.originalPrice}</div>
+                  <div className="text-red-600 font-bold text-xl">₹{p.finalPrice}</div>
+                </div>
+                <div className="mt-auto pt-4">
+                  <button
+                    disabled={isPaying}
+                    onClick={() => startWorkshopPayment(p.finalPrice, p.name)}
+                    className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
+                  >
+                    Enroll
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Workshops for BCA */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl font-bold text-gray-900 mb-3">For BCA</h2>
+            <p className="text-gray-600">Curated programs for BCA students</p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {bcaPrograms.map((p, idx) => (
+              <motion.div
+                key={p.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: (idx % 6) * 0.05 }}
+                className="bg-gray-50 rounded-xl shadow hover:shadow-lg transition-shadow p-6 flex flex-col"
+              >
+                <div className="relative">
+                  <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                    {p.discount}% off
+                  </div>
+                  <h3 className="text-lg font-semibold text-gray-900">{p.name}</h3>
+                </div>
+                <div className="mt-3 space-y-1">
+                  <div className="text-gray-500 line-through text-sm">₹{p.originalPrice}</div>
+                  <div className="text-red-600 font-bold text-xl">₹{p.finalPrice}</div>
+                </div>
+                <div className="mt-auto pt-4">
+                  <button
+                    disabled={isPaying}
+                    onClick={() => startWorkshopPayment(p.finalPrice, p.name)}
+                    className="w-full bg-blue-600 text-white py-2.5 rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50"
+                  >
+                    Enroll
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 

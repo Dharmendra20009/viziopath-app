@@ -9,10 +9,15 @@ export default async function handler(req: any, res: any) {
       key_secret: process.env.RAZORPAY_KEY_SECRET as string,
     });
 
+    const body = req.body || {};
+    const amount = Number(body.amount) > 0 ? Math.floor(Number(body.amount)) : 50000; // paise
+    const currency = body.currency || 'INR';
+    const receipt = body.receipt || `receipt_${Date.now()}`;
+
     const options = {
-      amount: 50000,
-      currency: 'INR',
-      receipt: `receipt_${Date.now()}`,
+      amount,
+      currency,
+      receipt,
     } as const;
 
     const order = await razorpay.orders.create(options as any);
@@ -21,5 +26,6 @@ export default async function handler(req: any, res: any) {
     return res.status(500).json({ error: error?.message || 'Server error' });
   }
 }
+
 
 
