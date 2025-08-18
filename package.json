@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^1.0.6",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.6.1",
     "express": "^5.1.0",
@@ -66,5 +67,10 @@
   "bugs": {
     "url": "https://github.com/Dharmendra20009/viziopath-app/issues"
   },
-  "homepage": "https://github.com/Dharmendra20009/viziopath-app#readme"
+  "homepage": "https://github.com/Dharmendra20009/viziopath-app#readme",
+  "email": "user@example.com",
+  "password": "yourpassword",
+  "token": "JWT_TOKEN",
+  "user": { "id": "...", "name": "...", "email": "...", "role": "admin" },
+  "message": "Invalid credentials"
 }

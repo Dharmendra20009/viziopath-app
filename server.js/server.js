@@ -47,3 +47,5 @@ const PORT = process.env.PORT || 5000;
 connectDB().then(() => {
   app.listen(PORT, () => console.log(`🚀 Server listening on http://localhost:${PORT}`));
 });
+
+node [server.js](http://_vscodecontentref_/0)

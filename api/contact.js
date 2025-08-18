@@ -58,4 +58,12 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  const { name, email, phone, subject, message } = req.body;
+  // Save to database or send email here
+  // Example: send email to your address
+  // await sendEmailToYou({ name, email, phone, subject, message });
+  res.json({ ok: true });
+});
+
 export default router;

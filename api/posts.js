@@ -98,3 +98,5 @@ router.delete('/:id', auth(['admin']), async (req, res, next) => {
 });
 
 export default router;
+
+/api/auth/login
