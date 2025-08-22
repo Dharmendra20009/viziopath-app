@@ -68,7 +68,7 @@
     "url": "https://github.com/Dharmendra20009/viziopath-app/issues"
   },
   "homepage": "https://github.com/Dharmendra20009/viziopath-app#readme",
-  "email": "user@example.com",
+  "email": "your@email.com",
   "password": "yourpassword",
   "token": "JWT_TOKEN",
   "user": { "id": "...", "name": "...", "email": "...", "role": "admin" },
