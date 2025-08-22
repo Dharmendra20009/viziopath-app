@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Calendar, MapPin, Users, Clock, Play, ExternalLink } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 const Speakers = () => {
   const upcomingEvents = [
@@ -100,6 +101,7 @@ const Speakers = () => {
   const [isPaying, setIsPaying] = useState(false);
   const [paidEventIds, setPaidEventIds] = useState<number[]>([]);
   const [playingProgramId, setPlayingProgramId] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   // Load Razorpay script once
   useEffect(() => {
@@ -217,6 +219,30 @@ const Speakers = () => {
       expertise: ['Machine Learning', 'Autonomous Systems', 'MLOps']
     }
   ];
+
+  const ProgramCard = ({ program }: any) => {
+    const handleEnroll = () => {
+      navigate(
+        `/payment?program=${encodeURIComponent(program.name)}&amount=${program.fee}&id=${program.id}`
+      );
+    };
+
+    return (
+      <div>
+        {/* ...other program details... */}
+        <button
+          onClick={() =>
+            navigate(
+              `/payment?program=${encodeURIComponent(p.name)}&amount=${p.finalPrice}&id=${p.id}`
+            )
+          }
+          className="bg-blue-600 text-white py-2.5 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
+        >
+          Enroll Now
+        </button>
+      </div>
+    );
+  };
 
   return (
     <div className="min-h-screen">
