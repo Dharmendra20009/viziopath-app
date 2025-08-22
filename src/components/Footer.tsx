@@ -10,6 +10,8 @@ const Footer = () => {
     { name: 'Terms', href: '#' },
     { name: 'Privacy', href: '#' },
     { name: 'Refund Policy', href: '#' },
+    { name: 'Login', href: '/login' },
+    { name: 'Sign Up', href: '/signup' },
   ];
 
   const socialLinks = [
@@ -73,7 +75,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Contact Info</h3>
             <div className="space-y-2 text-gray-300">
-              <p>viziopath </p>
+              <p>viziopath</p>
               <p>Khushi Tola, Near Khiriya Ghat</p>
               <p>Betiiah, Bihar, 845438, India</p>
               <p className="pt-2">Phone: +91 8210381000</p>

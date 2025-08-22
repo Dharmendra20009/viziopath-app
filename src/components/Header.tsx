@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,9 +19,9 @@ const Header = () => {
     <header className="absolute inset-x-0 top-0 z-50">
       <nav className="flex items-center justify-between p-6 lg:px-8 md:-mt-3">
         <div className="flex lg:flex-1">
-          <a href="/" className="-m-1.5 p-1.5 font-sans text-xl font-bold text-sky-500">
+          <Link to="/" className="-m-1.5 p-1.5 font-sans text-xl font-bold text-sky-500">
             Viziopath
-          </a>
+          </Link>
         </div>
 
         <div className="flex lg:hidden">
@@ -34,19 +35,25 @@ const Header = () => {
 
         <div className="hidden lg:flex lg:gap-x-12">
           {navigation.map((item) => (
-            <a key={item.name} href={item.href} className="text-sm font-semibold text-white">
+            <Link key={item.name} to={item.href} className="text-sm font-semibold text-white">
               {item.name}
-            </a>
+            </Link>
           ))}
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-4">
-          <button className="text-sm font-semibold leading-6 text-white hover:text-indigo-300 transition-colors">
+          <Link
+            to="/login"
+            className="text-sm font-semibold leading-6 text-white hover:text-indigo-300 transition-colors"
+          >
             Log in
-          </button>
-          <button className="text-sm font-semibold leading-6 text-white bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-lg transition-colors">
+          </Link>
+          <Link
+            to="/signup"
+            className="text-sm font-semibold leading-6 text-white bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-lg transition-colors"
+          >
             Sign up
-          </button>
+          </Link>
         </div>
       </nav>
 
@@ -54,9 +61,9 @@ const Header = () => {
       {isMenuOpen && (
         <div className="lg:hidden fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-900 p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="/" className="-m-1.5 p-1.5 font-sans text-xl font-bold text-sky-500">
+            <Link to="/" className="-m-1.5 p-1.5 font-sans text-xl font-bold text-sky-500">
               Viziopath
-            </a>
+            </Link>
             <button
               onClick={() => setIsMenuOpen(false)}
               className="-m-2.5 rounded-md p-2.5 text-white"
@@ -69,30 +76,32 @@ const Header = () => {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 {navigation.map((item) => (
-                  <a
+                  <Link
                     key={item.name}
-                    href={item.href}
+                    to={item.href}
                     className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-white hover:bg-gray-800"
-                    onClick={() => setIsMenuOpen(false)} // Close menu when clicking link
+                    onClick={() => setIsMenuOpen(false)}
                   >
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
 
               <div className="py-6 space-y-2">
-                <button
+                <Link
+                  to="/login"
                   onClick={() => setIsMenuOpen(false)}
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-white hover:bg-gray-800 w-full text-left"
                 >
                   Log in
-                </button>
-                <button
+                </Link>
+                <Link
+                  to="/signup"
                   onClick={() => setIsMenuOpen(false)}
                   className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-indigo-400 hover:bg-gray-800 w-full text-left"
                 >
                   Sign up
-                </button>
+                </Link>
               </div>
             </div>
           </div>

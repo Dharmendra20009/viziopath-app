@@ -12,6 +12,8 @@ import Apply from './pages/Apply';
 import Contact from './pages/Contact';
 import VideoPage from './pages/VideoPage';
 import Payment from './pages/Payment';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
             <Route path="/video" element={<VideoPage />} />
             <Route path="/apply" element={<Apply />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
           </Routes>
         </main>
         <Footer />
