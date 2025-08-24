@@ -12,32 +12,30 @@ import Apply from './pages/Apply';
 import Contact from './pages/Contact';
 import VideoPage from './pages/VideoPage';
 import Payment from './pages/Payment';
-import Login from './pages/Login';
+import Login from './pages/login';
 import Signup from './pages/Signup';
 
 function App() {
   return (
     <Router>
-      <div className="min-h-screen bg-white">
-        <Header />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/mous" element={<MOUs />} />
-            <Route path="/gallery" element={<Gallery />} />
-            <Route path="/top-achievers" element={<TopAchievers />} />
-            <Route path="/speakers" element={<Speakers />} />
-            <Route path="/payment" element={<Payment />} />
-            <Route path="/video" element={<VideoPage />} />
-            <Route path="/apply" element={<Apply />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
+      <Header />   {/* Always shows */}
+      <main className="min-h-screen bg-white">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/mous" element={<MOUs />} />
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/top-achievers" element={<TopAchievers />} />
+          <Route path="/speakers" element={<Speakers />} />
+          <Route path="/payment" element={<Payment />} />
+          <Route path="/video" element={<VideoPage />} />
+          <Route path="/apply" element={<Apply />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      </main>
+      <Footer />   {/* Always shows */}
     </Router>
   );
 }
