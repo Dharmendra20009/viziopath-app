@@ -103,17 +103,6 @@ const Speakers = () => {
   const [playingProgramId, setPlayingProgramId] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  // Load Razorpay script once
-  useEffect(() => {
-    const scriptId = 'razorpay-checkout-js';
-    if (document.getElementById(scriptId)) return;
-    const script = document.createElement('script');
-    script.id = scriptId;
-    script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
-
   // Note: Video unlock happens only after successful payment
 
   // Workshops data
@@ -140,49 +129,9 @@ const Speakers = () => {
     { id: 'da', name: 'Data Analytics', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Analyze data patterns and extract meaningful insights', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
   ];
 
-  const startWorkshopPayment = async (amountInRupees: number, programName: string) => {
-    try {
-      setIsPaying(true);
-      const orderRes = await fetch('/api/create-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: Math.round(amountInRupees * 100), currency: 'INR', receipt: `ws_${programName}_${Date.now()}` }),
-      });
-      const order = await orderRes.json();
-      const options: any = {
-        key: (import.meta as any).env.VITE_RAZORPAY_KEY_ID,
-        name: 'Viziopath',
-        description: programName,
-        order_id: order.id,
-        handler: async (response: any) => {
-          const verifyRes = await fetch('/api/verify-payment', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              order_id: response.razorpay_order_id,
-              payment_id: response.razorpay_payment_id,
-              signature: response.razorpay_signature,
-              userId: 1,
-            }),
-          });
-          const verify = await verifyRes.json();
-          if (verify.ok) {
-            alert('Enrollment successful!');
-          } else {
-            alert('Payment verification failed');
-          }
-        },
-        theme: { color: '#2563eb' },
-        prefill: {},
-      };
-      // @ts-ignore
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (e) {
-      alert('Unable to start payment');
-    } finally {
-      setIsPaying(false);
-    }
+  const startWorkshopPayment = (amountInRupees: number, programName: string) => {
+    // Navigate to the beautiful payment page instead of Razorpay
+    navigate(`/payment?program=${encodeURIComponent(programName)}&amount=${amountInRupees}&id=${Date.now()}`);
   };
 
   const speakers = [
@@ -231,11 +180,7 @@ const Speakers = () => {
       <div>
         {/* ...other program details... */}
         <button
-          onClick={() =>
-            navigate(
-              `/payment?program=${encodeURIComponent(p.name)}&amount=${p.finalPrice}&id=${p.id}`
-            )
-          }
+          onClick={handleEnroll}
           className="bg-blue-600 text-white py-2.5 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
         >
           Enroll Now
@@ -653,46 +598,9 @@ const Speakers = () => {
                           ) : (
                             <button
                               disabled={isPaying}
-                              onClick={async () => {
-                                try {
-                                  setIsPaying(true);
-                                  const orderRes = await fetch('/api/create-order', { method: 'POST' });
-                                  const order = await orderRes.json();
-                                  const options: any = {
-                                    key: (import.meta as any).env.VITE_RAZORPAY_KEY_ID,
-                                    name: 'Viziopath',
-                                    description: event.title,
-                                    order_id: order.id,
-                                    handler: async (response: any) => {
-                                      const verifyRes = await fetch('/api/verify-payment', {
-                                        method: 'POST',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({
-                                          order_id: response.razorpay_order_id,
-                                          payment_id: response.razorpay_payment_id,
-                                          signature: response.razorpay_signature,
-                                          userId: 1,
-                                        }),
-                                      });
-                                      const verify = await verifyRes.json();
-                                      if (verify.ok) {
-                                        setPaidEventIds(prev => Array.from(new Set([...prev, event.id])));
-                                        setPlayingEventId(event.id);
-                                      } else {
-                                        alert('Payment verification failed');
-                                      }
-                                    },
-                                    theme: { color: '#2563eb' },
-                                    prefill: {},
-                                  };
-                                  // @ts-ignore
-                                  const rzp = new window.Razorpay(options);
-                                  rzp.open();
-                                } catch (e) {
-                                  alert('Unable to start payment');
-                                } finally {
-                                  setIsPaying(false);
-                                }
+                              onClick={() => {
+                                // Navigate to payment page for event unlock
+                                navigate(`/payment?program=${encodeURIComponent(event.title)}&amount=199&id=${event.id}&type=event`);
                               }}
                               className="flex items-center text-blue-600 hover:text-blue-700 font-medium text-sm disabled:opacity-50"
                             >
