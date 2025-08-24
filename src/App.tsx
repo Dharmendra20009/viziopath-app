@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -17,26 +18,28 @@ import Signup from './pages/Signup';
 
 function App() {
   return (
-    <Router>
-      <Header />   {/* Always shows */}
-      <main className="min-h-screen bg-white">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/mous" element={<MOUs />} />
-          <Route path="/gallery" element={<Gallery />} />
-          <Route path="/top-achievers" element={<TopAchievers />} />
-          <Route path="/speakers" element={<Speakers />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/video" element={<VideoPage />} />
-          <Route path="/apply" element={<Apply />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
-      </main>
-      <Footer />   {/* Always shows */}
-    </Router>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID"}>
+      <Router>
+        <Header />   {/* Always shows */}
+        <main className="min-h-screen bg-white">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/mous" element={<MOUs />} />
+            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/top-achievers" element={<TopAchievers />} />
+            <Route path="/speakers" element={<Speakers />} />
+            <Route path="/payment" element={<Payment />} />
+            <Route path="/video" element={<VideoPage />} />
+            <Route path="/apply" element={<Apply />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          </Routes>
+        </main>
+        <Footer />   {/* Always shows */}
+      </Router>
+    </GoogleOAuthProvider>
   );
 }
 
