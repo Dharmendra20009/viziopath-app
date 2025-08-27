@@ -9,6 +9,7 @@ import MOUs from './pages/MOUs';
 import Gallery from './pages/Gallery';
 import TopAchievers from './pages/TopAchievers';
 import Speakers from './pages/Speakers';
+import Services from './pages/Services';
 import Apply from './pages/Apply';
 import Contact from './pages/Contact';
 import VideoPage from './pages/VideoPage';
@@ -29,6 +30,7 @@ function App() {
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/top-achievers" element={<TopAchievers />} />
             <Route path="/speakers" element={<Speakers />} />
+            <Route path="/services" element={<Services />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/video" element={<VideoPage />} />
             <Route path="/apply" element={<Apply />} />
