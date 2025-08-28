@@ -31,9 +31,9 @@ import {
 
 const Home = () => {
   const stats = [
-    { number: '12,898+', label: 'Interns', icon: Users },
+    { number: '26,898+', label: 'Interns', icon: Users },
     { number: '187+', label: 'Colleges', icon: Building },
-    { number: '135,000+', label: 'Top Tier Finishers', icon: Award },
+    { number: '91,309+', label: 'Top Tier Finishers', icon: Award },
     { number: '13+', label: 'Countries', icon: Globe },
   ];
 
