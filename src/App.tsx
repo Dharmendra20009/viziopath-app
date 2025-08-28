@@ -6,7 +6,7 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import About from './pages/About';
 import MOUs from './pages/MOUs';
-import Gallery from './pages/Gallery';
+import JobPortal from './pages/JobPortal';
 import TopAchievers from './pages/TopAchievers';
 import Speakers from './pages/Speakers';
 import Services from './pages/Services';
@@ -27,7 +27,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/mous" element={<MOUs />} />
-            <Route path="/gallery" element={<Gallery />} />
+            <Route path="/jobportal" element={<JobPortal />} />
             <Route path="/top-achievers" element={<TopAchievers />} />
             <Route path="/speakers" element={<Speakers />} />
             <Route path="/services" element={<Services />} />
