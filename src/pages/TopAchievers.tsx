@@ -7,17 +7,17 @@ const TopAchievers = () => {
     
       {
   id: 1,
-  name: 'Mustafa Ansari',
-  package: '20 LPA',
-  domain: 'Software Developer',
-  company: 'Increff',
-  position: 'Software Developer',
-  image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=400',
-  testimonial: 'Viziopath gave me the right exposure to industry-level projects and problem-solving skills. The continuous mentorship and real-time assignments boosted my confidence and helped me secure my placement at Increff as a Software Developer.',
-  achievements: [
-    'Built scalable full-stack web applications during training',
-    'Worked on problem-solving and algorithmic challenges',
-    'Secured placement as a Software Developer at Increff'
+name: 'Mustafa Ansari (20 LPA)',
+domain: 'Software Development',
+company: 'Increff',
+position: 'Software Developer',
+image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=400',
+testimonial: 'Viziopath gave me the right exposure to industry-level projects and problem-solving skills. The continuous mentorship and real-time assignments boosted my confidence and helped me secure my placement at Increff as a Software Developer.',
+achievements: [
+  'Built scalable full-stack web applications during training',
+  'Worked on problem-solving and algorithmic challenges',
+  'Secured placement as a Software Developer at Increff with a ₹20 LPA package'
+
   ],
   rating: 5,
   linkedin: 'https://www.linkedin.com/in/mustafa-ansari/',
@@ -26,21 +26,28 @@ const TopAchievers = () => {
 
     {
       id: 2,
-      name: 'Rahul Patel',
-      domain: 'Full Stack Development',
-      company: 'Microsoft',
-      position: 'Senior Software Engineer',
-      image: 'https://images.pexels.com/photos/3777946/pexels-photo-3777946.jpeg?auto=compress&cs=tinysrgb&w=400',
-      testimonial: 'The comprehensive training at Viziopath gave me the confidence to tackle complex projects. Now I lead a team at Microsoft.',
-      achievements: ['Architected 5 major systems', 'Mentor to 20+ developers', 'Microsoft MVP'],
-      rating: 5,
-      linkedin: '#',
-      github: '#'
+name: 'Ranjeet Kumar (7 LPA)',
+package: '₹7 LPA',
+domain: 'Full Stack Development',
+company: 'Anshu PVT. LTD.',
+position: 'Software Engineer',
+image: 'https://images.pexels.com/photos/3777946/pexels-photo-3777946.jpeg?auto=compress&cs=tinysrgb&w=400',
+testimonial: 'The comprehensive training at Viziopath gave me the confidence to tackle complex projects. Now I lead a team at Anshu PVT. LTD.',
+achievements: [
+  'Architected 5 major systems',
+  'Mentor to 20+ developers',
+  'Recognized as Microsoft MVP',
+  'Secured placement at Anshu PVT. LTD. with a ₹7 LPA package'
+],
+rating: 5,
+linkedin: '#',
+github: '#'
+
     },
     {
       id: 3,
       name: 'Sneha Gupta',
-      domain: 'Data Science',
+      domain: 'Solution Graph',
       company: 'Amazon',
       position: 'Principal Data Scientist',
       image: 'https://images.pexels.com/photos/3756681/pexels-photo-3756681.jpeg?auto=compress&cs=tinysrgb&w=400',
@@ -52,10 +59,10 @@ const TopAchievers = () => {
     },
     {
       id: 4,
-      name: 'Arjun Singh',
-      domain: 'Mobile Development',
-      company: 'Meta',
-      position: 'Mobile Architect',
+      name: 'Ajit Kumar Yadav',
+      domain: 'Operations Manager',
+      company: 'Aringo tech',
+      position: 'Operations Management',
       image: 'https://images.pexels.com/photos/3778212/pexels-photo-3778212.jpeg?auto=compress&cs=tinysrgb&w=400',
       testimonial: 'Viziopath provided the perfect blend of theory and practice. The mobile development track set me up for success at Meta.',
       achievements: ['Built apps with 10M+ users', 'Tech lead for 3 products', 'Mobile innovation award'],
@@ -120,7 +127,7 @@ const TopAchievers = () => {
   const stats = [
     { number: '1,35,000+', label: 'Top Tier Finishers' },
     { number: '65%', label: 'Placement Rate' },
-    { number: '₹4L+', label: 'Average Package' },
+    { number: '₹20 LPA', label: 'Dream Offer' },
     { number: '8+', label: 'Partner Companies' }
   ];
 

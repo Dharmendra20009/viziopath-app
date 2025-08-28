@@ -1,229 +1,320 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { X, Filter } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { Search, Briefcase, MapPin, Filter, ExternalLink } from "lucide-react";
 
-const Gallery = () => {
-  const [selectedFilter, setSelectedFilter] = useState('All');
-  const [selectedImage, setSelectedImage] = useState<any>(null);
+const JobPortal = () => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const filters = ['All', 'Events', 'Trainings', 'Intern Life', 'Speakers'];
+  const categories = ["All", "IT", "Marketing", "Finance", "Design", "HR"];
 
-  const images = [
+  // ✅ FIXED: Only ONE jobs array
+  const jobs = [
     {
       id: 1,
-      src: '/Gupta.JPG',
-      title: 'Business Analytics Workshop',
-      category: 'Trainings',
-      description: 'Students learning modern Business Analytics techniques'
+      title: "Software Engineering Intern",
+      company: "NVIDIA",
+      location: "Shangai",
+      category: "IT",
+      type: "Full-Time",
+      link: "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/Taiwan-Taipei/Software-Engineering-Intern---OpenBMC_JR1989739?source=jobboardlinkedin",
+      description: "Work on scalable web applications with React, Node.js, and cloud tech."
     },
     {
       id: 2,
-      src: '/event.jpg',
-      title: 'Our Event',
-      category: 'Events',
-      description: 'The official Event representing our brand values, mission, and vision.'
+      title: "Marketing Executive",
+      company: "Deloitte",
+      location: "Gurgaon, India",
+      category: "Marketing",
+      type: "Internship",
+      link: "https://naukri.com/marketing-job-link",
+      description: "Plan, strategize and execute brand awareness campaigns."
     },
     {
       id: 3,
-      src: 'tr.jpg',
-      title: 'Problem-Solving Ideathon 2025',
-      category: 'Events',
-      description: 'Presented an innovative AI solution with the help of Viziopath; industry experts shared insights on latest AI trends.'
+      title: "Financial Analyst",
+      company: "JP Morgan",
+      location: "Mumbai, India",
+      category: "Finance",
+      type: "Full-Time",
+      link: "https://naukri.com/finance-job-link",
+      description: "Analyze financial reports and assist in investment strategies."
     },
     {
       id: 4,
-      src: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Guest Speaker Session',
-      category: 'Speakers',
-      description: 'Tech industry leader sharing career insights'
+      title: "UI/UX Designer",
+      company: "Adobe",
+      location: "Remote",
+      category: "Design",
+      type: "Full-Time",
+      link: "https://naukri.com/design-job-link",
+      description: "Design modern and user-friendly interfaces for web & mobile apps."
     },
     {
       id: 5,
-      src: 'https://images.pexels.com/photos/3183197/pexels-photo-3183197.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Mobile App Development',
-      category: 'Trainings',
-      description: 'Hands-on mobile application development training'
+      title: "HR Manager",
+      company: "Infosys",
+      location: "Hyderabad, India",
+      category: "HR",
+      type: "Full-Time",
+      link: "https://naukri.com/hr-job-link",
+      description: "Lead HR operations and employee engagement initiatives."
     },
     {
       id: 6,
-      src: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Graduation Ceremony',
-      category: 'Events',
-      description: 'Celebrating successful completion of internship programs'
+      title: "Backend Engineer",
+      company: "Amazon",
+      location: "Chennai, India",
+      category: "IT",
+      type: "Full-Time",
+      link: "https://naukri.com/backend-job-link",
+      description: "Build scalable backend services with Java, Spring Boot, and AWS."
     },
     {
       id: 7,
-      src: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Code Review Session',
-      category: 'Intern Life',
-      description: 'Mentors guiding interns through code optimization'
+      title: "Digital Marketing Specialist",
+      company: "Google",
+      location: "Bangalore, India",
+      category: "Marketing",
+      type: "Full-Time",
+      link: "https://naukri.com/digital-marketing-job-link",
+      description: "Develop SEO, SEM and social media strategies for global campaigns."
     },
     {
       id: 8,
-      src: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Industry Expert Panel',
-      category: 'Speakers',
-      description: 'Panel discussion with leading technology professionals'
+      title: "Accounts Manager",
+      company: "KPMG",
+      location: "Delhi, India",
+      category: "Finance",
+      type: "Full-Time",
+      link: "https://naukri.com/accounts-job-link",
+      description: "Manage client accounts and financial reconciliations."
     },
     {
       id: 9,
-      src: 'https://images.pexels.com/photos/3184295/pexels-photo-3184295.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Data Science Bootcamp',
-      category: 'Trainings',
-      description: 'Intensive data science and analytics training program'
+      title: "Graphic Designer",
+      company: "Canva",
+      location: "Remote",
+      category: "Design",
+      type: "Internship",
+      link: "https://naukri.com/graphic-design-job-link",
+      description: "Create engaging graphics, illustrations, and marketing assets."
     },
     {
       id: 10,
-      src: 'https://images.pexels.com/photos/3184296/pexels-photo-3184296.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Networking Event',
-      category: 'Events',
-      description: 'Connecting interns with industry professionals'
+      title: "Talent Acquisition Specialist",
+      company: "Wipro",
+      location: "Pune, India",
+      category: "HR",
+      type: "Full-Time",
+      link: "https://naukri.com/talent-acquisition-job-link",
+      description: "Source, screen, and onboard top talent for multiple business units."
     },
     {
       id: 11,
-      src: 'https://images.pexels.com/photos/3184297/pexels-photo-3184297.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Project Showcase',
-      category: 'Intern Life',
-      description: 'Interns presenting their innovative project solutions'
+      title: "Data Scientist",
+      company: "IBM",
+      location: "Bangalore, India",
+      category: "IT",
+      type: "Full-Time",
+      link: "https://naukri.com/datascientist-job-link",
+      description: "Work on ML models and data pipelines for enterprise solutions."
     },
     {
       id: 12,
-      src: 'https://images.pexels.com/photos/3184298/pexels-photo-3184298.jpeg?auto=compress&cs=tinysrgb&w=800',
-      title: 'Tech Talk Series',
-      category: 'Speakers',
-      description: 'Weekly tech talks by industry veterans'
+      title: "Content Strategist",
+      company: "Zomato",
+      location: "Gurgaon, India",
+      category: "Marketing",
+      type: "Full-Time",
+      link: "https://naukri.com/content-job-link",
+      description: "Plan and execute digital content campaigns to increase user reach."
+    },
+    {
+      id: 13,
+      title: "Investment Banker",
+      company: "Goldman Sachs",
+      location: "Mumbai, India",
+      category: "Finance",
+      type: "Full-Time",
+      link: "https://naukri.com/investment-job-link",
+      description: "Manage corporate investment portfolios and risk analysis."
+    },
+    {
+      id: 14,
+      title: "Product Designer",
+      company: "Figma",
+      location: "Remote",
+      category: "Design",
+      type: "Full-Time",
+      link: "https://naukri.com/product-design-job-link",
+      description: "Collaborate with product teams to design user-friendly interfaces."
+    },
+    {
+      id: 15,
+      title: "HR Business Partner",
+      company: "Cognizant",
+      location: "Kolkata, India",
+      category: "HR",
+      type: "Full-Time",
+      link: "https://naukri.com/hr-business-job-link",
+      description: "Partner with leadership to align HR strategies with business goals."
+    },
+    {
+      id: 16,
+      title: "Cloud Engineer",
+      company: "Oracle",
+      location: "Hyderabad, India",
+      category: "IT",
+      type: "Full-Time",
+      link: "https://naukri.com/cloud-job-link",
+      description: "Deploy and manage cloud infrastructure using OCI and Kubernetes."
+    },
+    {
+      id: 17,
+      title: "SEO Analyst",
+      company: "Swiggy",
+      location: "Bangalore, India",
+      category: "Marketing",
+      type: "Full-Time",
+      link: "https://naukri.com/seo-job-link",
+      description: "Optimize website traffic and rankings using advanced SEO techniques."
+    },
+    {
+      id: 18,
+      title: "Finance Executive",
+      company: "EY",
+      location: "Delhi, India",
+      category: "Finance",
+      type: "Internship",
+      link: "https://naukri.com/finance-executive-job-link",
+      description: "Assist in audits, taxation, and financial reporting."
+    },
+    {
+      id: 19,
+      title: "Visual Designer",
+      company: "Dribbble",
+      location: "Remote",
+      category: "Design",
+      type: "Part-Time",
+      link: "https://naukri.com/visual-design-job-link",
+      description: "Create visual assets for web, mobile, and print media."
+    },
+    {
+      id: 20,
+      title: "Payroll Specialist",
+      company: "TCS",
+      location: "Bangalore, India",
+      category: "HR",
+      type: "Full-Time",
+      link: "https://naukri.com/payroll-job-link",
+      description: "Manage payroll operations and compliance across teams."
     }
+    // 👉 Add more jobs here (up to 30+)
   ];
 
-  const filteredImages = selectedFilter === 'All' 
-    ? images 
-    : images.filter(image => image.category === selectedFilter);
+  // Filtering jobs
+  const filteredJobs = jobs.filter((job) => {
+    const matchesCategory = selectedCategory === "All" || job.category === selectedCategory;
+    const matchesSearch =
+      job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      job.company.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
+      <section className="bg-gradient-to-r from-blue-800 to-indigo-700 text-white py-20">
+        <div className="max-w-6xl mx-auto text-center">
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center"
+            className="text-5xl font-bold mb-4"
           >
-            <h1 className="text-5xl font-bold mb-6">Gallery</h1>
-            <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              Explore moments from our training sessions, events, and the vibrant life of our intern community.
-            </p>
-          </motion.div>
+            Find Your Dream Job
+          </motion.h1>
+          <p className="text-xl text-blue-100">
+            Explore opportunities from top companies and apply instantly.
+          </p>
         </div>
       </section>
 
-      {/* Filter Section */}
-      <section className="py-8 bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-center">
-            <div className="flex items-center space-x-2 mr-4">
-              <Filter className="h-5 w-5 text-gray-600" />
-              <span className="text-gray-600 font-medium">Filter by:</span>
-            </div>
-            <div className="flex flex-wrap gap-2">
-              {filters.map((filter) => (
-                <button
-                  key={filter}
-                  onClick={() => setSelectedFilter(filter)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                    selectedFilter === filter
-                      ? 'bg-blue-600 text-white'
-                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                  }`}
-                >
-                  {filter}
-                </button>
-              ))}
-            </div>
+      {/* Search & Filter Section */}
+      <section className="py-8 bg-white shadow">
+        <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+          {/* Search Bar */}
+          <div className="flex items-center border rounded-lg px-3 py-2 w-full md:w-1/2">
+            <Search className="h-5 w-5 text-gray-500 mr-2" />
+            <input
+              type="text"
+              placeholder="Search jobs or companies..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full outline-none"
+            />
+          </div>
+
+          {/* Filter Buttons */}
+          <div className="flex items-center flex-wrap gap-2">
+            <Filter className="h-5 w-5 text-gray-600" />
+            {categories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                  selectedCategory === cat
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Gallery Grid */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            layout
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
-          >
-            {filteredImages.map((image, index) => (
-              <motion.div
-                key={image.id}
-                layout
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 }}
-                className="group cursor-pointer"
-                onClick={() => setSelectedImage(image)}
+      {/* Job Cards */}
+      <section className="py-12">
+        <div className="max-w-6xl mx-auto px-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {filteredJobs.map((job, index) => (
+            <motion.div
+              key={job.id}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white shadow-lg rounded-2xl p-6 flex flex-col justify-between hover:shadow-2xl transition-shadow"
+            >
+              <div>
+                <h3 className="text-xl font-bold text-gray-800 mb-2 flex items-center">
+                  <Briefcase className="h-5 w-5 text-blue-600 mr-2" />
+                  {job.title}
+                </h3>
+                <p className="text-gray-600 font-medium">{job.company}</p>
+                <p className="text-gray-500 text-sm flex items-center mt-2">
+                  <MapPin className="h-4 w-4 mr-1" /> {job.location}
+                </p>
+                <span className="inline-block mt-2 bg-blue-100 text-blue-800 px-2 py-1 text-xs rounded-full">
+                  {job.category} • {job.type}
+                </span>
+                <p className="mt-4 text-gray-700 text-sm">{job.description}</p>
+              </div>
+
+              <a
+                href={job.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center justify-center bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition"
               >
-                <div className="relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
-                  <img
-                    src={image.src}
-                    alt={image.title}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="absolute bottom-4 left-4 right-4 text-white">
-                      <h3 className="text-lg font-semibold mb-1">{image.title}</h3>
-                      <p className="text-sm opacity-90">{image.description}</p>
-                      <span className="inline-block bg-blue-600 text-xs px-2 py-1 rounded-full mt-2">
-                        {image.category}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                Apply Now <ExternalLink className="ml-2 h-4 w-4" />
+              </a>
+            </motion.div>
+          ))}
         </div>
       </section>
-
-      {/* Lightbox Modal */}
-      {selectedImage && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
-        >
-          <motion.div
-            initial={{ scale: 0.8 }}
-            animate={{ scale: 1 }}
-            exit={{ scale: 0.8 }}
-            className="relative max-w-4xl max-h-full"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
-            >
-              <X className="h-8 w-8" />
-            </button>
-            
-            <img
-              src={selectedImage.src}
-              alt={selectedImage.title}
-              className="max-w-full max-h-full object-contain rounded-lg"
-            />
-            
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent text-white p-6 rounded-b-lg">
-              <h3 className="text-2xl font-bold mb-2">{selectedImage.title}</h3>
-              <p className="text-lg opacity-90 mb-2">{selectedImage.description}</p>
-              <span className="inline-block bg-blue-600 text-sm px-3 py-1 rounded-full">
-                {selectedImage.category}
-              </span>
-            </div>
-          </motion.div>
-        </motion.div>
-      )}
     </div>
   );
 };
 
-export default Gallery;
+export default JobPortal;
