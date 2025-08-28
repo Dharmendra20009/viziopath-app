@@ -4,19 +4,26 @@ import { Award, Star, Linkedin, Github, ExternalLink } from 'lucide-react';
 
 const TopAchievers = () => {
   const achievers = [
-    {
-      id: 1,
-      name: 'Harshit Sharma',
-      domain: 'Artificial Intelligence',
-      company: 'Google',
-      position: 'AI Engineer',
-      image: 'https://images.pexels.com/photos/3785077/pexels-photo-3785077.jpeg?auto=compress&cs=tinysrgb&w=400',
-      testimonial: 'Viziopath transformed my understanding of AI. The mentorship and hands-on projects prepared me perfectly for my role at Google.',
-      achievements: ['Published 3 research papers', 'Led AI team of 12 members', 'Patent holder'],
-      rating: 5,
-      linkedin: '#',
-      github: '#'
-    },
+    
+      {
+  id: 1,
+  name: 'Mustafa Ansari',
+  package: '20 LPA',
+  domain: 'Software Developer',
+  company: 'Increff',
+  position: 'Software Developer',
+  image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=400',
+  testimonial: 'Viziopath gave me the right exposure to industry-level projects and problem-solving skills. The continuous mentorship and real-time assignments boosted my confidence and helped me secure my placement at Increff as a Software Developer.',
+  achievements: [
+    'Built scalable full-stack web applications during training',
+    'Worked on problem-solving and algorithmic challenges',
+    'Secured placement as a Software Developer at Increff'
+  ],
+  rating: 5,
+  linkedin: 'https://www.linkedin.com/in/mustafa-ansari/',
+  github: 'https://github.com/mustafa-ansari'
+},
+
     {
       id: 2,
       name: 'Rahul Patel',
