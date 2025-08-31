@@ -17,38 +17,38 @@ const JobPortal = () => {
       location: "Shangai",
       category: "IT",
       type: "Full-Time",
-      link: "https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite/job/Taiwan-Taipei/Software-Engineering-Intern---OpenBMC_JR1989739?source=jobboardlinkedin",
+      link: "https://www.citadel.com/careers/details/software-engineer-intern-asia/",
       description: "Work on scalable web applications with React, Node.js, and cloud tech."
     },
     {
       id: 2,
-      title: "Marketing Executive",
-      company: "Deloitte",
-      location: "Gurgaon, India",
-      category: "Marketing",
+      title: "Site Reliability Engineer - Intern",
+      company: "Citadel",
+      location: "Singapore",
+      category: "IT",
       type: "Internship",
       link: "https://naukri.com/marketing-job-link",
-      description: "Plan, strategize and execute brand awareness campaigns."
+      description: "Support system reliability by assisting with monitoring, automation, and troubleshooting while learning from senior engineers."
     },
     {
       id: 3,
-      title: "Financial Analyst",
+      title: "Financial Analyst - Intern",
       company: "JP Morgan",
       location: "Mumbai, India",
       category: "Finance",
-      type: "Full-Time",
+      type: "Internship",
       link: "https://naukri.com/finance-job-link",
       description: "Analyze financial reports and assist in investment strategies."
     },
     {
       id: 4,
-      title: "UI/UX Designer",
-      company: "Adobe",
+      title: "Engineering Intern",
+      company: "Appwrite",
       location: "Remote",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://naukri.com/design-job-link",
-      description: "Design modern and user-friendly interfaces for web & mobile apps."
+      category: "IT",
+      type: "Internship",
+      link: "https://www.appwrite.careers/engineering-internship/en",
+      description: "Contribute to open-source projects, assist in developing scalable web and mobile solutions, and gain hands-on experience in modern software engineering practices."
     },
     {
       id: 5,
@@ -62,22 +62,22 @@ const JobPortal = () => {
     },
     {
       id: 6,
-      title: "Backend Engineer",
-      company: "Amazon",
+      title: "Frontend Engineer",
+      company: "Atlan",
       location: "Chennai, India",
       category: "IT",
       type: "Full-Time",
-      link: "https://naukri.com/backend-job-link",
-      description: "Build scalable backend services with Java, Spring Boot, and AWS."
+      link: "https://jobs.ashbyhq.com/atlan/24de3528-5486-421b-9282-82260b83e033/application",
+      description: "Build scalable frontend applications with React, Vue.js, and modern web technologies."
     },
     {
       id: 7,
       title: "Digital Marketing Specialist",
-      company: "Google",
-      location: "Bangalore, India",
+      company: "4BELL TECHNOLOGY",
+      location: "Noida, India",
       category: "Marketing",
       type: "Full-Time",
-      link: "https://naukri.com/digital-marketing-job-link",
+      link: "https://www.shine.com/jobs/digital-marketing/4bell-technology/17558788",
       description: "Develop SEO, SEM and social media strategies for global campaigns."
     },
     {
@@ -93,41 +93,41 @@ const JobPortal = () => {
     {
       id: 9,
       title: "Graphic Designer",
-      company: "Canva",
+      company: "Atlan",
       location: "Remote",
       category: "Design",
       type: "Internship",
-      link: "https://naukri.com/graphic-design-job-link",
+      link: "https://jobs.ashbyhq.com/atlan/24de3528-5486-421b-9282-82260b83e033/application",
       description: "Create engaging graphics, illustrations, and marketing assets."
     },
     {
       id: 10,
-      title: "Talent Acquisition Specialist",
-      company: "Wipro",
-      location: "Pune, India",
-      category: "HR",
+      title: "Software Engineer Intern",
+      company: "IBM",
+      location: "Hyderabad, India",
+      category: "IT",
       type: "Full-Time",
-      link: "https://naukri.com/talent-acquisition-job-link",
-      description: "Source, screen, and onboard top talent for multiple business units."
+      link: "https://ibmglobal.avature.net/en_US/careers/JobDetail?jobId=48508",
+      description: "Work on real-world software projects, assist in coding, debugging, and testing applications, and learn best practices in software development under the guidance of IBM engineers."
     },
     {
       id: 11,
-      title: "Data Scientist",
-      company: "IBM",
-      location: "Bangalore, India",
+      title: "Product Management Intern",
+      company: "PW(Physics Wallah)",
+      location: "Noida, India",
       category: "IT",
       type: "Full-Time",
-      link: "https://naukri.com/datascientist-job-link",
-      description: "Work on ML models and data pipelines for enterprise solutions."
+      link: "https://docs.google.com/forms/d/e/1FAIpQLSdowsqFGCmsqybe6aT-qcPGZdT_LnzDzirzMPHwt5O8oEDD4A/viewform",
+      description: "Assist in product research, feature planning, and execution. Collaborate with cross-functional teams to gather insights, define requirements, and improve user experience."
     },
     {
       id: 12,
       title: "Content Strategist",
-      company: "Zomato",
-      location: "Gurgaon, India",
+      company: "Desnor Destination Pvt. Ltd.",
+      location: "Delhi, India",
       category: "Marketing",
       type: "Full-Time",
-      link: "https://naukri.com/content-job-link",
+      link: "https://www.shine.com/jobs/content-writer-work-from-home-part-time/desnor-destination-pvt-ltd/17615810",
       description: "Plan and execute digital content campaigns to increase user reach."
     },
     {
@@ -162,22 +162,22 @@ const JobPortal = () => {
     },
     {
       id: 16,
-      title: "Cloud Engineer",
-      company: "Oracle",
-      location: "Hyderabad, India",
+      title: "Software Engineer",
+      company: "Cisco",
+      location: "Bangalore, India",
       category: "IT",
       type: "Full-Time",
-      link: "https://naukri.com/cloud-job-link",
-      description: "Deploy and manage cloud infrastructure using OCI and Kubernetes."
+      link: "https://jobs.cisco.com/jobs/ProjectDetail/Software-Engineer-Network-Embedded-Application-Development-Intern-India-UHR/1421663",
+      description: "Develop and optimize software solutions while gaining hands-on experience in cloud, networking, and application development."
     },
     {
       id: 17,
       title: "SEO Analyst",
-      company: "Swiggy",
-      location: "Bangalore, India",
+      company: "Kashni",
+      location: "Delhi, India",
       category: "Marketing",
       type: "Full-Time",
-      link: "https://naukri.com/seo-job-link",
+      link: "https://www.shine.com/jobs/digital-marketing-internship-in-delhi/kashni/17407688",
       description: "Optimize website traffic and rankings using advanced SEO techniques."
     },
     {
