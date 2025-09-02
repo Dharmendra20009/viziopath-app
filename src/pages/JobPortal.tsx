@@ -6,10 +6,74 @@ const JobPortal = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categories = ["All", "IT", "Marketing", "Finance", "Design", "HR"];
+  // ✅ Added Viziopath Intern as a category
+  const categories = ["All", "IT", "Viziopath Intern", "Marketing", "Finance", "Design", "HR"];
 
-  // ✅ FIXED: Only ONE jobs array
+  // ✅ Jobs & Internships List
   const jobs = [
+    // 🌐 Viziopath Internships
+    {
+      id: 101,
+      title: "Digital Marketing Intern",
+      company: "Viziopath",
+      location: "Remote",
+      category: "Viziopath Intern",
+      type: "Internship",
+      link: "https://viziopath.com/apply/digital-marketing",
+      description: "Work on SEO, social media management, and content creation to build digital campaigns for global clients."
+    },
+    {
+      id: 103,
+      title: "Engineering Intern",
+      company: "Viziopath",
+      location: "Remote",
+      category: "Viziopath Intern",
+      type: "Internship",
+      link: "https://viziopath.com/apply/engineering-intern",
+      description: "Gain hands-on experience across Software, Mechanical, Electrical, Civil, and Data Engineering by contributing to real-world projects in design, development, testing, and research. Work with cross-functional teams, learn industry tools, and build problem-solving skills through practical innovation."
+    },
+    {
+      id: 102,
+      title: "Business Analyst Intern",
+      company: "Viziopath",
+      location: "Remote / Gurgaon, India",
+      category: "Viziopath Intern",
+      type: "Internship",
+      link: "https://viziopath.com/apply/business-analyst",
+      description: "Assist in market research, competitor analysis, and preparing client presentations with actionable insights."
+    },
+    {
+      id: 103,
+      title: "Graphic Design Intern",
+      company: "Viziopath",
+      location: "Remote",
+      category: "Viziopath Intern",
+      type: "Internship",
+      link: "https://viziopath.com/apply/graphic-design",
+      description: "Design creative posters, social media graphics, and branding materials for ongoing campaigns."
+    },
+    {
+      id: 103,
+      title: "HR Intern",
+      company: "Viziopath",
+      location: "Remote",
+      category: "Viziopath Intern",
+      type: "Internship",
+      link: "https://viziopath.com/apply/hr-intern",
+      description: "Assist in recruitment, employee engagement, and HR policy implementation."
+    },
+    {
+      id: 104,
+      title: "Finance Intern",
+      company: "Viziopath",
+      location: "Remote",
+      category: "Viziopath Intern",
+      type: "Internship",
+      link: "https://viziopath.com/apply/finance-intern",
+      description: "Support financial analysis, reporting, and client onboarding documentation."
+    },
+
+    // 🔹 Existing Jobs (your previous code)
     {
       id: 1,
       title: "Software Engineering Intern",
@@ -210,10 +274,9 @@ const JobPortal = () => {
       link: "https://naukri.com/payroll-job-link",
       description: "Manage payroll operations and compliance across teams."
     }
-    // 👉 Add more jobs here (up to 30+)
   ];
 
-  // Filtering jobs
+  // ✅ Filtering jobs
   const filteredJobs = jobs.filter((job) => {
     const matchesCategory = selectedCategory === "All" || job.category === selectedCategory;
     const matchesSearch =
@@ -232,10 +295,10 @@ const JobPortal = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-5xl font-bold mb-4"
           >
-            Find Your Dream Job
+            Explore Internship & Job Opportunities
           </motion.h1>
           <p className="text-xl text-blue-100">
-            Explore opportunities from top companies and apply instantly.
+            Apply for Viziopath Internships or find jobs from top global companies.
           </p>
         </div>
       </section>
