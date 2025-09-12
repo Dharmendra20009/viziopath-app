@@ -50,11 +50,17 @@ const MOUs = () => {
 
   const industryPartners = [
     {
-      name: 'ZARZO',
+      name: 'IBM',
       type: 'Industry Partner',
-      description: 'Providing real-world project opportunities and mentorship for interns.',
-      focus: 'Enterprise Solutions'
+      description: 'A global technology and consulting company providing expertise in cloud computing, artificial intelligence, and enterprise systems.',
+      focus: 'Hybrid Cloud, AI, and Enterprise Solutions'
     },
+    {
+  "name": "Increff",
+  "type": "Industry Partner",
+  "description": "A retail tech company offering collaborative training programs, supply chain expertise, and direct recruitment opportunities.",
+  "focus": "Retail Tech, Supply Chain Optimization, and Digital Transformation"
+},
     {
       name: 'CAREERHUBS',
       type: 'Industry Partner', 
