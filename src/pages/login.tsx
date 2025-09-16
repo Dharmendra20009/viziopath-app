@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { motion } from 'framer-motion';
-import { FaFacebook, FaGithub, FaLinkedin } from 'react-icons/fa';
-import axios from 'axios';
+// Removed unused social icon imports
+import { apiRequest } from '../utils/api';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -18,7 +18,10 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      await axios.post('http://localhost:5000/api/auth/login', { email, password });
+      await apiRequest('/api/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password })
+      });
       setSuccess('Login successful!');
       setEmail('');
       setPassword('');
@@ -39,10 +42,7 @@ const Login = () => {
     setError('Google login failed. Please try again.');
   };
 
-  const handleSocialLogin = (provider: string) => {
-    setError('');
-    setSuccess(`Logging in with ${provider}...`);
-  };
+  // Social logins can be wired later via backend OAuth endpoints
 
   return (
     <div className="min-h-screen flex flex-col">

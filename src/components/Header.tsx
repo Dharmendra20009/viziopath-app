@@ -11,8 +11,8 @@ const Header = () => {
     { name: 'MOUs & Collabs', href: '/mous' },
     { name: 'Job Portal', href: '/jobportal' },
     { name: 'Top Achievers', href: '/top-achievers' },
-    { name: 'Speakers & Trainings', href: '/speakers' },
-    { name: 'Services', href: '/services' },
+    { name: 'Courses & Trainings', href: '/speakers' },
+    { name: 'Resume Builder', href: '/services' },
     { name: 'Contact Us', href: '/contact' },
   ];
 

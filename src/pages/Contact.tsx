@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, MessageSquare, Send } from 'lucide-react';
-import axios from 'axios';
+import { apiRequest } from '../utils/api';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -23,7 +23,19 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('/api/contact', formData);
+      // Try primary route
+      try {
+        await apiRequest('/api/contact', {
+          method: 'POST',
+          body: JSON.stringify(formData),
+        });
+      } catch (primaryErr) {
+        // Fallback: some backends expose the route without the /api prefix
+        await apiRequest('/contact', {
+          method: 'POST',
+          body: JSON.stringify(formData),
+        });
+      }
       alert('Your message has been sent successfully!');
       setFormData({
         name: '',
@@ -33,7 +45,9 @@ const Contact = () => {
         message: ''
       });
     } catch (err) {
-      alert('Failed to send message. Please try again.');
+      const message = (err as any)?.message || 'Failed to send message. Please try again.';
+      console.error('Contact submit failed:', err);
+      alert(message);
     }
   };
 

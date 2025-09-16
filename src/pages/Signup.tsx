@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 import { motion } from "framer-motion";
 import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
-import axios from "axios";
+import { apiRequest } from "../utils/api";
 
 const Signup: React.FC = () => {
   const [name, setName] = useState("");
@@ -20,10 +20,9 @@ const Signup: React.FC = () => {
     setIsLoading(true);
 
     try {
-      await axios.post("http://localhost:5000/api/auth/register", {
-        name,
-        email,
-        password,
+      await apiRequest("/api/auth/register", {
+        method: "POST",
+        body: JSON.stringify({ name, email, password })
       });
       setSuccess("Signup successful! You can now log in.");
       setName("");

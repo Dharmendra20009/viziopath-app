@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import { Search, Briefcase, MapPin, Filter, ExternalLink } from "lucide-react";
+import { apiRequest } from "../utils/api";
 
 const JobPortal = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -9,8 +10,24 @@ const JobPortal = () => {
   // ✅ Added Viziopath Intern and Management as categories
   const categories = ["All", "IT", "Viziopath Intern", "Marketing", "Finance", "Design", "HR", "Management"];
 
-  // ✅ Jobs & Internships List
-  const jobs = [
+  // ✅ Job type from backend
+  type Job = {
+    id: number;
+    title: string;
+    company: string;
+    location: string;
+    category: string;
+    type: string;
+    link: string;
+    description: string;
+  };
+
+  const [apiJobs, setApiJobs] = useState<Job[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // ✅ Jobs & Internships List (fallback if API is unavailable)
+  const fallbackJobs: Job[] = [
     // 🌐 Viziopath Internships
     {
       id: 101,
@@ -1188,7 +1205,49 @@ const JobPortal = () => {
     }
   ];
 
-  // ✅ Filtering jobs
+  // ✅ Fetch jobs from backend (supports server-side filtering if available)
+  useEffect(() => {
+    let isCancelled = false;
+
+    async function fetchJobs() {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams();
+        if (selectedCategory !== "All") params.set("category", selectedCategory);
+        if (searchTerm.trim()) params.set("q", searchTerm.trim());
+
+        const endpointWithFilters = `/jobs${params.toString() ? `?${params.toString()}` : ""}`;
+        let data: Job[] | null = null;
+        try {
+          data = await apiRequest<Job[]>(endpointWithFilters);
+        } catch (_) {
+          data = await apiRequest<Job[]>("/jobs");
+        }
+
+        if (!isCancelled && Array.isArray(data)) {
+          setApiJobs(data);
+        }
+      } catch (e: any) {
+        if (!isCancelled) {
+          setError(e?.message || "Failed to load jobs from server");
+          setApiJobs([]);
+        }
+      } finally {
+        if (!isCancelled) setIsLoading(false);
+      }
+    }
+
+    fetchJobs();
+    return () => {
+      isCancelled = true;
+    };
+  }, [searchTerm, selectedCategory]);
+
+  // ✅ Choose data source (API first, fallback otherwise)
+  const jobs: Job[] = useMemo(() => (apiJobs && apiJobs.length ? apiJobs : fallbackJobs), [apiJobs, fallbackJobs]);
+
+  // ✅ Client-side filtering (works for both API and fallback data)
   const filteredJobs = jobs.filter((job) => {
     const matchesCategory = selectedCategory === "All" || job.category === selectedCategory;
     const matchesSearch =
@@ -1250,10 +1309,21 @@ const JobPortal = () => {
         </div>
       </section>
 
+      {/* Messages */}
+      {error && (
+        <div className="max-w-6xl mx-auto px-4 mt-6">
+          <div className="rounded-lg border border-red-200 bg-red-50 text-red-700 p-4 text-sm">{error}</div>
+        </div>
+      )}
+
       {/* Job Cards */}
       <section className="py-12">
         <div className="max-w-6xl mx-auto px-4 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {filteredJobs.map((job, index) => (
+          {isLoading && filteredJobs.length === 0 ? (
+            <div className="col-span-full text-center text-gray-600">Loading jobs...</div>
+          ) : filteredJobs.length === 0 ? (
+            <div className="col-span-full text-center text-gray-600">No jobs found.</div>
+          ) : filteredJobs.map((job, index) => (
             <motion.div
               key={job.id}
               initial={{ opacity: 0, y: 40 }}

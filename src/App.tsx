@@ -8,8 +8,8 @@ import About from './pages/About';
 import MOUs from './pages/MOUs';
 import JobPortal from './pages/JobPortal';
 import TopAchievers from './pages/TopAchievers';
-import Speakers from './pages/Speakers';
-import Services from './pages/Services';
+import Courses from './pages/Courses';
+import ResumeBuilder from './pages/ResumeBuilder';
 import Apply from './pages/Apply';
 import Contact from './pages/Contact';
 import VideoPage from './pages/VideoPage';
@@ -29,8 +29,8 @@ function App() {
             <Route path="/mous" element={<MOUs />} />
             <Route path="/jobportal" element={<JobPortal />} />
             <Route path="/top-achievers" element={<TopAchievers />} />
-            <Route path="/speakers" element={<Speakers />} />
-            <Route path="/services" element={<Services />} />
+            <Route path="/speakers" element={<Courses />} />
+            <Route path="/services" element={<ResumeBuilder />} />
             <Route path="/payment" element={<Payment />} />
             <Route path="/video" element={<VideoPage />} />
             <Route path="/apply" element={<Apply />} />
