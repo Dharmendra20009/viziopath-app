@@ -285,10 +285,10 @@ const JobPortal = () => {
       id: 20,
       title: "Payroll Specialist",
       company: "TCS",
-      location: "Bangalore, India",
+      location: "Pan India",
       category: "HR",
       type: "Full-Time",
-      link: "https://naukri.com/payroll-job-link",
+      link: "https://on.tcs.com/4ghJTtv",
       description: "Manage payroll operations and compliance across teams."
     },
 
