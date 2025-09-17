@@ -67,9 +67,15 @@ const ResumeBuilder: React.FC = () => {
                   <a href="https://www.careerhubs.info/resume-form" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl px-6 py-4 text-base font-semibold text-indigo-700 ring-2 ring-inset ring-indigo-200 transition-colors hover:bg-indigo-50 sm:text-lg">
                     Fill Resume Form
                   </a>
-                  <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGE3mcREhM0VatrbUXHupROarHAPa7Pp6YO3hXCHUPuoeGpQ/viewform?usp=header" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl bg-purple-600 px-6 py-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-purple-500 sm:text-lg">
-                    Order Your Premium Resume Today
-                  </a>
+                  <div className="flex flex-col items-center">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGE3mcREhM0VatrbUXHupROarHAPa7Pp6YO3hXCHUPuoeGpQ/viewform?usp=header" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl bg-purple-600 px-6 py-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-purple-500 sm:text-lg">
+                      Order Your Premium Resume
+                    </a>
+                    <div className="mt-2 text-xs sm:text-sm text-gray-700">
+                      <span className="line-through text-gray-400 mr-2">₹2000</span>
+                      <span className="text-purple-700 font-semibold">Today ₹349</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -93,9 +99,15 @@ const ResumeBuilder: React.FC = () => {
           <a href="https://www.careerhubs.info/resume-form" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-semibold text-indigo-600 ring-1 ring-inset ring-indigo-200 transition-colors hover:bg-indigo-50">
             Fill Resume Form
           </a>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGE3mcREhM0VatrbUXHupROarHAPa7Pp6YO3hXCHUPuoeGpQ/viewform?usp=header" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-lg bg-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-purple-500">
-            Order Your Premium Resume
-          </a>
+          <div className="flex flex-col items-center">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGE3mcREhM0VatrbUXHupROarHAPa7Pp6YO3hXCHUPuoeGpQ/viewform?usp=header" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-lg bg-purple-600 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-purple-500">
+              Order Your Premium Resume
+            </a>
+            <div className="mt-1 text-xs text-gray-700">
+              <span className="line-through text-gray-400 mr-2">₹2000</span>
+              <span className="text-purple-700 font-semibold">For Today ₹349</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
