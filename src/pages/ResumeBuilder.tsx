@@ -82,6 +82,42 @@ const ResumeBuilder: React.FC = () => {
           </div>
         </div>
 
+        {/* Sample Resumes just below the hero card */}
+         <div className="mx-auto max-w-7xl mt-12 sm:mt-16">
+           {/** Ensure images resolve under correct base (e.g., when deployed under subpath) */}
+           {(() => null)()}
+          <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Sample Resumes</h2>
+          <p className="mt-2 text-sm text-gray-600">Explore a few example templates. Click any image to view full size.</p>
+          <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {(() => {
+              const base = import.meta.env.BASE_URL || '/';
+              const samples = [
+                {src:`${base}S1.jpg`,alt:'Professional Resume Sample 1'},
+                {src:`${base}S2.jpg`,alt:'Professional Resume Sample 2'},
+                {src:`${base}S3.jpg`,alt:'Professional Resume Sample 3'},
+                {src:`${base}S4.jpg`,alt:'Professional Resume Sample 4'},
+                {src:`${base}S5.jpg`,alt:'Professional Resume Sample 5'},
+                {src:`${base}S6.jpg`,alt:'Professional Resume Sample 6'},
+                {src:`${base}S7.jpg`,alt:'Professional Resume Sample 7'},
+              ];
+              return samples.map((img) => (
+                <a key={img.src} href={img.src} target="_blank" rel="noopener noreferrer" className="group block rounded-2xl overflow-hidden border border-gray-200 shadow-sm hover:shadow-md transition">
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    className="w-full h-80 sm:h-96 lg:h-[520px] object-contain bg-gray-50 group-hover:scale-[1.01] transition-transform"
+                    loading="lazy"
+                  />
+                  <div className="px-4 py-3 bg-white">
+                    <p className="text-sm font-medium text-gray-900">{img.alt}</p>
+                    <p className="text-xs text-gray-500">ATS-friendly, clean and readable layout</p>
+                  </div>
+                </a>
+              ));
+            })()}
+          </div>
+        </div>
+
         <div className="mx-auto max-w-7xl mt-12 sm:mt-16">
           <h2 className="text-2xl font-bold tracking-tight text-gray-900 sm:text-3xl">Key Features</h2>
           <FeatureGrid items={resumeFeatures} />
