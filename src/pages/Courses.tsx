@@ -9,79 +9,46 @@ const Courses = () => {
   const isPaying = false;
   const [playingProgramId, setPlayingProgramId] = useState<string | null>(null);
 
-  const shortPrograms = [
-    { id: 'excel', name: 'MS Excel', originalPrice: 399, finalPrice: 199, discount: 50, image: 'https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master Excel formulas, pivot tables, and data analysis techniques', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
-    { id: 'word', name: 'MS Word', originalPrice: 399, finalPrice: 199, discount: 50, image: 'https://images.pexels.com/photos/3184339/pexels-photo-3184339.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn advanced document formatting and professional writing skills', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
-    { id: 'ppt', name: 'MS PowerPoint', originalPrice: 399, finalPrice: 199, discount: 50, image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Create stunning presentations with advanced design techniques', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
-    { id: 'pbi', name: 'Power BI', originalPrice: 799, finalPrice: 389, discount: 51, image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Transform data into interactive visualizations and reports', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+  // B.Tech (Engineering Students) Courses
+  const btechCourses = [
+    { id: 'ai-ml', name: 'Artificial Intelligence & Machine Learning', originalPrice: 2999, finalPrice: 1499, discount: 50, image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master AI algorithms, neural networks, and machine learning models', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'data-science', name: 'Data Science & Big Data Analytics', originalPrice: 2799, finalPrice: 1399, discount: 50, image: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn data analysis, visualization, and big data processing techniques', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'cybersecurity', name: 'Cybersecurity & Ethical Hacking', originalPrice: 2599, finalPrice: 1299, discount: 50, image: 'https://images.pexels.com/photos/60504/security-protection-anti-virus-software-60504.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Protect systems and networks from cyber threats and vulnerabilities', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'cloud-computing', name: 'Cloud Computing (AWS, Azure, Google Cloud)', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master cloud platforms and deployment strategies', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'fullstack', name: 'Full-Stack Development (MERN, MEAN, Python-Django)', originalPrice: 2199, finalPrice: 1099, discount: 50, image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Build complete web applications with modern tech stacks', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'iot', name: 'Internet of Things (IoT) & Embedded Systems', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Design and develop connected devices and smart systems', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'blockchain', name: 'Blockchain Technology & Web3', originalPrice: 2199, finalPrice: 1099, discount: 50, image: 'https://images.pexels.com/photos/6801874/pexels-photo-6801874.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn decentralized applications and cryptocurrency development', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'robotics', name: 'Robotics & Automation (RPA, Industrial AI)', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Build intelligent robots and automate business processes', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'arvr', name: 'AR/VR & Metaverse Development', originalPrice: 2599, finalPrice: 1299, discount: 50, image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Create immersive experiences and virtual worlds', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'devops', name: 'DevOps & Software Testing Automation', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Streamline development workflows and automate testing', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
   ];
 
-  const bcaPrograms = [
-    { id: 'web', name: 'Web Development', originalPrice: 1599, finalPrice: 799, discount: 50, image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Build modern, responsive websites with latest technologies', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
-    { id: 'py', name: 'Python Programming', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/3184357/pexels-photo-3184357.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn Python fundamentals and advanced programming concepts', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+  // BCA (Computer Applications Students) Courses
+  const bcaCourses = [
+    { id: 'mobile-dev', name: 'Mobile App Development (Flutter, React Native, Kotlin, Swift)', originalPrice: 2199, finalPrice: 1099, discount: 50, image: 'https://images.pexels.com/photos/1181675/pexels-photo-1181675.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Build cross-platform mobile applications for iOS and Android', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'ui-ux', name: 'UI/UX Designing & Product Design', originalPrice: 1799, finalPrice: 899, discount: 50, image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Design beautiful and user-friendly interfaces and experiences', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'game-dev', name: 'Game Development (Unity, Unreal Engine)', originalPrice: 2399, finalPrice: 1199, discount: 50, image: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Create engaging games using industry-standard engines', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'database', name: 'Database Management (SQL, NoSQL, MongoDB)', originalPrice: 1599, finalPrice: 799, discount: 50, image: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master database design, optimization, and management', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'python-advanced', name: 'Python & Advanced Programming', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Advanced Python programming and software development', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'data-analytics', name: 'Data Analytics & Business Intelligence Tools (Power BI, Tableau)', originalPrice: 1799, finalPrice: 899, discount: 50, image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Transform data into actionable business insights', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'cloud-virtualization', name: 'Cloud Computing & Virtualization', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Learn cloud platforms and virtualization technologies', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'digital-marketing', name: 'Digital Marketing for IT Products', originalPrice: 1399, finalPrice: 699, discount: 50, image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Market and promote technology products effectively', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'ai-chatbot', name: 'AI Chatbot & Automation Development', originalPrice: 1799, finalPrice: 899, discount: 50, image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Build intelligent chatbots and automation solutions', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'project-management', name: 'Software Project Management (Agile, Scrum, Jira)', originalPrice: 1599, finalPrice: 799, discount: 50, image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Manage software projects using industry best practices', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
   ];
 
-  // 55+ course catalog (tags)
-  const allCourses: string[] = [
-    'Data Structures & Algorithms (DSA)',
-    'Data Analyst',
-    'Data Science',
-    'Python Programming',
-    'SQL',
-    'Excel Essentials',
-    'Advanced Excel',
-    'Power BI',
-    'Tableau',
-    'Statistics for Data Science',
-    'Machine Learning',
-    'Deep Learning',
-    'NLP Basics',
-    'Computer Vision',
-    'Big Data Fundamentals',
-    'Apache Spark',
-    'Hadoop',
-    'ETL & Data Warehousing',
-    'Data Visualization',
-    'Business Analytics',
-    'Product Analytics',
-    'A/B Testing',
-    'MongoDB',
-    'MySQL',
-    'PostgreSQL',
-    'NoSQL Basics',
-    'R Programming',
-    'Pandas & NumPy',
-    'Scikit-learn',
-    'TensorFlow/Keras',
-    'Git & GitHub',
-    'Linux for Developers',
-    'Web Development Basics',
-    'HTML & CSS',
-    'JavaScript',
-    'TypeScript',
-    'React Fundamentals',
-    'Node.js & Express',
-    'REST APIs',
-    'Next.js',
-    'Docker Basics',
-    'Kubernetes Intro',
-    'Cloud Fundamentals (AWS)',
-    'DevOps Foundations',
-    'Microservices Basics',
-    'System Design Basics',
-    'Cybersecurity Fundamentals',
-    'Networking Basics',
-    'OOP in Java',
-    'C++ Programming',
-    'C Programming',
-    'Android (Kotlin) Basics',
-    'iOS (Swift) Basics',
-    'UI/UX Fundamentals',
-    'Figma for Beginners',
-    'Agile & Scrum',
-    'Project Management Basics',
-    'Soft Skills for Tech',
-    'Interview Preparation',
+  // MBA/BBA (Management Students) Courses
+  const mbaCourses = [
+    { id: 'digital-marketing-mba', name: 'Digital Marketing & Growth Hacking', originalPrice: 1799, finalPrice: 899, discount: 50, image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Master digital marketing strategies and growth hacking techniques', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'business-analytics', name: 'Business Analytics & Data-Driven Decision Making', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Make informed business decisions using data analytics', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'financial-modeling', name: 'Financial Modeling & Investment Banking', originalPrice: 2199, finalPrice: 1099, discount: 50, image: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Build financial models and understand investment strategies', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'entrepreneurship', name: 'Entrepreneurship & Startup Management', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Launch and manage successful startups and businesses', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'hr-analytics', name: 'Human Resource Analytics & People Management', originalPrice: 1799, finalPrice: 899, discount: 50, image: 'https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Manage people and analyze HR data for better decisions', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'international-business', name: 'International Business & Global Trade', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/1181671/pexels-photo-1181671.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Navigate global markets and international trade', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'operations-supply', name: 'Operations & Supply Chain Management (with ERP tools like SAP)', originalPrice: 2199, finalPrice: 1099, discount: 50, image: 'https://images.pexels.com/photos/163100/circuit-circuit-board-resistor-computer-163100.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Optimize operations and supply chains using ERP systems', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'ai-business', name: 'AI in Business Strategy & Decision Making', originalPrice: 1999, finalPrice: 999, discount: 50, image: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Integrate AI into business strategies and decision processes', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'product-management', name: 'Product Management & Design Thinking', originalPrice: 1799, finalPrice: 899, discount: 50, image: 'https://images.pexels.com/photos/196644/pexels-photo-196644.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Lead product development using design thinking principles', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
+    { id: 'leadership', name: 'Leadership, Communication & Negotiation Skills', originalPrice: 1599, finalPrice: 799, discount: 50, image: 'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800', description: 'Develop essential leadership and communication skills', video: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4' },
   ];
 
   const upcomingEvents = [
@@ -122,16 +89,16 @@ const Courses = () => {
 
       
 
-      {/* Courses */}
+      {/* B.Tech (Engineering Students) Courses */}
       <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">Courses</h2>
-            <p className="text-gray-600">Intensive workshops to quickly upskill</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-3">For B.Tech (Engineering Students)</h2>
+            <p className="text-gray-600">👉 Focus: Technology, Innovation, Future Skills</p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {shortPrograms.map((p, idx) => (
+            {btechCourses.map((p, idx) => (
               <motion.div key={p.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (idx % 6) * 0.05 }} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
                 <div className="md:flex">
                   <div className="md:w-1/2 relative">
@@ -148,7 +115,7 @@ const Courses = () => {
                   </div>
                   <div className="p-6 md:w-1/2">
                     <div className="flex items-center mb-2">
-                      <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">Course</span>
+                      <span className="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">B.Tech</span>
                       <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">{p.discount}% off</div>
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">{p.name}</h3>
@@ -170,16 +137,16 @@ const Courses = () => {
         </div>
       </section>
 
-      {/* Courses for Tech Students */}
+      {/* BCA (Computer Applications Students) Courses */}
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-3">Courses for Tech Students</h2>
-            <p className="text-gray-600">Curated courses for Tech students</p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-3">💻 For BCA (Computer Applications Students)</h2>
+            <p className="text-gray-600">👉 Focus: Software Development + IT + Product Building</p>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {bcaPrograms.map((p, idx) => (
+            {bcaCourses.map((p, idx) => (
               <motion.div key={p.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (idx % 6) * 0.05 }} className="bg-gray-50 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
                 <div className="md:flex">
                   <div className="md:w-1/2 relative">
@@ -196,7 +163,7 @@ const Courses = () => {
                   </div>
                   <div className="p-6 md:w-1/2">
                     <div className="flex items-center mb-2">
-                      <span className="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">Tech Programs</span>
+                      <span className="bg-teal-500 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">BCA</span>
                       <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">{p.discount}% off</div>
                     </div>
                     <h3 className="text-xl font-bold text-gray-900 mb-2">{p.name}</h3>
@@ -218,55 +185,50 @@ const Courses = () => {
         </div>
       </section>
 
-      {/* All Course Cards (generated from 55+ list) */}
+      {/* MBA/BBA (Management Students) Courses */}
       <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900">All Courses</h2>
-            <p className="text-gray-600">Browse our full catalog and enroll instantly</p>
-          </div>
+          <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-3">📊 For MBA/BBA (Management Students)</h2>
+            <p className="text-gray-600">👉 Focus: Leadership + Strategy + Digital Business</p>
+          </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {allCourses.map((name, idx) => {
-              const originalPrice = 999;
-              const finalPrice = idx % 5 === 0 ? 489 : idx % 3 === 0 ? 389 : 199;
-              const discount = Math.round(((originalPrice - finalPrice) / originalPrice) * 100);
-              const imageQuery = encodeURIComponent(name.split(' ')[0]);
-              const image = `https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800`;
-              const description = `Learn ${name} with hands-on exercises and real-world examples.`;
-              return (
-                <div key={name} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
-                  <div className="md:flex">
-                    <div className="md:w-1/2">
-                      <img src={image} alt={name} className="w-full h-48 md:h-full object-cover" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {mbaCourses.map((p, idx) => (
+              <motion.div key={p.id} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (idx % 6) * 0.05 }} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 overflow-hidden">
+                <div className="md:flex">
+                  <div className="md:w-1/2 relative">
+                    {playingProgramId === p.id ? (
+                      <video controls className="w-full h-48 md:h-full object-cover" src={p.video}>
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <img src={p.image} alt={p.name} className="w-full h-48 md:h-full object-cover" />
+                    )}
+                    <button onClick={() => setPlayingProgramId(prev => prev === p.id ? null : p.id)} className="absolute top-2 right-2 bg-black bg-opacity-70 text-white p-2 rounded-full hover:bg-opacity-90 transition-all" title={playingProgramId === p.id ? 'Hide Video' : 'Play Video'}>
+                      <Play className="h-4 w-4" />
+                    </button>
+                  </div>
+                  <div className="p-6 md:w-1/2">
+                    <div className="flex items-center mb-2">
+                      <span className="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">Management</span>
+                      <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">{p.discount}% off</div>
                     </div>
-                    <div className="p-6 md:w-1/2">
-                      <div className="flex items-center mb-2">
-                        <span className="bg-indigo-500 text-white px-3 py-1 rounded-full text-sm font-medium mr-3">Course</span>
-                        <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">{discount}% off</div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{p.name}</h3>
+                    <p className="text-gray-600 text-sm mb-4">{p.description}</p>
+                    <div className="mb-4">
+                      <div className="space-y-1">
+                        <div className="text-gray-500 line-through text-sm">₹{p.originalPrice}</div>
+                        <div className="text-red-600 font-bold text-xl">₹{p.finalPrice}</div>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-900 mb-2">{name}</h3>
-                      <p className="text-gray-600 text-sm mb-4">{description}</p>
-                      <div className="mb-4">
-                        <div className="space-y-1">
-                          <div className="text-gray-500 line-through text-sm">₹{originalPrice}</div>
-                          <div className="text-red-600 font-bold text-xl">₹{finalPrice}</div>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <button
-                          disabled={isPaying}
-                          onClick={() => startWorkshopPayment(finalPrice, name)}
-                          className="bg-indigo-600 text-white py-2.5 px-4 rounded-lg font-semibold hover:bg-indigo-700 transition-colors disabled:opacity-50"
-                        >
-                          Enroll Now
-                        </button>
-                      </div>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <button disabled={isPaying} onClick={() => startWorkshopPayment(p.finalPrice, p.name)} className="bg-purple-600 text-white py-2.5 px-4 rounded-lg font-semibold hover:bg-purple-700 transition-colors disabled:opacity-50">Enroll Now</button>
                     </div>
                   </div>
                 </div>
-              );
-            })}
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
