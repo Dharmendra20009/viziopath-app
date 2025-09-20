@@ -31,63 +31,33 @@ const JobPortal = () => {
     // 🌐 Viziopath Internships
     {
       id: 101,
-      title: "Digital Marketing Intern",
+      title: "Global B.Tech Internship Program",
       company: "Viziopath",
-      location: "Remote",
+      location: "Onsite / Remote",
       category: "Viziopath Intern",
-      type: "Internship",
-      link: "https://viziopath.com/apply/digital-marketing",
-      description: "Work on SEO, social media management, and content creation to build digital campaigns for global clients."
+      type: "Internship / job",
+      link: "https://docs.google.com/forms/d/e/1FAIpQLSfOGD-eqNiOzivb65YFo9r-xHLs_bygwZ2FIMkR2q3TzrsBMg/viewform?usp=header",
+      description: "Hands-on industry experience for all B.Tech students with projects, mentorship, and skill development."
     },
     {
       id: 103,
-      title: "Engineering Intern",
+      title: "BCA Career Launchpad Internship",
       company: "Viziopath",
-      location: "Remote",
+      location: "onsite / Remote",
       category: "Viziopath Intern",
       type: "Internship",
-      link: "https://viziopath.com/apply/engineering-intern",
-      description: "Gain hands-on experience across Software, Mechanical, Electrical, Civil, and Data Engineering by contributing to real-world projects in design, development, testing, and research. Work with cross-functional teams, learn industry tools, and build problem-solving skills through practical innovation."
+      link: "https://docs.google.com/forms/d/e/1FAIpQLSfOGD-eqNiOzivb65YFo9r-xHLs_bygwZ2FIMkR2q3TzrsBMg/viewform?usp=header",
+      description: "Code, create, and collaborate on real-world applications designed for tomorrow’s tech world."
     },
     {
       id: 102,
-      title: "Business Analyst Intern",
+      title: "MBA/BBA Career Launchpad Internship",
       company: "Viziopath",
-      location: "Remote / Gurgaon, India",
+      location: "Onsite / Remote",
       category: "Viziopath Intern",
       type: "Internship",
-      link: "https://viziopath.com/apply/business-analyst",
-      description: "Assist in market research, competitor analysis, and preparing client presentations with actionable insights."
-    },
-    {
-      id: 103,
-      title: "Graphic Design Intern",
-      company: "Viziopath",
-      location: "Remote",
-      category: "Viziopath Intern",
-      type: "Internship",
-      link: "https://viziopath.com/apply/graphic-design",
-      description: "Design creative posters, social media graphics, and branding materials for ongoing campaigns."
-    },
-    {
-      id: 103,
-      title: "HR Intern",
-      company: "Viziopath",
-      location: "Remote",
-      category: "Viziopath Intern",
-      type: "Internship",
-      link: "https://viziopath.com/apply/hr-intern",
-      description: "Assist in recruitment, employee engagement, and HR policy implementation."
-    },
-    {
-      id: 104,
-      title: "Finance Intern",
-      company: "Viziopath",
-      location: "Remote",
-      category: "Viziopath Intern",
-      type: "Internship",
-      link: "https://viziopath.com/apply/finance-intern",
-      description: "Support financial analysis, reporting, and client onboarding documentation."
+      link: "https://docs.google.com/forms/d/e/1FAIpQLSfOGD-eqNiOzivb65YFo9r-xHLs_bygwZ2FIMkR2q3TzrsBMg/viewform?usp=header",
+      description: "Master core business skills by working on cross-functional projects with real business impact."
     },
 
     // 🔹 Existing Jobs (your previous code)
