@@ -1,16 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { Search, Briefcase, MapPin, Filter, ExternalLink } from "lucide-react";
+import { Search, Briefcase, MapPin, Filter, ExternalLink, DollarSign } from "lucide-react";
 import { apiRequest } from "../utils/api";
 
 const JobPortal = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  // ✅ Added Viziopath Intern and Management as categories
   const categories = ["All", "IT", "Viziopath Intern", "Marketing", "Finance", "Design", "HR", "Management"];
 
-  // ✅ Job type from backend
   type Job = {
     id: number;
     title: string;
@@ -20,13 +18,14 @@ const JobPortal = () => {
     type: string;
     link: string;
     description: string;
+    stipend: string;
+    eligibility: string[];
   };
 
   const [apiJobs, setApiJobs] = useState<Job[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // ✅ Jobs & Internships List (fallback if API is unavailable)
   const fallbackJobs: Job[] = [
     // 🌐 Viziopath Internships
     {
@@ -35,19 +34,11 @@ const JobPortal = () => {
       company: "Viziopath",
       location: "Onsite / Remote",
       category: "Viziopath Intern",
-      type: "Internship / job",
-      link: "https://docs.google.com/forms/d/e/1FAIpQLSfOGD-eqNiOzivb65YFo9r-xHLs_bygwZ2FIMkR2q3TzrsBMg/viewform?usp=header",
-      description: "Hands-on industry experience for all B.Tech students with projects, mentorship, and skill development."
-    },
-    {
-      id: 103,
-      title: "BCA Career Launchpad Internship",
-      company: "Viziopath",
-      location: "onsite / Remote",
-      category: "Viziopath Intern",
       type: "Internship",
-      link: "https://docs.google.com/forms/d/e/1FAIpQLSfOGD-eqNiOzivb65YFo9r-xHLs_bygwZ2FIMkR2q3TzrsBMg/viewform?usp=header",
-      description: "Code, create, and collaborate on real-world applications designed for tomorrow’s tech world."
+      link: "https://docs.google.com/forms/d/e/1FAIpQLSfOGD-eqNiOzivb65YFo9r-xHLs_bygwZ2FIMkR2q3TzrsBMg/viewform",
+      description: "Hands-on industry experience for all B.Tech students with projects, mentorship, and skill development.",
+      stipend: "₹15,000 - ₹25,000/month",
+      eligibility: ["B.Tech", "BE", "B.Sc IT"]
     },
     {
       id: 102,
@@ -56,1126 +47,1425 @@ const JobPortal = () => {
       location: "Onsite / Remote",
       category: "Viziopath Intern",
       type: "Internship",
-      link: "https://docs.google.com/forms/d/e/1FAIpQLSfOGD-eqNiOzivb65YFo9r-xHLs_bygwZ2FIMkR2q3TzrsBMg/viewform?usp=header",
-      description: "Master core business skills by working on cross-functional projects with real business impact."
-    },
-
-    // 🔹 Existing Jobs (your previous code)
-    {
-      id: 1,
-      title: "Software Engineering Intern",
-      company: "NVIDIA",
-      location: "Shangai",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.citadel.com/careers/details/software-engineer-intern-asia/",
-      description: "Work on scalable web applications with React, Node.js, and cloud tech."
-    },
-    {
-      id: 2,
-      title: "Site Reliability Engineer - Intern",
-      company: "Citadel",
-      location: "Singapore",
-      category: "IT",
-      type: "Internship",
-      link: "https://naukri.com/marketing-job-link",
-      description: "Support system reliability by assisting with monitoring, automation, and troubleshooting while learning from senior engineers."
-    },
-    {
-      id: 3,
-      title: "Financial Analyst - Intern",
-      company: "JP Morgan",
-      location: "Mumbai, India",
-      category: "Finance",
-      type: "Internship",
-      link: "https://naukri.com/finance-job-link",
-      description: "Analyze financial reports and assist in investment strategies."
-    },
-    {
-      id: 4,
-      title: "Engineering Intern",
-      company: "Appwrite",
-      location: "Remote",
-      category: "IT",
-      type: "Internship",
-      link: "https://www.appwrite.careers/engineering-internship/en",
-      description: "Contribute to open-source projects, assist in developing scalable web and mobile solutions, and gain hands-on experience in modern software engineering practices."
-    },
-    {
-      id: 5,
-      title: "HR Manager",
-      company: "Infosys",
-      location: "Hyderabad, India",
-      category: "HR",
-      type: "Full-Time",
-      link: "https://naukri.com/hr-job-link",
-      description: "Lead HR operations and employee engagement initiatives."
-    },
-    {
-      id: 6,
-      title: "Frontend Engineer",
-      company: "Atlan",
-      location: "Chennai, India",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://jobs.ashbyhq.com/atlan/24de3528-5486-421b-9282-82260b83e033/application",
-      description: "Build scalable frontend applications with React, Vue.js, and modern web technologies."
-    },
-    {
-      id: 7,
-      title: "Digital Marketing Specialist",
-      company: "4BELL TECHNOLOGY",
-      location: "Noida, India",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://www.shine.com/jobs/digital-marketing/4bell-technology/17558788",
-      description: "Develop SEO, SEM and social media strategies for global campaigns."
-    },
-    {
-      id: 8,
-      title: "Accounts Manager",
-      company: "KPMG",
-      location: "Delhi, India",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://naukri.com/accounts-job-link",
-      description: "Manage client accounts and financial reconciliations."
-    },
-    {
-      id: 9,
-      title: "Graphic Designer",
-      company: "Atlan",
-      location: "Remote",
-      category: "Design",
-      type: "Internship",
-      link: "https://jobs.ashbyhq.com/atlan/24de3528-5486-421b-9282-82260b83e033/application",
-      description: "Create engaging graphics, illustrations, and marketing assets."
-    },
-    {
-      id: 10,
-      title: "Software Engineer Intern",
-      company: "IBM",
-      location: "Hyderabad, India",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://ibmglobal.avature.net/en_US/careers/JobDetail?jobId=48508",
-      description: "Work on real-world software projects, assist in coding, debugging, and testing applications, and learn best practices in software development under the guidance of IBM engineers."
-    },
-    {
-      id: 11,
-      title: "Product Management Intern",
-      company: "PW(Physics Wallah)",
-      location: "Noida, India",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://docs.google.com/forms/d/e/1FAIpQLSdowsqFGCmsqybe6aT-qcPGZdT_LnzDzirzMPHwt5O8oEDD4A/viewform",
-      description: "Assist in product research, feature planning, and execution. Collaborate with cross-functional teams to gather insights, define requirements, and improve user experience."
-    },
-    {
-      id: 12,
-      title: "Content Strategist",
-      company: "Desnor Destination Pvt. Ltd.",
-      location: "Delhi, India",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://www.shine.com/jobs/content-writer-work-from-home-part-time/desnor-destination-pvt-ltd/17615810",
-      description: "Plan and execute digital content campaigns to increase user reach."
-    },
-    {
-      id: 13,
-      title: "Investment Banker",
-      company: "Goldman Sachs",
-      location: "Mumbai, India",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://naukri.com/investment-job-link",
-      description: "Manage corporate investment portfolios and risk analysis."
-    },
-    {
-      id: 14,
-      title: "Product Designer",
-      company: "Figma",
-      location: "Remote",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://naukri.com/product-design-job-link",
-      description: "Collaborate with product teams to design user-friendly interfaces."
-    },
-    {
-      id: 15,
-      title: "HR Business Partner",
-      company: "Cognizant",
-      location: "Kolkata, India",
-      category: "HR",
-      type: "Full-Time",
-      link: "https://naukri.com/hr-business-job-link",
-      description: "Partner with leadership to align HR strategies with business goals."
-    },
-    {
-      id: 16,
-      title: "Software Engineer",
-      company: "Cisco",
-      location: "Bangalore, India",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://jobs.cisco.com/jobs/ProjectDetail/Software-Engineer-Network-Embedded-Application-Development-Intern-India-UHR/1421663",
-      description: "Develop and optimize software solutions while gaining hands-on experience in cloud, networking, and application development."
-    },
-    {
-      id: 17,
-      title: "SEO Analyst",
-      company: "Kashni",
-      location: "Delhi, India",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://www.shine.com/jobs/digital-marketing-internship-in-delhi/kashni/17407688",
-      description: "Optimize website traffic and rankings using advanced SEO techniques."
-    },
-    {
-      id: 18,
-      title: "Finance Executive",
-      company: "EY",
-      location: "Delhi, India",
-      category: "Finance",
-      type: "Internship",
-      link: "https://naukri.com/finance-executive-job-link",
-      description: "Assist in audits, taxation, and financial reporting."
-    },
-    {
-      id: 19,
-      title: "Visual Designer",
-      company: "Dribbble",
-      location: "Remote",
-      category: "Design",
-      type: "Part-Time",
-      link: "https://naukri.com/visual-design-job-link",
-      description: "Create visual assets for web, mobile, and print media."
-    },
-    {
-      id: 20,
-      title: "Payroll Specialist",
-      company: "TCS",
-      location: "Pan India",
-      category: "HR",
-      type: "Full-Time",
-      link: "https://on.tcs.com/4ghJTtv",
-      description: "Manage payroll operations and compliance across teams."
-    },
-
-    // 🚀 Tech Giants & Startups
-    {
-      id: 21,
-      title: "Software Engineer",
-      company: "Google",
-      location: "Mountain View, CA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://careers.google.com/jobs/results/",
-      description: "Build scalable systems and innovative products used by billions worldwide."
-    },
-    {
-      id: 22,
-      title: "Product Manager",
-      company: "Microsoft",
-      location: "Seattle, WA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://careers.microsoft.com/us/en",
-      description: "Lead product strategy and development for enterprise solutions."
-    },
-    {
-      id: 23,
-      title: "Data Scientist",
-      company: "Amazon",
-      location: "Seattle, WA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.amazon.jobs/en/",
-      description: "Analyze big data to drive business insights and machine learning models."
-    },
-    {
-      id: 24,
-      title: "Frontend Developer",
-      company: "Meta",
-      location: "Menlo Park, CA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.metacareers.com/",
-      description: "Create engaging user interfaces for social media platforms."
-    },
-    {
-      id: 25,
-      title: "DevOps Engineer",
-      company: "Netflix",
-      location: "Los Gatos, CA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://jobs.netflix.com/",
-      description: "Build and maintain cloud infrastructure for streaming services."
-    },
-    {
-      id: 26,
-      title: "AI Research Scientist",
-      company: "OpenAI",
-      location: "San Francisco, CA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://openai.com/careers/",
-      description: "Research and develop cutting-edge artificial intelligence technologies."
-    },
-    {
-      id: 27,
-      title: "Mobile App Developer",
-      company: "Uber",
-      location: "San Francisco, CA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.uber.com/careers/",
-      description: "Develop mobile applications for ride-sharing and delivery services."
-    },
-    {
-      id: 28,
-      title: "Backend Engineer",
-      company: "Airbnb",
-      location: "San Francisco, CA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://careers.airbnb.com/",
-      description: "Build scalable backend systems for the global travel platform."
-    },
-    {
-      id: 29,
-      title: "Full Stack Developer",
-      company: "Stripe",
-      location: "San Francisco, CA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://stripe.com/jobs",
-      description: "Develop payment processing solutions for businesses worldwide."
-    },
-    {
-      id: 30,
-      title: "Cloud Architect",
-      company: "Salesforce",
-      location: "San Francisco, CA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://salesforce.wd1.myworkdayjobs.com/External_Career_Site",
-      description: "Design and implement cloud solutions for enterprise customers."
-    },
-
-    // 💼 Management & Consulting
-    {
-      id: 31,
-      title: "Management Consultant",
-      company: "McKinsey & Company",
-      location: "New York, NY",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.mckinsey.com/careers",
-      description: "Provide strategic consulting to Fortune 500 companies."
-    },
-    {
-      id: 32,
-      title: "Business Analyst",
-      company: "Bain & Company",
-      location: "Boston, MA",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.bain.com/careers/",
-      description: "Analyze business processes and recommend strategic improvements."
-    },
-    {
-      id: 33,
-      title: "Strategy Consultant",
-      company: "Boston Consulting Group",
-      location: "Boston, MA",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://careers.bcg.com/",
-      description: "Develop growth strategies for leading global companies."
-    },
-    {
-      id: 34,
-      title: "Project Manager",
-      company: "Deloitte",
-      location: "New York, NY",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www2.deloitte.com/us/en/careers.html",
-      description: "Lead digital transformation projects for enterprise clients."
-    },
-    {
-      id: 35,
-      title: "Operations Manager",
-      company: "Accenture",
-      location: "Chicago, IL",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.accenture.com/us-en/careers",
-      description: "Optimize business operations and implement process improvements."
-    },
-    {
-      id: 36,
-      title: "Product Manager",
-      company: "PwC",
-      location: "New York, NY",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.pwc.com/us/en/careers.html",
-      description: "Manage product development lifecycle and market strategy."
-    },
-    {
-      id: 37,
-      title: "Business Development Manager",
-      company: "EY",
-      location: "New York, NY",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.ey.com/en_us/careers",
-      description: "Drive business growth through strategic partnerships and client relationships."
-    },
-    {
-      id: 38,
-      title: "Operations Analyst",
-      company: "KPMG",
-      location: "New York, NY",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://home.kpmg/us/en/home/careers.html",
-      description: "Analyze operational efficiency and recommend process optimizations."
-    },
-
-    // 💰 Finance & Banking
-    {
-      id: 39,
-      title: "Investment Banking Analyst",
-      company: "Goldman Sachs",
-      location: "New York, NY",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://www.goldmansachs.com/careers/",
-      description: "Analyze financial markets and execute complex transactions."
-    },
-    {
-      id: 40,
-      title: "Risk Analyst",
-      company: "JPMorgan Chase",
-      location: "New York, NY",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://careers.jpmorgan.com/",
-      description: "Assess and manage financial risks across various portfolios."
-    },
-    {
-      id: 41,
-      title: "Quantitative Analyst",
-      company: "Morgan Stanley",
-      location: "New York, NY",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://www.morganstanley.com/careers/",
-      description: "Develop mathematical models for trading and risk management."
-    },
-    {
-      id: 42,
-      title: "Corporate Finance Manager",
-      company: "Bank of America",
-      location: "Charlotte, NC",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://careers.bankofamerica.com/",
-      description: "Manage corporate financial planning and capital allocation."
-    },
-    {
-      id: 43,
-      title: "Credit Analyst",
-      company: "Wells Fargo",
-      location: "San Francisco, CA",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://www.wellsfargo.com/about/careers/",
-      description: "Evaluate creditworthiness and manage loan portfolios."
-    },
-    {
-      id: 44,
-      title: "Treasury Analyst",
-      company: "Citigroup",
-      location: "New York, NY",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://jobs.citi.com/",
-      description: "Manage cash flow, liquidity, and foreign exchange operations."
-    },
-    {
-      id: 45,
-      title: "Financial Advisor",
-      company: "Charles Schwab",
-      location: "San Francisco, CA",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://jobs.schwabjobs.com/",
-      description: "Provide investment advice and financial planning services."
-    },
-    {
-      id: 46,
-      title: "Portfolio Manager",
-      company: "BlackRock",
-      location: "New York, NY",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://careers.blackrock.com/",
-      description: "Manage investment portfolios and develop asset allocation strategies."
-    },
-
-    // 🎨 Design & Creative
-    {
-      id: 47,
-      title: "UX Designer",
-      company: "Adobe",
-      location: "San Jose, CA",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://adobe.wd5.myworkdayjobs.com/external_experienced",
-      description: "Design intuitive user experiences for creative software products."
-    },
-    {
-      id: 48,
-      title: "UI Designer",
-      company: "Sketch",
-      location: "Amsterdam, Netherlands",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://www.sketch.com/jobs/",
-      description: "Create beautiful and functional user interfaces for design tools."
-    },
-    {
-      id: 49,
-      title: "Brand Designer",
-      company: "Canva",
-      location: "Sydney, Australia",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://www.canva.com/careers/",
-      description: "Develop brand identities and visual design systems."
-    },
-    {
-      id: 50,
-      title: "Motion Graphics Designer",
-      company: "After Effects",
-      location: "Remote",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://www.adobe.com/careers.html",
-      description: "Create engaging animations and motion graphics for digital media."
-    },
-    {
-      id: 51,
-      title: "Product Designer",
-      company: "InVision",
-      location: "New York, NY",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://www.invisionapp.com/careers",
-      description: "Design digital products and user experiences for enterprise clients."
-    },
-    {
-      id: 52,
-      title: "Creative Director",
-      company: "Behance",
-      location: "San Francisco, CA",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://careers.adobe.com/us/en/search-results?keywords=behance",
-      description: "Lead creative teams and oversee design strategy for creative platform."
-    },
-
-    // 📈 Marketing & Sales
-    {
-      id: 53,
-      title: "Digital Marketing Manager",
-      company: "HubSpot",
-      location: "Cambridge, MA",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://www.hubspot.com/careers",
-      description: "Develop and execute digital marketing strategies for inbound marketing."
-    },
-    {
-      id: 54,
-      title: "Content Marketing Specialist",
-      company: "Mailchimp",
-      location: "Atlanta, GA",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://mailchimp.com/careers/",
-      description: "Create compelling content to drive customer engagement and growth."
-    },
-    {
-      id: 55,
-      title: "Social Media Manager",
-      company: "Hootsuite",
-      location: "Vancouver, Canada",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://careers.hootsuite.com/",
-      description: "Manage social media presence and community engagement strategies."
-    },
-    {
-      id: 56,
-      title: "Growth Marketing Manager",
-      company: "Slack",
-      location: "San Francisco, CA",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://slack.com/careers",
-      description: "Drive user acquisition and retention through data-driven marketing campaigns."
-    },
-    {
-      id: 57,
-      title: "Brand Manager",
-      company: "Coca-Cola",
-      location: "Atlanta, GA",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://www.coca-colacompany.com/careers",
-      description: "Develop and execute brand strategies for global beverage products."
-    },
-    {
-      id: 58,
-      title: "Sales Manager",
-      company: "Salesforce",
-      location: "San Francisco, CA",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://salesforce.wd1.myworkdayjobs.com/External_Career_Site",
-      description: "Lead sales teams and drive revenue growth for CRM solutions."
-    },
-    {
-      id: 59,
-      title: "Marketing Analyst",
-      company: "Google",
-      location: "Mountain View, CA",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://careers.google.com/jobs/results/",
-      description: "Analyze marketing performance and optimize advertising campaigns."
-    },
-    {
-      id: 60,
-      title: "Product Marketing Manager",
-      company: "Microsoft",
-      location: "Redmond, WA",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://careers.microsoft.com/us/en",
-      description: "Develop go-to-market strategies for enterprise software products."
-    },
-
-    // 👥 Human Resources
-    {
-      id: 61,
-      title: "HR Business Partner",
-      company: "Google",
-      location: "Mountain View, CA",
-      category: "HR",
-      type: "Full-Time",
-      link: "https://careers.google.com/jobs/results/",
-      description: "Partner with business leaders to drive people strategy and culture."
-    },
-    {
-      id: 62,
-      title: "Talent Acquisition Manager",
-      company: "LinkedIn",
-      location: "Sunnyvale, CA",
-      category: "HR",
-      type: "Full-Time",
-      link: "https://careers.linkedin.com/",
-      description: "Lead recruitment efforts and build talent pipelines for tech roles."
-    },
-    {
-      id: 63,
-      title: "Employee Experience Manager",
-      company: "Airbnb",
-      location: "San Francisco, CA",
-      category: "HR",
-      type: "Full-Time",
-      link: "https://careers.airbnb.com/",
-      description: "Design and implement programs to enhance employee engagement and satisfaction."
-    },
-    {
-      id: 64,
-      title: "Compensation Analyst",
-      company: "PayPal",
-      location: "San Jose, CA",
-      category: "HR",
-      type: "Full-Time",
-      link: "https://www.paypal.com/us/webapps/mpp/jobs",
-      description: "Analyze compensation data and design competitive pay structures."
-    },
-    {
-      id: 65,
-      title: "Learning & Development Manager",
-      company: "Amazon",
-      location: "Seattle, WA",
-      category: "HR",
-      type: "Full-Time",
-      link: "https://www.amazon.jobs/en/",
-      description: "Develop training programs and career development initiatives."
-    },
-    {
-      id: 66,
-      title: "Diversity & Inclusion Manager",
-      company: "Microsoft",
-      location: "Redmond, WA",
-      category: "HR",
-      type: "Full-Time",
-      link: "https://careers.microsoft.com/us/en",
-      description: "Lead diversity initiatives and create inclusive workplace culture."
-    },
-    {
-      id: 67,
-      title: "HR Operations Manager",
-      company: "Uber",
-      location: "San Francisco, CA",
-      category: "HR",
-      type: "Full-Time",
-      link: "https://www.uber.com/careers/",
-      description: "Optimize HR processes and manage employee lifecycle operations."
-    },
-    {
-      id: 68,
-      title: "Workplace Culture Manager",
-      company: "Netflix",
-      location: "Los Gatos, CA",
-      category: "HR",
-      type: "Full-Time",
-      link: "https://jobs.netflix.com/",
-      description: "Foster company culture and employee engagement initiatives."
-    },
-
-    // 🏭 Manufacturing & Automotive
-    {
-      id: 69,
-      title: "Manufacturing Engineer",
-      company: "Tesla",
-      location: "Fremont, CA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.tesla.com/careers",
-      description: "Optimize production processes for electric vehicle manufacturing."
-    },
-    {
-      id: 70,
-      title: "Supply Chain Manager",
-      company: "Toyota",
-      location: "Plano, TX",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.toyota.com/careers/",
-      description: "Manage global supply chain operations and logistics."
-    },
-    {
-      id: 71,
-      title: "Quality Assurance Engineer",
-      company: "BMW",
-      location: "Spartanburg, SC",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.bmwgroup.com/en/careers.html",
-      description: "Ensure product quality and implement quality control systems."
-    },
-    {
-      id: 72,
-      title: "Production Manager",
-      company: "Ford",
-      location: "Dearborn, MI",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://corporate.ford.com/careers.html",
-      description: "Oversee manufacturing operations and production efficiency."
-    },
-
-    // 🏥 Healthcare & Pharmaceuticals
-    {
-      id: 73,
-      title: "Clinical Research Associate",
-      company: "Pfizer",
-      location: "New York, NY",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.pfizer.com/careers",
-      description: "Manage clinical trials and research studies for new medications."
-    },
-    {
-      id: 74,
-      title: "Healthcare Data Analyst",
-      company: "Johnson & Johnson",
-      location: "New Brunswick, NJ",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.careers.jnj.com/",
-      description: "Analyze healthcare data to improve patient outcomes and operations."
-    },
-    {
-      id: 75,
-      title: "Medical Device Engineer",
-      company: "Medtronic",
-      location: "Minneapolis, MN",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.medtronic.com/us-en/about/careers.html",
-      description: "Design and develop innovative medical devices and technologies."
-    },
-    {
-      id: 76,
-      title: "Pharmaceutical Sales Manager",
-      company: "Merck",
-      location: "Kenilworth, NJ",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://jobs.merck.com/us/en",
-      description: "Lead sales teams and drive pharmaceutical product sales."
-    },
-
-    // 🛒 Retail & E-commerce
-    {
-      id: 77,
-      title: "E-commerce Manager",
-      company: "Shopify",
-      location: "Ottawa, Canada",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://www.shopify.com/careers",
-      description: "Manage online store operations and digital marketing strategies."
-    },
-    {
-      id: 78,
-      title: "Supply Chain Analyst",
-      company: "Walmart",
-      location: "Bentonville, AR",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://careers.walmart.com/",
-      description: "Optimize supply chain operations and inventory management."
-    },
-    {
-      id: 79,
-      title: "Retail Operations Manager",
-      company: "Target",
-      location: "Minneapolis, MN",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://corporate.target.com/careers",
-      description: "Oversee retail store operations and customer experience."
-    },
-    {
-      id: 80,
-      title: "Digital Marketing Specialist",
-      company: "Amazon",
-      location: "Seattle, WA",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://www.amazon.jobs/en/",
-      description: "Develop and execute digital marketing campaigns for e-commerce."
-    },
-
-    // 🎮 Gaming & Entertainment
-    {
-      id: 81,
-      title: "Game Developer",
-      company: "Epic Games",
-      location: "Cary, NC",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.epicgames.com/site/en-US/careers",
-      description: "Develop cutting-edge video games and interactive experiences."
-    },
-    {
-      id: 82,
-      title: "Game Designer",
-      company: "Blizzard Entertainment",
-      location: "Irvine, CA",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://careers.blizzard.com/",
-      description: "Design engaging gameplay mechanics and user experiences."
-    },
-    {
-      id: 83,
-      title: "3D Artist",
-      company: "Unity Technologies",
-      location: "San Francisco, CA",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://careers.unity.com/",
-      description: "Create stunning 3D assets and visual effects for games."
-    },
-    {
-      id: 84,
-      title: "Community Manager",
-      company: "Riot Games",
-      location: "Los Angeles, CA",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://www.riotgames.com/en/work-with-us",
-      description: "Build and engage gaming communities across social platforms."
-    },
-
-    // 🏦 Fintech & Cryptocurrency
-    {
-      id: 85,
-      title: "Blockchain Developer",
-      company: "Coinbase",
-      location: "San Francisco, CA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.coinbase.com/careers",
-      description: "Develop blockchain applications and cryptocurrency solutions."
-    },
-    {
-      id: 86,
-      title: "Cryptocurrency Analyst",
-      company: "Binance",
-      location: "Remote",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://www.binance.com/en/careers",
-      description: "Analyze cryptocurrency markets and trading strategies."
-    },
-    {
-      id: 87,
-      title: "Fintech Product Manager",
-      company: "Square",
-      location: "San Francisco, CA",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://careers.squareup.com/us/en",
-      description: "Lead product development for financial technology solutions."
-    },
-    {
-      id: 88,
-      title: "Risk Management Specialist",
-      company: "Robinhood",
-      location: "Menlo Park, CA",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://robinhood.com/careers/",
-      description: "Manage financial risks in trading and investment platforms."
-    },
-
-    // 🚀 Aerospace & Defense
-    {
-      id: 89,
-      title: "Aerospace Engineer",
-      company: "SpaceX",
-      location: "Hawthorne, CA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.spacex.com/careers/",
-      description: "Design and develop spacecraft and rocket technologies."
-    },
-    {
-      id: 90,
-      title: "Systems Engineer",
-      company: "Boeing",
-      location: "Seattle, WA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://jobs.boeing.com/",
-      description: "Develop complex aerospace systems and integration solutions."
-    },
-    {
-      id: 91,
-      title: "Defense Analyst",
-      company: "Lockheed Martin",
-      location: "Bethesda, MD",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.lockheedmartin.com/en-us/careers.html",
-      description: "Analyze defense systems and strategic planning initiatives."
-    },
-    {
-      id: 92,
-      title: "Avionics Engineer",
-      company: "Northrop Grumman",
-      location: "Falls Church, VA",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.northropgrumman.com/careers/",
-      description: "Design and develop aircraft electronic systems and controls."
-    },
-
-    // 🏠 Real Estate & Construction
-    {
-      id: 93,
-      title: "Real Estate Analyst",
-      company: "CBRE",
-      location: "Los Angeles, CA",
-      category: "Finance",
-      type: "Full-Time",
-      link: "https://www.cbre.com/careers",
-      description: "Analyze real estate markets and investment opportunities."
-    },
-    {
-      id: 94,
-      title: "Construction Project Manager",
-      company: "Turner Construction",
-      location: "New York, NY",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.turnerconstruction.com/careers",
-      description: "Manage large-scale construction projects from planning to completion."
-    },
-    {
-      id: 95,
-      title: "Property Manager",
-      company: "JLL",
-      location: "Chicago, IL",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.jll.com/en/careers",
-      description: "Oversee commercial and residential property operations."
-    },
-    {
-      id: 96,
-      title: "Architectural Designer",
-      company: "Gensler",
-      location: "San Francisco, CA",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://www.gensler.com/careers",
-      description: "Design innovative architectural solutions for commercial projects."
-    },
-
-    // 🎓 Education & EdTech
-    {
-      id: 97,
-      title: "Educational Technology Manager",
-      company: "Coursera",
-      location: "Mountain View, CA",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.coursera.org/careers",
-      description: "Develop and manage online learning platforms and content."
-    },
-    {
-      id: 98,
-      title: "Learning Experience Designer",
-      company: "Udemy",
-      location: "San Francisco, CA",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://about.udemy.com/careers/",
-      description: "Design engaging online learning experiences and curricula."
-    },
-    {
-      id: 99,
-      title: "EdTech Product Manager",
-      company: "Khan Academy",
-      location: "Mountain View, CA",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.khanacademy.org/careers",
-      description: "Lead product development for educational technology solutions."
-    },
-    {
-      id: 100,
-      title: "Curriculum Developer",
-      company: "Duolingo",
-      location: "Pittsburgh, PA",
-      category: "Design",
-      type: "Full-Time",
-      link: "https://www.duolingo.com/careers",
-      description: "Develop language learning curricula and educational content."
-    },
-
-    // 🌱 Sustainability & Clean Energy
-    {
-      id: 101,
-      title: "Sustainability Manager",
-      company: "Patagonia",
-      location: "Ventura, CA",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.patagonia.com/careers/",
-      description: "Lead environmental sustainability initiatives and programs."
-    },
-    {
-      id: 102,
-      title: "Renewable Energy Engineer",
-      company: "First Solar",
-      location: "Tempe, AZ",
-      category: "IT",
-      type: "Full-Time",
-      link: "https://www.firstsolar.com/en-us/about-us/careers",
-      description: "Design and develop solar energy systems and technologies."
+      link: "https://docs.google.com/forms/d/e/1FAIpQLSfOGD-eqNiOzivb65YFo9r-xHLs_bygwZ2FIMkR2q3TzrsBMg/viewform",
+      description: "Master core business skills by working on cross-functional projects with real business impact.",
+      stipend: "₹12,000 - ₹20,000/month",
+      eligibility: ["MBA", "BBA", "BMS"]
     },
     {
       id: 103,
-      title: "Environmental Analyst",
-      company: "Tesla",
-      location: "Austin, TX",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://www.tesla.com/careers",
-      description: "Analyze environmental impact and sustainability metrics."
-    },
-    {
-      id: 104,
-      title: "Clean Energy Consultant",
-      company: "BloombergNEF",
-      location: "New York, NY",
-      category: "Management",
-      type: "Full-Time",
-      link: "https://about.bnef.com/careers/",
-      description: "Provide consulting services for clean energy investments and strategies."
+      title: "BCA Career Launchpad Internship",
+      company: "Viziopath",
+      location: "Onsite / Remote",
+      category: "Viziopath Intern",
+      type: "Internship",
+      link: "https://docs.google.com/forms/d/e/1FAIpQLSfOGD-eqNiOzivb65YFo9r-xHLs_bygwZ2FIMkR2q3TzrsBMg/viewform",
+      description: "Code, create, and collaborate on real-world applications designed for tomorrow's tech world.",
+      stipend: "₹10,000 - ₹18,000/month",
+      eligibility: ["BCA", "B.Sc CS", "B.Sc IT"]
     },
 
-    // 🎬 Media & Entertainment
+    // 🔹 Microsoft
     {
-      id: 105,
-      title: "Content Producer",
+      id: 1,
+      title: "Software Engineering Intern",
+      company: "Microsoft",
+      location: "Hyderabad, Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.microsoft.com/students/us/en/ind-internship",
+      description: "Work on cutting-edge technologies including Azure, AI, and cloud computing.",
+      stipend: "₹90,000 - ₹1,20,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA", "MCA"]
+    },
+
+    // 🔹 Google
+    {
+      id: 2,
+      title: "Software Engineer Intern",
+      company: "Google",
+      location: "Bangalore, Hyderabad",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.google.com/jobs/results/131339044044539590-software-engineering-intern-summer-2024/",
+      description: "Develop software solutions and work on Google's core products and services.",
+      stipend: "₹1,00,000 - ₹1,50,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA", "MCA"]
+    },
+
+    // 🔹 Amazon
+    {
+      id: 3,
+      title: "SDE Intern",
+      company: "Amazon",
+      location: "Bangalore, Chennai",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.amazon.jobs/en/jobs/2415584/software-development-engineer-intern-2024",
+      description: "Build scalable distributed systems and work on AWS technologies.",
+      stipend: "₹80,000 - ₹1,20,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA", "MCA"]
+    },
+
+    // 🔹 Goldman Sachs
+    {
+      id: 4,
+      title: "Summer Analyst Intern",
+      company: "Goldman Sachs",
+      location: "Bangalore, Mumbai",
+      category: "Finance",
+      type: "Internship",
+      link: "https://www.goldmansachs.com/careers/students/programs/india/summer-analyst-program.html",
+      description: "Investment banking, risk management, and financial analysis roles.",
+      stipend: "₹1,00,000 - ₹1,40,000/month",
+      eligibility: ["B.Tech", "MBA", "BBA", "B.Com"]
+    },
+
+    // 🔹 McKinsey & Company
+    {
+      id: 5,
+      title: "Business Analyst Intern",
+      company: "McKinsey & Company",
+      location: "Delhi, Mumbai, Bangalore",
+      category: "Management",
+      type: "Internship",
+      link: "https://www.mckinsey.com/careers/students",
+      description: "Work on strategic business problems for global clients.",
+      stipend: "₹1,20,000 - ₹1,80,000/month",
+      eligibility: ["MBA", "B.Tech", "BBA"]
+    },
+
+    // 🔹 Intel
+    {
+      id: 6,
+      title: "Hardware Engineering Intern",
+      company: "Intel",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://jobs.intel.com/en/job/-/-/599/58667827552",
+      description: "Work on processor design, validation, and hardware development.",
+      stipend: "₹70,000 - ₹1,00,000/month",
+      eligibility: ["B.Tech ECE", "B.Tech CSE", "M.Tech"]
+    },
+
+    // 🔹 Adobe
+    {
+      id: 7,
+      title: "Product Development Intern",
+      company: "Adobe",
+      location: "Noida, Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.adobe.com/us/en/job/R140915/Software-Development-Intern",
+      description: "Work on Creative Cloud products and digital experience solutions.",
+      stipend: "₹85,000 - ₹1,10,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA", "MCA"]
+    },
+
+    // 🔹 JP Morgan
+    {
+      id: 8,
+      title: "Quantitative Research Intern",
+      company: "JP Morgan",
+      location: "Mumbai, Bangalore",
+      category: "Finance",
+      type: "Internship",
+      link: "https://jpmc.recsolu.com/external/requisitions/9RrXHf0G7hXc8nX_9RrXHf0G7hXc8nX",
+      description: "Develop quantitative models for trading and risk management.",
+      stipend: "₹95,000 - ₹1,30,000/month",
+      eligibility: ["B.Tech", "MBA", "BBA"]
+    },
+
+    // 🔹 IBM
+    {
+      id: 9,
+      title: "Software Developer Intern",
+      company: "IBM",
+      location: "Bangalore, Pune",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.ibm.com/careers/us-en/",
+      description: "Work on AI, cloud, and enterprise software solutions.",
+      stipend: "₹60,000 - ₹90,000/month",
+      eligibility: ["B.Tech", "BCA", "MCA"]
+    },
+
+    // 🔹 Deloitte
+    {
+      id: 10,
+      title: "Business Technology Analyst Intern",
+      company: "Deloitte",
+      location: "Multiple Locations",
+      category: "Management",
+      type: "Internship",
+      link: "https://www2.deloitte.com/us/en/careers/students.html",
+      description: "Technology consulting and digital transformation projects.",
+      stipend: "₹50,000 - ₹80,000/month",
+      eligibility: ["B.Tech", "MBA", "BBA", "BCA"]
+    },
+
+    // 🔹 Accenture
+    {
+      id: 11,
+      title: "Advanced Technology Intern",
+      company: "Accenture",
+      location: "Multiple Locations",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.accenture.com/in-en/careers/students",
+      description: "Work on emerging technologies and digital solutions.",
+      stipend: "₹45,000 - ₹70,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc IT"]
+    },
+
+    // 🔹 TCS
+    {
+      id: 12,
+      title: "TCS Ignite Intern",
+      company: "Tata Consultancy Services",
+      location: "Pan India",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.tcs.com/careers/students",
+      description: "Comprehensive training and project work in IT services.",
+      stipend: "₹30,000 - ₹50,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc CS"]
+    },
+
+    // 🔹 Infosys
+    {
+      id: 13,
+      title: "Infosys Springboard Intern",
+      company: "Infosys",
+      location: "Pan India",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.infosys.com/careers/graduates.html",
+      description: "Software development and IT consulting projects.",
+      stipend: "₹35,000 - ₹55,000/month",
+      eligibility: ["B.Tech", "BCA", "MCA"]
+    },
+
+    // 🔹 Wipro
+    {
+      id: 14,
+      title: "Wipro Turbo Intern",
+      company: "Wipro",
+      location: "Pan India",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.wipro.com/careers-home/",
+      description: "Digital transformation and IT infrastructure projects.",
+      stipend: "₹32,000 - ₹48,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc IT"]
+    },
+
+    // 🔹 HCL
+    {
+      id: 15,
+      title: "HCL TechBee Intern",
+      company: "HCL Technologies",
+      location: "Multiple Locations",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.hcltech.com/careers/students",
+      description: "IT services and software development training program.",
+      stipend: "₹28,000 - ₹45,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc CS"]
+    },
+
+    // 🔹 Capgemini
+    {
+      id: 16,
+      title: "GET Program Intern",
+      company: "Capgemini",
+      location: "Multiple Locations",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.capgemini.com/in-en/careers/students/",
+      description: "Graduate engineer training with hands-on projects.",
+      stipend: "₹40,000 - ₹60,000/month",
+      eligibility: ["B.Tech", "BCA", "MCA"]
+    },
+
+    // 🔹 Cognizant
+    {
+      id: 17,
+      title: "Programmer Analyst Intern",
+      company: "Cognizant",
+      location: "Multiple Locations",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.cognizant.com/global-en/students",
+      description: "Software development and digital business solutions.",
+      stipend: "₹42,000 - ₹65,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc IT"]
+    },
+
+    // 🔹 Oracle
+    {
+      id: 18,
+      title: "Software Engineer Intern",
+      company: "Oracle",
+      location: "Bangalore, Hyderabad",
+      category: "IT",
+      type: "Internship",
+      link: "https://eeho.fa.us.oracle.com/OA_HTML/OA.jsp?OAFunc=IRC_VIS_VAC_DISPLAY&OAMC=/ORACLE/ERC/INT/CX/CX_2024&p_svid=115287&p_spid=5697823",
+      description: "Database technologies and cloud infrastructure development.",
+      stipend: "₹75,000 - ₹1,05,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 VMware
+    {
+      id: 19,
+      title: "R&D Intern",
+      company: "VMware",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.vmware.com/main/jobs/R2313742?lang=en-us",
+      description: "Cloud infrastructure and virtualization technologies.",
+      stipend: "₹80,000 - ₹1,10,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 Cisco
+    {
+      id: 20,
+      title: "Engineering Intern",
+      company: "Cisco",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://jobs.cisco.com/jobs/ProjectDetail/Software-Engineer-Intern-India-UHR/1378405",
+      description: "Networking technologies and cybersecurity solutions.",
+      stipend: "₹70,000 - ₹95,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 Morgan Stanley
+    {
+      id: 21,
+      title: "Technology Analyst Intern",
+      company: "Morgan Stanley",
+      location: "Mumbai",
+      category: "Finance",
+      type: "Internship",
+      link: "https://www.morganstanley.com/people-opportunities/students-graduates/technology-roles",
+      description: "Financial technology and quantitative systems development.",
+      stipend: "₹90,000 - ₹1,25,000/month",
+      eligibility: ["B.Tech", "MBA", "BBA"]
+    },
+
+    // 🔹 Barclays
+    {
+      id: 22,
+      title: "Technology Summer Analyst",
+      company: "Barclays",
+      location: "Pune",
+      category: "Finance",
+      type: "Internship",
+      link: "https://search.jobs.barclays/technology-summer-analyst-2024-pune",
+      description: "Banking technology and financial software development.",
+      stipend: "₹65,000 - ₹90,000/month",
+      eligibility: ["B.Tech", "BCA", "BBA"]
+    },
+
+    // 🔹 Deutsche Bank
+    {
+      id: 23,
+      title: "Technology Intern",
+      company: "Deutsche Bank",
+      location: "Pune, Bangalore",
+      category: "Finance",
+      type: "Internship",
+      link: "https://careers.db.com/professionals/search-roles/technology",
+      description: "Investment banking technology and analytics platforms.",
+      stipend: "₹70,000 - ₹1,00,000/month",
+      eligibility: ["B.Tech", "MBA", "BBA"]
+    },
+
+    // 🔹 Salesforce
+    {
+      id: 24,
+      title: "Futureforce Tech Intern",
+      company: "Salesforce",
+      location: "Hyderabad, Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://salesforce.wd1.myworkdayjobs.com/en-US/Futureforce_Internships/",
+      description: "CRM platform development and cloud technologies.",
+      stipend: "₹85,000 - ₹1,15,000/month",
+      eligibility: ["B.Tech", "BCA", "MCA"]
+    },
+
+    // 🔹 ServiceNow
+    {
+      id: 25,
+      title: "Software Engineering Intern",
+      company: "ServiceNow",
+      location: "Hyderabad",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.servicenow.com/careers/jobs/743999957850111EXT",
+      description: "Digital workflow and enterprise cloud platform development.",
+      stipend: "₹75,000 - ₹1,05,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 Atlassian
+    {
+      id: 26,
+      title: "Product Development Intern",
+      company: "Atlassian",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.atlassian.com/company/careers/jobs/2435950",
+      description: "Work on Jira, Confluence, and other collaboration tools.",
+      stipend: "₹95,000 - ₹1,30,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 Uber
+    {
+      id: 27,
+      title: "Software Engineer Intern",
+      company: "Uber",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://university-uber.icims.com/jobs/121665/job",
+      description: "Mobility and delivery platform technology development.",
+      stipend: "₹1,00,000 - ₹1,40,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 Ola
+    {
+      id: 28,
+      title: "Tech Intern",
+      company: "Ola",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://ola.skillate.com/jobs/57638",
+      description: "Electric mobility and transportation technology.",
+      stipend: "₹60,000 - ₹85,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc IT"]
+    },
+
+    // 🔹 Swiggy
+    {
+      id: 29,
+      title: "Engineering Intern",
+      company: "Swiggy",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.swiggy.com/#/careers/home",
+      description: "Food delivery technology and logistics optimization.",
+      stipend: "₹55,000 - ₹80,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc CS"]
+    },
+
+    // 🔹 Zomato
+    {
+      id: 30,
+      title: "Product Management Intern",
+      company: "Zomato",
+      location: "Gurgaon",
+      category: "Management",
+      type: "Internship",
+      link: "https://www.zomato.com/careers",
+      description: "Product strategy and user experience optimization.",
+      stipend: "₹50,000 - ₹75,000/month",
+      eligibility: ["MBA", "B.Tech", "BBA"]
+    },
+
+    // 🔹 Flipkart
+    {
+      id: 31,
+      title: "Flipkart Runway Intern",
+      company: "Flipkart",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.flipkartcareers.com/#!/joblist",
+      description: "E-commerce technology and supply chain solutions.",
+      stipend: "₹70,000 - ₹1,00,000/month",
+      eligibility: ["B.Tech", "MBA", "BBA"]
+    },
+
+    // 🔹 Amazon ML School
+    {
+      id: 32,
+      title: "ML Summer School Intern",
+      company: "Amazon",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.amazon.science/academic-programs",
+      description: "Machine learning and AI research projects.",
+      stipend: "₹90,000 - ₹1,20,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 Microsoft Engage
+    {
+      id: 33,
+      title: "Microsoft Engage Mentorship",
+      company: "Microsoft",
+      location: "Remote",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.microsoft.com/students/us/en/ind-engage",
+      description: "Mentorship program with technical projects and guidance.",
+      stipend: "₹40,000 - ₹60,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc CS"]
+    },
+
+    // 🔹 Google STEP
+    {
+      id: 34,
+      title: "STEP Intern",
+      company: "Google",
+      location: "Hyderabad",
+      category: "IT",
+      type: "Internship",
+      link: "https://buildyourfuture.withgoogle.com/programs/step/",
+      description: "Software engineering training for early-year students.",
+      stipend: "₹65,000 - ₹85,000/month",
+      eligibility: ["B.Tech 1st/2nd Year", "BCA 2nd Year"]
+    },
+
+    // 🔹 Twitter
+    {
+      id: 35,
+      title: "Engineering Intern",
+      company: "Twitter",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.twitter.com/",
+      description: "Social media platform development and features.",
+      stipend: "₹95,000 - ₹1,25,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 LinkedIn
+    {
+      id: 36,
+      title: "Software Engineering Intern",
+      company: "LinkedIn",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.linkedin.com/",
+      description: "Professional networking platform development.",
+      stipend: "₹1,00,000 - ₹1,35,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 Meta
+    {
+      id: 37,
+      title: "Software Engineer Intern",
+      company: "Meta",
+      location: "Remote",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.metacareers.com/careerprograms/students/",
+      description: "Social media and virtual reality technologies.",
+      stipend: "₹1,10,000 - ₹1,50,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 Netflix
+    {
+      id: 38,
+      title: "Product Science Intern",
       company: "Netflix",
-      location: "Los Angeles, CA",
-      category: "Marketing",
-      type: "Full-Time",
-      link: "https://jobs.netflix.com/",
-      description: "Produce original content and manage production workflows."
+      location: "Remote",
+      category: "IT",
+      type: "Internship",
+      link: "https://jobs.netflix.com/search?q=intern",
+      description: "Content recommendation and streaming technology.",
+      stipend: "₹1,20,000 - ₹1,60,000/month",
+      eligibility: ["B.Tech", "MBA", "BBA"]
     },
+
+    // 🔹 Apple
     {
-      id: 106,
-      title: "Video Editor",
-      company: "YouTube",
-      location: "San Bruno, CA",
+      id: 39,
+      title: "IS&T Intern",
+      company: "Apple",
+      location: "Hyderabad",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.apple.com/careers/in/",
+      description: "Information systems and technology infrastructure.",
+      stipend: "₹85,000 - ₹1,15,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc IT"]
+    },
+
+    // 🔹 Samsung
+    {
+      id: 40,
+      title: "Samsung PRISM Intern",
+      company: "Samsung",
+      location: "Noida, Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.samsung.com/in/aboutsamsung/careers/students/",
+      description: "Research and innovation in mobile technologies.",
+      stipend: "₹50,000 - ₹75,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 Qualcomm
+    {
+      id: 41,
+      title: "Hardware Intern",
+      company: "Qualcomm",
+      location: "Hyderabad",
+      category: "IT",
+      type: "Internship",
+      link: "https://qualcomm.wd5.myworkdayjobs.com/en-US/External/",
+      description: "Chip design and wireless communication technologies.",
+      stipend: "₹70,000 - ₹95,000/month",
+      eligibility: ["B.Tech ECE", "B.Tech CSE", "M.Tech"]
+    },
+
+    // 🔹 Nvidia
+    {
+      id: 42,
+      title: "Deep Learning Intern",
+      company: "Nvidia",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://nvidia.wd5.myworkdayjobs.com/en-US/NVIDIAExternalCareerSite/",
+      description: "AI research and GPU computing technologies.",
+      stipend: "₹90,000 - ₹1,20,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 Intel AI
+    {
+      id: 43,
+      title: "AI Research Intern",
+      company: "Intel",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://jobs.intel.com/en/search-jobs/india",
+      description: "Artificial intelligence and machine learning research.",
+      stipend: "₹80,000 - ₹1,10,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 AMD
+    {
+      id: 44,
+      title: "Silicon Design Intern",
+      company: "AMD",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://amd.eightfold.ai/careers/",
+      description: "Processor architecture and chip design.",
+      stipend: "₹75,000 - ₹1,00,000/month",
+      eligibility: ["B.Tech ECE", "M.Tech VLSI"]
+    },
+
+    // 🔹 Broadcom
+    {
+      id: 45,
+      title: "ASIC Design Intern",
+      company: "Broadcom",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.broadcom.com/global/en/students",
+      description: "Semiconductor design and verification.",
+      stipend: "₹65,000 - ₹90,000/month",
+      eligibility: ["B.Tech ECE", "M.Tech"]
+    },
+
+    // 🔹 Micron
+    {
+      id: 46,
+      title: "Memory Design Intern",
+      company: "Micron",
+      location: "Hyderabad",
+      category: "IT",
+      type: "Internship",
+      link: "https://micron.eightfold.ai/careers/",
+      description: "Memory technology and storage solutions.",
+      stipend: "₹60,000 - ₹85,000/month",
+      eligibility: ["B.Tech", "M.Tech"]
+    },
+
+    // 🔹 Applied Materials
+    {
+      id: 47,
+      title: "Process Engineer Intern",
+      company: "Applied Materials",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://amat.eightfold.ai/careers/",
+      description: "Semiconductor manufacturing equipment.",
+      stipend: "₹55,000 - ₹80,000/month",
+      eligibility: ["B.Tech", "M.Tech"]
+    },
+
+    // 🔹 Lam Research
+    {
+      id: 48,
+      title: "Equipment Engineer Intern",
+      company: "Lam Research",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://lamresearch.wd1.myworkdayjobs.com/en-US/LamCareers/",
+      description: "Wafer fabrication equipment technology.",
+      stipend: "₹58,000 - ₹82,000/month",
+      eligibility: ["B.Tech", "M.Tech"]
+    },
+
+    // 🔹 KPMG
+    {
+      id: 49,
+      title: "Advisory Intern",
+      company: "KPMG",
+      location: "Multiple Locations",
+      category: "Finance",
+      type: "Internship",
+      link: "https://home.kpmg/in/en/home/careers/students.html",
+      description: "Risk consulting and financial advisory services.",
+      stipend: "₹45,000 - ₹65,000/month",
+      eligibility: ["MBA", "BBA", "B.Com"]
+    },
+
+    // 🔹 EY
+    {
+      id: 50,
+      title: "Technology Risk Intern",
+      company: "EY",
+      location: "Multiple Locations",
+      category: "Finance",
+      type: "Internship",
+      link: "https://www.ey.com/en_in/careers/students",
+      description: "IT audit and cybersecurity risk assessment.",
+      stipend: "₹42,000 - ₹62,000/month",
+      eligibility: ["B.Tech", "MBA", "BBA"]
+    },
+
+    // 🔹 PwC
+    {
+      id: 51,
+      title: "Consulting Intern",
+      company: "PwC",
+      location: "Multiple Locations",
+      category: "Management",
+      type: "Internship",
+      link: "https://www.pwc.in/careers/students.html",
+      description: "Business consulting and strategy development.",
+      stipend: "₹48,000 - ₹70,000/month",
+      eligibility: ["MBA", "B.Tech", "BBA"]
+    },
+
+    // 🔹 BCG
+    {
+      id: 52,
+      title: "Consulting Intern",
+      company: "Boston Consulting Group",
+      location: "Delhi, Mumbai",
+      category: "Management",
+      type: "Internship",
+      link: "https://careers.bcg.com/students",
+      description: "Management consulting and business strategy.",
+      stipend: "₹1,10,000 - ₹1,50,000/month",
+      eligibility: ["MBA", "B.Tech", "BBA"]
+    },
+
+    // 🔹 Bain & Company
+    {
+      id: 53,
+      title: "Associate Consultant Intern",
+      company: "Bain & Company",
+      location: "Mumbai, Delhi",
+      category: "Management",
+      type: "Internship",
+      link: "https://www.bain.com/careers/students/",
+      description: "Strategy consulting and private equity work.",
+      stipend: "₹1,05,000 - ₹1,45,000/month",
+      eligibility: ["MBA", "B.Tech", "BBA"]
+    },
+
+    // 🔹 Kearney
+    {
+      id: 54,
+      title: "Business Analyst Intern",
+      company: "Kearney",
+      location: "Mumbai, Delhi",
+      category: "Management",
+      type: "Internship",
+      link: "https://www.kearney.com/careers/students",
+      description: "Operations and strategic management consulting.",
+      stipend: "₹95,000 - ₹1,30,000/month",
+      eligibility: ["MBA", "B.Tech", "BBA"]
+    },
+
+    // 🔹 American Express
+    {
+      id: 55,
+      title: "Technology Intern",
+      company: "American Express",
+      location: "Gurgaon",
+      category: "Finance",
+      type: "Internship",
+      link: "https://www.americanexpress.com/en-in/careers/students/",
+      description: "Payment technology and financial services.",
+      stipend: "₹65,000 - ₹90,000/month",
+      eligibility: ["B.Tech", "MBA", "BBA"]
+    },
+
+    // 🔹 Mastercard
+    {
+      id: 56,
+      title: "Software Development Intern",
+      company: "Mastercard",
+      location: "Pune",
+      category: "Finance",
+      type: "Internship",
+      link: "https://www.mastercard.us/en-us/vision/who-we-are/careers.html",
+      description: "Payment processing and fintech solutions.",
+      stipend: "₹70,000 - ₹95,000/month",
+      eligibility: ["B.Tech", "BCA", "BBA"]
+    },
+
+    // 🔹 Visa
+    {
+      id: 57,
+      title: "Technology Intern",
+      company: "Visa",
+      location: "Bangalore",
+      category: "Finance",
+      type: "Internship",
+      link: "https://www.visa.co.in/careers.html",
+      description: "Digital payments and cybersecurity technologies.",
+      stipend: "₹75,000 - ₹1,00,000/month",
+      eligibility: ["B.Tech", "MBA", "BBA"]
+    },
+
+    // 🔹 PayPal
+    {
+      id: 58,
+      title: "Product Intern",
+      company: "PayPal",
+      location: "Chennai",
+      category: "Finance",
+      type: "Internship",
+      link: "https://www.paypal.com/us/webapps/mpp/jobs",
+      description: "Digital wallet and payment product development.",
+      stipend: "₹68,000 - ₹92,000/month",
+      eligibility: ["MBA", "B.Tech", "BBA"]
+    },
+
+    // 🔹 Razorpay
+    {
+      id: 59,
+      title: "Engineering Intern",
+      company: "Razorpay",
+      location: "Bangalore",
+      category: "Finance",
+      type: "Internship",
+      link: "https://razorpay.com/jobs/",
+      description: "Fintech platform and payment gateway development.",
+      stipend: "₹50,000 - ₹75,000/month",
+      eligibility: ["B.Tech", "BCA", "BBA"]
+    },
+
+    // 🔹 Paytm
+    {
+      id: 60,
+      title: "Product Management Intern",
+      company: "Paytm",
+      location: "Noida",
+      category: "Finance",
+      type: "Internship",
+      link: "https://paytm.com/careers/",
+      description: "Digital payments and financial services products.",
+      stipend: "₹45,000 - ₹65,000/month",
+      eligibility: ["MBA", "B.Tech", "BBA"]
+    },
+
+    // 🔹 PhonePe
+    {
+      id: 61,
+      title: "Software Development Intern",
+      company: "PhonePe",
+      location: "Bangalore",
+      category: "Finance",
+      type: "Internship",
+      link: "https://www.phonepe.com/careers/",
+      description: "UPI payments and financial technology.",
+      stipend: "₹55,000 - ₹80,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc IT"]
+    },
+
+    // 🔹 CRED
+    {
+      id: 62,
+      title: "Product Design Intern",
+      company: "CRED",
+      location: "Bangalore",
       category: "Design",
-      type: "Full-Time",
-      link: "https://careers.google.com/jobs/results/",
-      description: "Edit and produce video content for digital platforms."
+      type: "Internship",
+      link: "https://cred.club/careers/",
+      description: "UX/UI design for credit card rewards platform.",
+      stipend: "₹40,000 - ₹60,000/month",
+      eligibility: ["B.Des", "B.Tech", "BCA"]
     },
+
+    // 🔹 Byju's
     {
-      id: 107,
-      title: "Social Media Producer",
-      company: "TikTok",
-      location: "Los Angeles, CA",
+      id: 63,
+      title: "Business Development Intern",
+      company: "Byju's",
+      location: "Bangalore",
       category: "Marketing",
-      type: "Full-Time",
-      link: "https://careers.tiktok.com/",
-      description: "Create and manage social media content and campaigns."
+      type: "Internship",
+      link: "https://byjus.com/careers/",
+      description: "Edtech sales and marketing operations.",
+      stipend: "₹35,000 - ₹50,000/month",
+      eligibility: ["MBA", "BBA", "B.Tech"]
     },
+
+    // 🔹 Unacademy
     {
-      id: 108,
-      title: "Digital Content Manager",
-      company: "Disney",
-      location: "Burbank, CA",
+      id: 64,
+      title: "Content Strategy Intern",
+      company: "Unacademy",
+      location: "Bangalore",
       category: "Marketing",
-      type: "Full-Time",
-      link: "https://jobs.disneycareers.com/",
-      description: "Manage digital content strategy and distribution across platforms."
+      type: "Internship",
+      link: "https://unacademy.com/careers/",
+      description: "Educational content planning and creation.",
+      stipend: "₹32,000 - ₹48,000/month",
+      eligibility: ["MBA", "BBA", "B.Tech"]
+    },
+
+    // 🔹 Vedantu
+    {
+      id: 65,
+      title: "Product Intern",
+      company: "Vedantu",
+      location: "Bangalore",
+      category: "Management",
+      type: "Internship",
+      link: "https://www.vedantu.com/careers/",
+      description: "Live learning platform product management.",
+      stipend: "₹38,000 - ₹55,000/month",
+      eligibility: ["MBA", "B.Tech", "BBA"]
+    },
+
+    // 🔹 upGrad
+    {
+      id: 66,
+      title: "Marketing Intern",
+      company: "upGrad",
+      location: "Mumbai",
+      category: "Marketing",
+      type: "Internship",
+      link: "https://www.upgrad.com/us/careers/",
+      description: "Digital marketing and student acquisition.",
+      stipend: "₹30,000 - ₹45,000/month",
+      eligibility: ["MBA", "BBA", "BMM"]
+    },
+
+    // 🔹 OYO
+    {
+      id: 67,
+      title: "Operations Intern",
+      company: "OYO",
+      location: "Gurgaon",
+      category: "Management",
+      type: "Internship",
+      link: "https://www.oyorooms.com/careers/",
+      description: "Hospitality operations and process optimization.",
+      stipend: "₹28,000 - ₹42,000/month",
+      eligibility: ["MBA", "BBA", "BHM"]
+    },
+
+    // 🔹 MakeMyTrip
+    {
+      id: 68,
+      title: "Product Management Intern",
+      company: "MakeMyTrip",
+      location: "Gurgaon",
+      category: "Management",
+      type: "Internship",
+      link: "https://careers.makemytrip.com/",
+      description: "Travel technology and booking platform.",
+      stipend: "₹40,000 - ₹60,000/month",
+      eligibility: ["MBA", "B.Tech", "BBA"]
+    },
+
+    // 🔹 Ibibo Group
+    {
+      id: 69,
+      title: "Software Development Intern",
+      company: "Ibibo Group",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.goibibo.com/careers/",
+      description: "Travel technology and hotel booking systems.",
+      stipend: "₹45,000 - ₹65,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc IT"]
+    },
+
+    // 🔹 Nykaa
+    {
+      id: 70,
+      title: "E-commerce Intern",
+      company: "Nykaa",
+      location: "Mumbai",
+      category: "Marketing",
+      type: "Internship",
+      link: "https://www.nykaa.com/careers/",
+      description: "Beauty e-commerce platform operations.",
+      stipend: "₹25,000 - ₹40,000/month",
+      eligibility: ["MBA", "BBA", "B.Com"]
+    },
+
+    // 🔹 Myntra
+    {
+      id: 71,
+      title: "Fashion Technology Intern",
+      company: "Myntra",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.myntra.com/careers/",
+      description: "Fashion e-commerce and recommendation systems.",
+      stipend: "₹35,000 - ₹55,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Des"]
+    },
+
+    // 🔹 Lenskart
+    {
+      id: 72,
+      title: "Product Development Intern",
+      company: "Lenskart",
+      location: "Gurgaon",
+      category: "Management",
+      type: "Internship",
+      link: "https://www.lenskart.com/careers/",
+      description: "Eyewear technology and retail operations.",
+      stipend: "₹30,000 - ₹45,000/month",
+      eligibility: ["MBA", "B.Tech", "BBA"]
+    },
+
+    // 🔹 PharmEasy
+    {
+      id: 73,
+      title: "Operations Intern",
+      company: "PharmEasy",
+      location: "Mumbai",
+      category: "Management",
+      type: "Internship",
+      link: "https://pharmeasy.in/careers/",
+      description: "Healthcare delivery and logistics operations.",
+      stipend: "₹28,000 - ₹42,000/month",
+      eligibility: ["MBA", "BBA", "B.Pharma"]
+    },
+
+    // 🔹 1MG
+    {
+      id: 74,
+      title: "Business Analyst Intern",
+      company: "1MG",
+      location: "Gurgaon",
+      category: "Management",
+      type: "Internship",
+      link: "https://www.1mg.com/careers/",
+      description: "Healthcare analytics and business intelligence.",
+      stipend: "₹32,000 - ₹48,000/month",
+      eligibility: ["MBA", "B.Tech", "BBA"]
+    },
+
+    // 🔹 CureFit
+    {
+      id: 75,
+      title: "Fitness Tech Intern",
+      company: "CureFit",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.cure.fit/careers/",
+      description: "Health and fitness technology platform.",
+      stipend: "₹35,000 - ₹52,000/month",
+      eligibility: ["B.Tech", "BCA", "BBA"]
+    },
+
+    // 🔹 ShareChat
+    {
+      id: 76,
+      title: "Software Engineer Intern",
+      company: "ShareChat",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://sharechat.com/careers/",
+      description: "Social media platform and content moderation.",
+      stipend: "₹50,000 - ₹75,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc IT"]
+    },
+
+    // 🔹 Dailyhunt
+    {
+      id: 77,
+      title: "Data Science Intern",
+      company: "Dailyhunt",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.dailyhunt.com/",
+      description: "Content recommendation and personalization.",
+      stipend: "₹45,000 - ₹68,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 InMobi
+    {
+      id: 78,
+      title: "Ad Tech Intern",
+      company: "InMobi",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.inmobi.com/company/careers/",
+      description: "Mobile advertising technology and analytics.",
+      stipend: "₹55,000 - ₹80,000/month",
+      eligibility: ["B.Tech", "MBA", "BBA"]
+    },
+
+    // 🔹 Zoho
+    {
+      id: 79,
+      title: "Software Developer Intern",
+      company: "Zoho",
+      location: "Chennai",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.zoho.com/careers/",
+      description: "Business software and SaaS platform development.",
+      stipend: "₹40,000 - ₹60,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc CS"]
+    },
+
+    // 🔹 Freshworks
+    {
+      id: 80,
+      title: "Product Engineering Intern",
+      company: "Freshworks",
+      location: "Chennai",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.freshworks.com/company/careers/",
+      description: "Customer engagement software development.",
+      stipend: "₹48,000 - ₹70,000/month",
+      eligibility: ["B.Tech", "BCA", "MCA"]
+    },
+
+    // 🔹 Chargebee
+    {
+      id: 81,
+      title: "Full Stack Intern",
+      company: "Chargebee",
+      location: "Chennai",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.chargebee.com/careers/",
+      description: "Subscription billing and revenue management.",
+      stipend: "₹42,000 - ₹65,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc IT"]
+    },
+
+    // 🔹 BrowserStack
+    {
+      id: 82,
+      title: "DevOps Intern",
+      company: "BrowserStack",
+      location: "Mumbai",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.browserstack.com/careers/",
+      description: "Cloud testing infrastructure and automation.",
+      stipend: "₹60,000 - ₹85,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc CS"]
+    },
+
+    // 🔹 Postman
+    {
+      id: 83,
+      title: "API Platform Intern",
+      company: "Postman",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.postman.com/careers/",
+      description: "API development and platform features.",
+      stipend: "₹65,000 - ₹90,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc IT"]
+    },
+
+    // 🔹 Hasura
+    {
+      id: 84,
+      title: "Backend Engineer Intern",
+      company: "Hasura",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://hasura.io/careers/",
+      description: "GraphQL engine and backend services.",
+      stipend: "₹55,000 - ₹78,000/month",
+      eligibility: ["B.Tech", "BCA", "MCA"]
+    },
+
+    // 🔹 Razorpay (Engineering)
+    {
+      id: 85,
+      title: "Backend Engineering Intern",
+      company: "Razorpay",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://razorpay.com/jobs/",
+      description: "Payment processing and fintech backend systems.",
+      stipend: "₹52,000 - ₹75,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc CS"]
+    },
+
+    // 🔹 Dream11
+    {
+      id: 86,
+      title: "Game Development Intern",
+      company: "Dream11",
+      location: "Mumbai",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.dreamsports.group/careers/",
+      description: "Fantasy sports platform and game features.",
+      stipend: "₹45,000 - ₹68,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc IT"]
+    },
+
+    // 🔹 MPL
+    {
+      id: 87,
+      title: "Mobile Development Intern",
+      company: "MPL",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.mpl.live/careers/",
+      description: "Mobile gaming platform and app development.",
+      stipend: "₹48,000 - ₹72,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc CS"]
+    },
+
+    // 🔹 Games24x7
+    {
+      id: 88,
+      title: "Data Analyst Intern",
+      company: "Games24x7",
+      location: "Mumbai",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.games24x7.com/careers/",
+      description: "Gaming analytics and user behavior analysis.",
+      stipend: "₹40,000 - ₹60,000/month",
+      eligibility: ["B.Tech", "BCA", "BBA"]
+    },
+
+    // 🔹 Urban Company
+    {
+      id: 89,
+      title: "Product Operations Intern",
+      company: "Urban Company",
+      location: "Gurgaon",
+      category: "Management",
+      type: "Internship",
+      link: "https://urbancompany.com/careers/",
+      description: "Service marketplace operations and quality.",
+      stipend: "₹35,000 - ₹55,000/month",
+      eligibility: ["MBA", "BBA", "B.Tech"]
+    },
+
+    // 🔹 BigBasket
+    {
+      id: 90,
+      title: "Supply Chain Intern",
+      company: "BigBasket",
+      location: "Bangalore",
+      category: "Management",
+      type: "Internship",
+      link: "https://www.bigbasket.com/careers/",
+      description: "Grocery delivery logistics and operations.",
+      stipend: "₹30,000 - ₹48,000/month",
+      eligibility: ["MBA", "BBA", "B.Tech"]
+    },
+
+    // 🔹 Grofers
+    {
+      id: 91,
+      title: "Operations Intern",
+      company: "Grofers",
+      location: "Gurgaon",
+      category: "Management",
+      type: "Internship",
+      link: "https://grofers.com/careers/",
+      description: "Quick commerce and delivery operations.",
+      stipend: "₹28,000 - ₹45,000/month",
+      eligibility: ["MBA", "BBA", "B.Tech"]
+    },
+
+    // 🔹 Rebel Foods
+    {
+      id: 92,
+      title: "Kitchen Tech Intern",
+      company: "Rebel Foods",
+      location: "Mumbai",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.rebelfoods.co/",
+      description: "Cloud kitchen technology and automation.",
+      stipend: "₹32,000 - ₹50,000/month",
+      eligibility: ["B.Tech", "BCA", "BHM"]
+    },
+
+    // 🔹 Zomato (Engineering)
+    {
+      id: 93,
+      title: "Backend Engineer Intern",
+      company: "Zomato",
+      location: "Gurgaon",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.zomato.com/careers/",
+      description: "Food delivery platform backend services.",
+      stipend: "₹45,000 - ₹65,000/month",
+      eligibility: ["B.Tech", "BCA", "B.Sc CS"]
+    },
+
+    // 🔹 Swiggy (Tech)
+    {
+      id: 94,
+      title: "Machine Learning Intern",
+      company: "Swiggy",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://careers.swiggy.com/",
+      description: "Delivery optimization and recommendation systems.",
+      stipend: "₹50,000 - ₹75,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 Ola (Electric)
+    {
+      id: 95,
+      title: "EV Technology Intern",
+      company: "Ola Electric",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://ola.skillate.com/jobs/",
+      description: "Electric vehicle technology and software.",
+      stipend: "₹55,000 - ₹80,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 Ather Energy
+    {
+      id: 96,
+      title: "Embedded Systems Intern",
+      company: "Ather Energy",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.atherenergy.com/careers/",
+      description: "Electric scooter firmware and controls.",
+      stipend: "₹48,000 - ₹70,000/month",
+      eligibility: ["B.Tech ECE", "B.Tech CSE"]
+    },
+
+    // 🔹 Tesla
+    {
+      id: 97,
+      title: "Autopilot Intern",
+      company: "Tesla",
+      location: "Remote",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.tesla.com/careers/search/",
+      description: "Autonomous driving technology and AI.",
+      stipend: "₹85,000 - ₹1,20,000/month",
+      eligibility: ["B.Tech", "M.Tech", "BCA"]
+    },
+
+    // 🔹 NVIDIA (AI)
+    {
+      id: 98,
+      title: "AI Research Intern",
+      company: "NVIDIA",
+      location: "Bangalore",
+      category: "IT",
+      type: "Internship",
+      link: "https://www.nvidia.com/en-in/about-nvidia/careers/",
+      description: "Deep learning and computer vision research.",
+      stipend: "₹95,000 - ₹1,30,000/month",
+      eligibility: ["B.Tech", "M.Tech", "PhD"]
+    },
+
+    // 🔹 OpenAI
+    {
+      id: 99,
+      title: "Research Engineer Intern",
+      company: "OpenAI",
+      location: "Remote",
+      category: "IT",
+      type: "Internship",
+      link: "https://openai.com/careers/",
+      description: "Large language models and AI safety.",
+      stipend: "₹1,20,000 - ₹1,60,000/month",
+      eligibility: ["B.Tech", "M.Tech", "PhD"]
+    },
+
+    // 🔹 DeepMind
+    {
+      id: 100,
+      title: "AI Safety Intern",
+      company: "DeepMind",
+      location: "Remote",
+      category: "IT",
+      type: "Internship",
+      link: "https://deepmind.com/careers/",
+      description: "AI alignment and safety research.",
+      stipend: "₹1,10,000 - ₹1,50,000/month",
+      eligibility: ["B.Tech", "M.Tech", "PhD"]
     }
   ];
 
-  // ✅ Fetch jobs from backend (supports server-side filtering if available)
   useEffect(() => {
     let isCancelled = false;
 
@@ -1214,15 +1504,14 @@ const JobPortal = () => {
     };
   }, [searchTerm, selectedCategory]);
 
-  // ✅ Choose data source (API first, fallback otherwise)
   const jobs: Job[] = useMemo(() => (apiJobs && apiJobs.length ? apiJobs : fallbackJobs), [apiJobs, fallbackJobs]);
 
-  // ✅ Client-side filtering (works for both API and fallback data)
   const filteredJobs = jobs.filter((job) => {
     const matchesCategory = selectedCategory === "All" || job.category === selectedCategory;
     const matchesSearch =
       job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.company.toLowerCase().includes(searchTerm.toLowerCase());
+      job.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      job.eligibility.some(elig => elig.toLowerCase().includes(searchTerm.toLowerCase()));
     return matchesCategory && matchesSearch;
   });
 
@@ -1252,7 +1541,7 @@ const JobPortal = () => {
             <Search className="h-5 w-5 text-gray-500 mr-2" />
             <input
               type="text"
-              placeholder="Search jobs or companies..."
+              placeholder="Search jobs, companies, or eligibility..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full outline-none"
@@ -1310,9 +1599,34 @@ const JobPortal = () => {
                 <p className="text-gray-500 text-sm flex items-center mt-2">
                   <MapPin className="h-4 w-4 mr-1" /> {job.location}
                 </p>
-                <span className="inline-block mt-2 bg-blue-100 text-blue-800 px-2 py-1 text-xs rounded-full">
-                  {job.category} • {job.type}
-                </span>
+                
+                {/* Stipend Information */}
+                <div className="flex items-center mt-2 bg-green-50 text-green-700 px-3 py-1 rounded-full text-sm">
+                  <DollarSign className="h-4 w-4 mr-1" />
+                  <span className="font-medium">{job.stipend}</span>
+                </div>
+
+                <div className="flex flex-wrap gap-2 mt-3">
+                  <span className="bg-blue-100 text-blue-800 px-2 py-1 text-xs rounded-full">
+                    {job.category}
+                  </span>
+                  <span className="bg-purple-100 text-purple-800 px-2 py-1 text-xs rounded-full">
+                    {job.type}
+                  </span>
+                </div>
+
+                {/* Eligibility */}
+                <div className="mt-3">
+                  <p className="text-sm text-gray-600 font-medium">Eligibility:</p>
+                  <div className="flex flex-wrap gap-1 mt-1">
+                    {job.eligibility.map((elig, idx) => (
+                      <span key={idx} className="bg-gray-100 text-gray-700 px-2 py-1 text-xs rounded">
+                        {elig}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+
                 <p className="mt-4 text-gray-700 text-sm">{job.description}</p>
               </div>
 
