@@ -61,14 +61,35 @@ const ResumeBuilder: React.FC = () => {
                   Use the builder or jump straight into the form. Download as PDF/DOCX or share online.
                 </p>
                 <div className="mt-8 flex flex-col items-center gap-4 sm:mt-10 sm:flex-row sm:justify-center">
-                  <a href="https://www.careerhubs.info/resume-builder" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-6 py-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-indigo-500 sm:text-lg">
-                    Open Resume Builder
-                  </a>
-                  <a href="https://www.careerhubs.info/resume-form" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl px-6 py-4 text-base font-semibold text-indigo-700 ring-2 ring-inset ring-indigo-200 transition-colors hover:bg-indigo-50 sm:text-lg">
-                    Fill Resume Form
-                  </a>
                   <div className="flex flex-col items-center">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfGE3mcREhM0VatrbUXHupROarHAPa7Pp6YO3hXCHUPuoeGpQ/viewform?usp=header" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center rounded-xl bg-purple-600 px-6 py-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-purple-500 sm:text-lg">
+                    <a
+                      href="https://www.careerhubs.info/resume-builder"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-6 py-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-indigo-500 sm:text-lg"
+                    >
+                      Open Resume Builder
+                    </a>
+                    <span className="mt-2 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold">Free</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <a
+                      href="https://www.careerhubs.info/resume-form"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-xl px-6 py-4 text-base font-semibold text-indigo-700 ring-2 ring-inset ring-indigo-200 transition-colors hover:bg-indigo-50 sm:text-lg"
+                    >
+                      Fill Resume Form
+                    </a>
+                    <span className="mt-2 px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-bold">Free</span>
+                  </div>
+                  <div className="flex flex-col items-center">
+                    <a
+                      href="https://docs.google.com/forms/d/e/1FAIpQLSfGE3mcREhM0VatrbUXHupROarHAPa7Pp6YO3hXCHUPuoeGpQ/viewform?usp=header"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center rounded-xl bg-purple-600 px-6 py-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-purple-500 sm:text-lg"
+                    >
                       Order Your Premium Resume
                     </a>
                     <div className="mt-2 text-xs sm:text-sm text-gray-700">

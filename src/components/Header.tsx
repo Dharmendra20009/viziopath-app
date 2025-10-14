@@ -14,6 +14,7 @@ const Header = () => {
     { name: 'Courses & Trainings', href: '/speakers' },
     { name: 'Resume Builder', href: '/services' },
     { name: 'Contact Us', href: '/contact' },
+    // { name: 'AI Assistant', href: '/ai-assistant' }, // Remove or comment this line
   ];
 
   return (
