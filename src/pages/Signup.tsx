@@ -1,197 +1,147 @@
-import React, { useState } from "react";
-import { GoogleLogin } from "@react-oauth/google";
-import { motion } from "framer-motion";
-import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
-import { apiRequest } from "../utils/api";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { supabase } from '../lib/supabase';
 
-const Signup: React.FC = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+import { Eye, EyeOff } from 'lucide-react';
 
-  // Email Signup
-  const handleSubmit = async (e: React.FormEvent) => {
+const Signup = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
+
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setSuccess("");
-    setIsLoading(true);
+    setLoading(true);
+    setError(null);
 
     try {
-      await apiRequest("/api/auth/register", {
-        method: "POST",
-        body: JSON.stringify({ name, email, password })
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
       });
-      setSuccess("Signup successful! You can now log in.");
-      setName("");
-      setEmail("");
-      setPassword("");
+
+      if (error) throw error;
+
+      // Check if session exists
+      if (data.session) {
+        navigate('/');
+      } else if (data.user) {
+        // If user is created but no session, it usually means email confirmation is required
+        // or the user already exists (and Supabase is protecting privacy).
+        // However, since the user specifically requested a warning for existing users,
+        // and we can't easily distinguish without email enumeration protection,
+        // we will show a message that covers both cases or implies checking email/signing in.
+        // But to try and satisfy the "warning" request:
+        setError('Account created or already exists. Please check your email for a confirmation link or try signing in.');
+      }
     } catch (err: any) {
-      const message = err?.response?.data?.message || "Signup failed";
-      setError(message);
+      if (err.message.includes('already registered') || err.message.includes('already exists')) {
+        setError('This email is already registered. Please sign in instead.');
+      } else {
+        setError(err.message);
+      }
     } finally {
-      setIsLoading(false);
+      setLoading(false);
     }
   };
 
-  // Google Signup
-  const handleGoogleSuccess = (credentialResponse: any) => {
-    console.log("Google signup success:", credentialResponse);
-    setSuccess("Google signup successful!");
-  };
-
-  const handleGoogleError = () => {
-    setError("Google signup failed. Please try again.");
-  };
-
-  // Social Signup
-  const handleSocialSignup = (provider: string) => {
-    setError("");
-    setSuccess(`Signing up with ${provider}...`);
-  };
-
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Hero Section */}
-      <div className="bg-gradient-to-r from-blue-900 to-blue-600 py-16 text-center text-white">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">Join Viziopath</h1>
-        <p className="text-lg md:text-xl opacity-90">
-        </p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-blue-600/20 blur-[100px]"></div>
+        <div className="absolute top-[40%] -right-[10%] w-[40%] h-[40%] rounded-full bg-indigo-600/20 blur-[100px]"></div>
+        <div className="absolute -bottom-[10%] left-[20%] w-[30%] h-[30%] rounded-full bg-teal-600/20 blur-[100px]"></div>
       </div>
 
-      {/* Signup Card */}
-      <div className="flex-grow flex items-center justify-center bg-gray-50">
-        <motion.div
-          initial={{ opacity: 0, y: 50, scale: 0.9 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="relative z-10 bg-white p-8 rounded-2xl shadow-lg w-full max-w-md border border-gray-200 -mt-20"
-        >
-          {/* Header */}
-          <div className="text-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Create Account
-            </h2>
-            <p className="text-gray-600">Sign up with Google or email</p>
-          </div>
-
-          {/* Google Signup */}
-          <div className="mb-6">
-            <GoogleLogin
-              onSuccess={handleGoogleSuccess}
-              onError={handleGoogleError}
-              theme="filled_blue"
-              size="large"
-              text="signup_with"
-              shape="rectangular"
-              width="100%"
-            />
-          </div>
-
-          {/* Social Signup */}
-          <div className="grid grid-cols-3 gap-3 mb-6">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleSocialSignup("Facebook")}
-              className="flex items-center justify-center p-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
-            >
-              <FaFacebook className="text-lg" />
-            </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleSocialSignup("GitHub")}
-              className="flex items-center justify-center p-3 bg-gray-800 hover:bg-gray-900 text-white rounded-lg"
-            >
-              <FaGithub className="text-lg" />
-            </motion.button>
-
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => handleSocialSignup("LinkedIn")}
-              className="flex items-center justify-center p-3 bg-blue-700 hover:bg-blue-800 text-white rounded-lg"
-            >
-              <FaLinkedin className="text-lg" />
-            </motion.button>
-          </div>
-
-          {/* Divider */}
-          <div className="relative my-6">
-            <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-200"></div>
+      <div className="max-w-md w-full space-y-8 relative z-10 bg-white/10 backdrop-blur-lg p-8 rounded-2xl border border-white/20 shadow-2xl">
+        <div>
+          <h2 className="mt-2 text-center text-3xl font-extrabold text-white tracking-tight">
+            Create Account
+          </h2>
+          <p className="mt-2 text-center text-sm text-gray-300">
+            Or{' '}
+            <Link to="/login" className="font-medium text-teal-400 hover:text-teal-300 transition-colors">
+              sign in to your existing account
+            </Link>
+          </p>
+        </div>
+        <form className="mt-8 space-y-6" onSubmit={handleSignup}>
+          <div className="space-y-4">
+            <div>
+              <label htmlFor="email-address" className="sr-only">
+                Email address
+              </label>
+              <input
+                id="email-address"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="appearance-none relative block w-full px-4 py-3 border border-gray-600 placeholder-gray-400 text-white bg-gray-800/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent focus:z-10 sm:text-sm transition-all"
+                placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
-            <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white text-gray-500">
-                Or sign up with email
-              </span>
+            <div className="relative">
+              <label htmlFor="password" className="sr-only">
+                Password
+              </label>
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? 'text' : 'password'}
+                autoComplete="new-password"
+                required
+                className="appearance-none relative block w-full px-4 py-3 border border-gray-600 placeholder-gray-400 text-white bg-gray-800/50 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent focus:z-10 sm:text-sm transition-all pr-10"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white transition-colors z-20"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" aria-hidden="true" />
+                ) : (
+                  <Eye className="h-5 w-5" aria-hidden="true" />
+                )}
+              </button>
             </div>
           </div>
 
-          {/* Email Form */}
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              placeholder="Full name"
-              className="w-full p-3 border border-gray-300 rounded-lg"
-            />
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="Email address"
-              className="w-full p-3 border border-gray-300 rounded-lg"
-            />
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="Password"
-              className="w-full p-3 border border-gray-300 rounded-lg"
-            />
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              disabled={isLoading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold"
-            >
-              {isLoading ? "Creating account..." : "Create Account"}
-            </motion.button>
-          </form>
-
-          {/* Links */}
-          <div className="mt-6 text-center text-gray-600 text-sm">
-            Already have an account?{" "}
-            <a
-              href="/login"
-              className="text-blue-600 hover:text-blue-700 font-semibold"
-            >
-              Sign in
-            </a>
-          </div>
-
-          {/* Status */}
           {error && (
-            <div className="mt-4 p-3 bg-red-100 text-red-700 text-center rounded-lg">
+            <div className="text-red-400 text-sm text-center bg-red-900/20 py-2 rounded-lg border border-red-500/20">
               {error}
             </div>
           )}
-          {success && (
-            <div className="mt-4 p-3 bg-green-100 text-green-700 text-center rounded-lg">
-              {success}
-            </div>
-          )}
-        </motion.div>
+
+          <div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-gradient-to-r from-teal-500 to-blue-600 hover:from-teal-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            >
+              {loading ? (
+                <span className="flex items-center">
+                  <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Signing up...
+                </span>
+              ) : (
+                'Sign up'
+              )}
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );

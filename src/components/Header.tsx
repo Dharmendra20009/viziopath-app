@@ -1,18 +1,31 @@
 import { useState } from 'react';
 import { FaBars, FaTimes } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
+  const { user, signOut } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true);
+    // Add a small delay to show the animation
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    await signOut();
+    setIsLoggingOut(false);
+    setIsMenuOpen(false);
+    navigate('/login');
+  };
 
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
     { name: 'MOUs & Collabs', href: '/mous' },
     { name: 'Job Portal', href: '/jobportal' },
-    { name: 'Top Achievers', href: '/top-achievers' },
     { name: 'Courses & Trainings', href: '/speakers' },
-    { name: 'Resume Builder', href: '/services' },
+    { name: 'Resume Templates', href: '/resumeTemplates' },
     { name: 'Contact Us', href: '/contact' },
     // { name: 'AI Assistant', href: '/ai-assistant' }, // Remove or comment this line
   ];
@@ -43,21 +56,53 @@ const Header = () => {
               {item.name}
             </Link>
           ))}
+          {user && (
+            <Link to="/my-projects" className="text-sm font-semibold text-white hover:text-indigo-300">
+              My Projects
+            </Link>
+          )}
+          {user?.email === 'dharmendrakumartdh@gmail.com' && (
+            <Link to="/admin/resume" className="text-sm font-semibold text-yellow-400 hover:text-yellow-300">
+              Admin Dashboard
+            </Link>
+          )}
         </div>
 
         <div className="hidden lg:flex lg:flex-1 lg:justify-end lg:items-center lg:gap-4">
-          <Link
-            to="/login"
-            className="text-sm font-semibold leading-6 text-white hover:text-indigo-300 transition-colors"
-          >
-            Log in
-          </Link>
-          <Link
-            to="/signup"
-            className="text-sm font-semibold leading-6 text-white bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-lg transition-colors"
-          >
-            Sign up
-          </Link>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="text-sm font-semibold leading-6 text-white bg-red-600 hover:bg-red-500 px-4 py-2 rounded-lg transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center gap-2"
+            >
+              {isLoggingOut ? (
+                <>
+                  <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                  Logging out...
+                </>
+              ) : (
+                'Logout'
+              )}
+            </button>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="text-sm font-semibold leading-6 text-white hover:text-indigo-300 transition-colors"
+              >
+                Log in
+              </Link>
+              <Link
+                to="/signup"
+                className="text-sm font-semibold leading-6 text-white bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-lg transition-colors"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
         </div>
       </nav>
 
@@ -91,23 +136,63 @@ const Header = () => {
                     {item.name}
                   </Link>
                 ))}
+                {user && (
+                  <Link
+                    to="/my-projects"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-white hover:bg-gray-800"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    My Projects
+                  </Link>
+                )}
+                {user?.email === 'dharmendrakumartdh@gmail.com' && (
+                  <Link
+                    to="/admin/resume"
+                    className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-yellow-400 hover:bg-gray-800"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    Admin Dashboard
+                  </Link>
+                )}
               </div>
 
               <div className="py-6 space-y-2">
-                <Link
-                  to="/login"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-white hover:bg-gray-800 w-full text-left"
-                >
-                  Log in
-                </Link>
-                <Link
-                  to="/signup"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-indigo-400 hover:bg-gray-800 w-full text-left"
-                >
-                  Sign up
-                </Link>
+                {user ? (
+                  <button
+                    onClick={handleLogout}
+                    disabled={isLoggingOut}
+                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-red-500 hover:bg-gray-800 w-full text-left flex items-center gap-2"
+                  >
+                    {isLoggingOut ? (
+                      <>
+                        <svg className="animate-spin h-4 w-4 text-red-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        Logging out...
+                      </>
+                    ) : (
+                      'Logout'
+                    )}
+                  </button>
+                ) : (
+                  <>
+                    <Link
+                      to="/login"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-white hover:bg-gray-800 w-full text-left"
+                    >
+                      Log in
+                    </Link>
+                    <Link
+                      to="/signup"
+                      onClick={() => setIsMenuOpen(false)}
+                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-indigo-400 hover:bg-gray-800 w-full text-left"
+                    >
+                      Sign up
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>

@@ -54,17 +54,17 @@ const Home = () => {
     { name: 'Digital Marketing', icon: TrendingUp, color: 'bg-pink-100 text-pink-600' },
     { name: 'UI/UX Design', icon: PenTool, color: 'bg-indigo-100 text-indigo-600' },
     { name: 'Marketing Management', icon: BarChart, color: 'bg-yellow-100 text-yellow-600' },
-  { name: 'Human Resource Management', icon: Users, color: 'bg-red-100 text-red-600' },
-  { name: 'Finance & Accounting', icon: DollarSign, color: 'bg-lime-100 text-lime-600' },
-  { name: 'Operations Management', icon: Settings, color: 'bg-slate-100 text-slate-600' },
-  { name: 'International Business', icon: Globe, color: 'bg-cyan-100 text-cyan-600' },
-  { name: 'Business Analytics', icon: PieChart, color: 'bg-teal-100 text-teal-600' },
-  { name: 'Entrepreneurship', icon: Briefcase, color: 'bg-violet-100 text-violet-600' },
-  { name: 'Supply Chain Management', icon: Truck, color: 'bg-amber-100 text-amber-600' },
-  { name: 'Retail Management', icon: ShoppingCart, color: 'bg-rose-100 text-rose-600' },
-  { name: 'Healthcare Management', icon: HeartPulse, color: 'bg-emerald-100 text-emerald-600' },
-  { name: 'Event Management', icon: Calendar, color: 'bg-fuchsia-100 text-fuchsia-600' },
-  { name: 'Hospitality & Tourism', icon: Plane, color: 'bg-sky-100 text-sky-600' },
+    { name: 'Human Resource Management', icon: Users, color: 'bg-red-100 text-red-600' },
+    { name: 'Finance & Accounting', icon: DollarSign, color: 'bg-lime-100 text-lime-600' },
+    { name: 'Operations Management', icon: Settings, color: 'bg-slate-100 text-slate-600' },
+    { name: 'International Business', icon: Globe, color: 'bg-cyan-100 text-cyan-600' },
+    { name: 'Business Analytics', icon: PieChart, color: 'bg-teal-100 text-teal-600' },
+    { name: 'Entrepreneurship', icon: Briefcase, color: 'bg-violet-100 text-violet-600' },
+    { name: 'Supply Chain Management', icon: Truck, color: 'bg-amber-100 text-amber-600' },
+    { name: 'Retail Management', icon: ShoppingCart, color: 'bg-rose-100 text-rose-600' },
+    { name: 'Healthcare Management', icon: HeartPulse, color: 'bg-emerald-100 text-emerald-600' },
+    { name: 'Event Management', icon: Calendar, color: 'bg-fuchsia-100 text-fuchsia-600' },
+    { name: 'Hospitality & Tourism', icon: Plane, color: 'bg-sky-100 text-sky-600' },
   ];
 
   const certifications = [
@@ -120,7 +120,7 @@ const Home = () => {
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -152,7 +152,7 @@ const Home = () => {
               <strong>Viziopath, powered by Viziopath Innovations:</strong> Where Technology Meets Talent.
             </p>
             <p className="text-lg text-gray-600 max-w-4xl mx-auto">
-              Our internship program focuses on real-world tech innovation, mentorship from industry leaders, 
+              Our internship program focuses on real-world tech innovation, mentorship from industry leaders,
               and meaningful career-building experiences that prepare you for success.
             </p>
           </motion.div>
@@ -187,7 +187,7 @@ const Home = () => {
           >
             Our Global Impact
           </motion.h2>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <motion.div
@@ -291,7 +291,7 @@ const Home = () => {
           >
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Official Recognition</h2>
             <p className="text-xl text-gray-600 mb-12">Certified and trusted by leading organizations</p>
-            
+
             <div className="flex flex-wrap justify-center items-center gap-8">
               {certifications.map((cert, index) => (
                 <motion.div
