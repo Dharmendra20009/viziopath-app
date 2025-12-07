@@ -274,7 +274,7 @@ export default function LatexEditor() {
                         <MonacoEditor
                             height="100%"
                             width="100%"
-                            defaultLanguage="latex"
+                            defaultLanguage="javascript"
                             theme="vs-dark"
                             value={latexCode}
                             onChange={handleCodeChange}
