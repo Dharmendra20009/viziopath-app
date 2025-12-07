@@ -1,5 +1,5 @@
 export const config = {
-    backendURL: "http://localhost:5000",
+    backendURL: import.meta.env.VITE_BACKEND_URL,
 };
 
 export default config;
