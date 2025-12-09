@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 import { FaSync, FaSpinner, FaChevronRight, FaChevronLeft } from "react-icons/fa";
 import { supabase } from "../lib/supabase";
 import { useAuth } from "../context/AuthContext";
+import { Pencil, Check, X } from 'lucide-react';
 import debounce from "lodash/debounce";
 
 const backendURL = config.backendURL;
@@ -19,6 +20,11 @@ export default function LatexEditor() {
     const [isCompiling, setIsCompiling] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    // Title Editing State
+    const [title, setTitle] = useState("Untitled Project");
+    const [isEditingTitle, setIsEditingTitle] = useState(false);
+    const [newTitle, setNewTitle] = useState("");
 
     // UI State
     const [editorWidth, setEditorWidth] = useState(50); // Initial width: 50%
@@ -47,10 +53,44 @@ export default function LatexEditor() {
 
             if (project) {
                 setLatexCode(project.custom_latex_code);
+                setTitle(project.title);
             }
         } catch (err: any) {
             console.error("Error loading project:", err);
             setError("Failed to load project. Please try again.");
+        }
+    };
+
+    // Title Editing Logic
+    const startEditing = () => {
+        setIsEditingTitle(true);
+        setNewTitle(title);
+    };
+
+    const cancelEditing = () => {
+        setIsEditingTitle(false);
+        setNewTitle("");
+    };
+
+    const handleUpdateTitle = async () => {
+        if (!newTitle.trim() || !id) return;
+
+        try {
+            const { error } = await supabase
+                .from('resume_projects')
+                .update({
+                    title: newTitle.trim(),
+                    updated_at: new Date().toISOString()
+                })
+                .eq('id', id);
+
+            if (error) throw error;
+
+            setTitle(newTitle.trim());
+            setIsEditingTitle(false);
+        } catch (err: any) {
+            console.error("Error updating title:", err);
+            setError("Failed to update title");
         }
     };
 
@@ -236,6 +276,47 @@ export default function LatexEditor() {
                             My Projects
                         </Link>
                     </div>
+                </div>
+
+                {/* Title Editor (Centered) */}
+                <div className="flex-1 flex justify-center order-first sm:order-none w-full sm:w-auto mb-2 sm:mb-0">
+                    {isEditingTitle ? (
+                        <div className="flex items-center gap-2">
+                            <input
+                                type="text"
+                                value={newTitle}
+                                onChange={(e) => setNewTitle(e.target.value)}
+                                className="bg-gray-700 text-white px-3 py-1 rounded-md border border-gray-600 focus:border-indigo-500 focus:outline-none text-sm w-48 sm:w-64"
+                                autoFocus
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') handleUpdateTitle();
+                                    if (e.key === 'Escape') cancelEditing();
+                                }}
+                            />
+                            <button
+                                onClick={handleUpdateTitle}
+                                className="text-green-400 hover:text-green-300 p-1 hover:bg-gray-700 rounded transition-colors"
+                            >
+                                <Check className="h-4 w-4" />
+                            </button>
+                            <button
+                                onClick={cancelEditing}
+                                className="text-red-400 hover:text-red-300 p-1 hover:bg-gray-700 rounded transition-colors"
+                            >
+                                <X className="h-4 w-4" />
+                            </button>
+                        </div>
+                    ) : (
+                        <div
+                            className="group flex items-center gap-2 cursor-pointer px-3 py-1 rounded-md hover:bg-gray-700/50 transition-colors"
+                            onClick={startEditing}
+                        >
+                            <h1 className="text-lg font-semibold text-white truncate max-w-[200px] sm:max-w-md" title={title}>
+                                {title}
+                            </h1>
+                            <Pencil className="h-3 w-3 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                        </div>
+                    )}
                 </div>
 
                 {/* Status & Recompile */}
