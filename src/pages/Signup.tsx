@@ -21,20 +21,15 @@ const Signup = () => {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          emailRedirectTo: import.meta.env.VITE_SITE_URL || window.location.origin,
+        },
       });
 
       if (error) throw error;
-
-      // Check if session exists
       if (data.session) {
         navigate('/');
       } else if (data.user) {
-        // If user is created but no session, it usually means email confirmation is required
-        // or the user already exists (and Supabase is protecting privacy).
-        // However, since the user specifically requested a warning for existing users,
-        // and we can't easily distinguish without email enumeration protection,
-        // we will show a message that covers both cases or implies checking email/signing in.
-        // But to try and satisfy the "warning" request:
         setError('Account created or already exists. Please check your email for a confirmation link or try signing in.');
       }
     } catch (err: any) {
@@ -50,7 +45,6 @@ const Signup = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
-      {/* Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-[20%] -left-[10%] w-[50%] h-[50%] rounded-full bg-blue-600/20 blur-[100px]"></div>
         <div className="absolute top-[40%] -right-[10%] w-[40%] h-[40%] rounded-full bg-indigo-600/20 blur-[100px]"></div>
