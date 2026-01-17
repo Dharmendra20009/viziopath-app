@@ -1,56 +1,43 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Target, Eye, Users, Award, Globe, Lightbulb } from 'lucide-react';
+import { Target, Eye, Users, Award, Globe, Lightbulb, CheckCircle, Clock, LayoutTemplate, Shield, Star, Rocket, Heart } from 'lucide-react';
 
 const About = () => {
+
+  const aboutHighlights = [
+    { text: "Powerful LaTeX engine that formats resumes automatically" },
+    { text: "100% browser-based — no software installation needed" },
+    { text: "Generates clean sections for education, experience, and skills" },
+    { text: "Perfect for university submissions, job portals, LinkedIn, and HR systems" },
+    { text: "Loved by 04,53,419+ users across India and worldwide" }
+  ];
+
+  const benefits = [
+    { icon: Clock, title: "Saves Time", desc: "Saves hours of manual formatting" },
+    { icon: LayoutTemplate, title: "Professional Layout", desc: "Ensures results every time" },
+    { icon: Users, title: "For Everyone", desc: "Freshers, students & professionals" }
+  ];
+
   const values = [
     {
       icon: Target,
-      title: 'Excellence',
-      description: 'We strive for excellence in every training program and internship opportunity we provide.'
+      title: 'Precision',
+      description: 'We believe in the power of perfect formatting. Every pixel and margin is calculated for maximum impact.'
     },
     {
       icon: Users,
-      title: 'Mentorship',
-      description: 'Industry experts guide every intern through personalized mentorship programs.'
+      title: 'Accessibility',
+      description: 'Making professional-grade LaTeX documents accessible to everyone, regardless of technical skill.'
     },
     {
-      icon: Globe,
-      title: 'Global Reach',
-      description: 'Connecting talent worldwide with opportunities that transcend geographical boundaries.'
+      icon: Rocket,
+      title: 'Career Growth',
+      description: 'Our ultimate goal is to help you land your dream job by presenting your best self.'
     },
     {
-      icon: Lightbulb,
-      title: 'Innovation',
-      description: 'Embracing cutting-edge technologies and innovative learning methodologies.'
-    }
-  ];
-
-  const methodology = [
-    {
-      step: '01',
-      title: 'Assessment & Onboarding',
-      description: 'Comprehensive skill assessment and personalized learning path creation.'
-    },
-    {
-      step: '02',
-      title: 'Structured Learning',
-      description: 'Industry-relevant curriculum with hands-on projects and real-world scenarios.'
-    },
-    {
-      step: '03',
-      title: 'Mentorship & Guidance',
-      description: 'One-on-one mentorship from industry experts and career guidance.'
-    },
-    {
-      step: '04',
-      title: 'Project Implementation',
-      description: 'Work on live projects that contribute to your portfolio and experience.'
-    },
-    {
-      step: '05',
-      title: 'Career Placement',
-      description: 'Job placement assistance and networking opportunities with top companies.'
+      icon: Heart,
+      title: 'User Success',
+      description: 'Your success is our success. We celebrate every interview call and job offer our users receive.'
     }
   ];
 
@@ -64,16 +51,94 @@ const About = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-center"
           >
-            <h1 className="text-5xl font-bold mb-6">About Viziopath</h1>
+            <h1 className="text-5xl font-bold mb-6">Building Careers, One Resume at a Time</h1>
             <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              Empowering the next generation of tech professionals through comprehensive training and meaningful internship experiences.
+              We are Viziopath. We bridge the gap between your potential and your career opportunities through intelligent, ATS-friendly document creation.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Company Overview */}
-      <section className="py-20 bg-white">
+      {/* Product Spotlight: LaTeX Resume Creator */}
+      <section className="py-24 bg-white border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            <div className="order-2 lg:order-1">
+              <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6 font-mono">About Our LaTeX Resume Creator</h2>
+              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
+                Designed for students, professionals, and job-seekers, our platform helps you build clean, ATS-compliant resumes using industry-standard LaTeX formatting. Whether you’re applying for your first internship or targeting top corporate roles, our tools ensure your profile stands out with clarity, structure, and precision.
+              </p>
+
+              <ul className="space-y-4 mb-10">
+                {aboutHighlights.map((item, idx) => (
+                  <li key={idx} className="flex items-start gap-3">
+                    <CheckCircle className="w-6 h-6 text-teal-500 shrink-0 mt-0.5" />
+                    <span className="text-gray-700">{item.text}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                {benefits.map((benefit, idx) => (
+                  <div key={idx} className="bg-gray-50 p-4 rounded-xl text-center hover:bg-teal-50 transition-colors">
+                    <benefit.icon className="w-8 h-8 text-teal-600 mx-auto mb-3" />
+                    <h4 className="font-bold text-gray-900 text-sm mb-1">{benefit.title}</h4>
+                    <p className="text-xs text-gray-500">{benefit.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="order-1 lg:order-2 relative">
+              <div className="absolute -inset-4 bg-gradient-to-r from-blue-100 to-teal-100 rounded-full blur-3xl opacity-50"></div>
+              <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-8 transform rotate-2 hover:rotate-0 transition-transform duration-500">
+                {/* Decorative Visual representing structure */}
+                <div className="space-y-4">
+                  <div className="h-8 w-1/3 bg-gray-100 rounded"></div>
+                  <div className="flex gap-4">
+                    <div className="h-32 w-full bg-blue-50/50 rounded-lg border border-dashed border-blue-200 flex items-center justify-center">
+                      <div className="text-center">
+                        <Shield className="w-8 h-8 text-blue-300 mx-auto mb-2" />
+                        <span className="text-xs text-blue-400 font-mono">ATS_COMPLIANT</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <div className="h-4 w-full bg-gray-50 rounded"></div>
+                    <div className="h-4 w-5/6 bg-gray-50 rounded"></div>
+                    <div className="h-4 w-4/6 bg-gray-50 rounded"></div>
+                  </div>
+                  <div className="flex justify-between items-center pt-8 border-t border-gray-100">
+                    <div className="flex -space-x-3">
+                      {[1, 2, 3, 4].map(i => (
+                        <div key={i} className="w-10 h-10 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-xs font-bold text-gray-500">
+                          U{i}
+                        </div>
+                      ))}
+                      <div className="w-10 h-10 rounded-full bg-teal-100 border-2 border-white flex items-center justify-center text-xs font-bold text-teal-600">
+                        +4M
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="flex text-yellow-400 mb-1">
+                        <Star className="w-4 h-4 fill-current" />
+                        <Star className="w-4 h-4 fill-current" />
+                        <Star className="w-4 h-4 fill-current" />
+                        <Star className="w-4 h-4 fill-current" />
+                        <Star className="w-4 h-4 fill-current" />
+                      </div>
+                      <div className="text-xs text-gray-400">Trusted by Professionals</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Our Story */}
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
@@ -83,17 +148,13 @@ const About = () => {
             >
               <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
               <p className="text-lg text-gray-600 mb-6">
-                Founded with a vision to bridge the gap between academic learning and industry requirements, 
-                Viziopath has emerged as a leading platform for technical training and internships. 
-                Powered by Innovation and Industry Insight, we combine technological expertise with educational excellence.
+                Viziopath started with a common frustration: seeing talented individuals get overlooked simply because their resumes weren't optimized for modern hiring systems. We realized that while candidates had the skills, they lacked the tools to present them effectively.
               </p>
               <p className="text-lg text-gray-600 mb-6">
-                Our journey began with a simple belief: every student deserves access to quality education 
-                and real-world experience that prepares them for successful careers in technology and beyond.
+                We turned to LaTeX—the gold standard for document formatting—but knew it was too complex for the average user. So, we built a bridge. A platform that harnesses the power of LaTeX's precision engine but wraps it in an intuitive, easy-to-use interface.
               </p>
               <p className="text-lg text-gray-600">
-                Today, we're proud to have trained over 13,661 interns from 187+ colleges across 13 countries, 
-                with recognition from AICTE and other prestigious organizations.
+                Today, Viziopath is more than just a resume builder. It's a career catalyst trusted by over 450,000+ users worldwide, helping them navigate the competitive job market with confidence and professionalism.
               </p>
               {/* Founder & CEO Section */}
               <div className="mt-10 flex items-center gap-4">
@@ -105,11 +166,11 @@ const About = () => {
                 <div>
                   <h3 className="text-2xl font-bold text-gray-900">Dharmendra Gupta</h3>
                   <p className="text-blue-700 font-semibold">Founder &amp; CEO</p>
-                  <p className="text-gray-600 text-sm mt-1">Leading Viziopath with a passion for empowering students and bridging the gap between education and industry.</p>
+                  <p className="text-gray-600 text-sm mt-1">Passionate about democratizing career opportunities through technology.</p>
                 </div>
               </div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -118,8 +179,8 @@ const About = () => {
             >
               <img
                 src="https://images.pexels.com/photos/3183153/pexels-photo-3183153.jpeg?auto=compress&cs=tinysrgb&w=800"
-                alt="Team collaboration"
-                className="rounded-2xl shadow-xl"
+                alt="Our commitment"
+                className="rounded-2xl shadow-xl hover:scale-105 transition-transform duration-500"
               />
             </motion.div>
           </div>
@@ -127,14 +188,14 @@ const About = () => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white p-8 rounded-2xl shadow-lg"
+              className="bg-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100"
             >
               <div className="flex items-center mb-6">
                 <div className="bg-blue-100 p-3 rounded-lg mr-4">
@@ -143,9 +204,7 @@ const About = () => {
                 <h3 className="text-2xl font-bold text-gray-900">Our Mission</h3>
               </div>
               <p className="text-lg text-gray-600">
-                To democratize access to quality technical education and provide students with practical, 
-                industry-relevant skills that enable them to excel in their chosen careers. We're committed 
-                to creating a bridge between academic knowledge and professional requirements.
+                To eliminate the "formatting barrier" in recruitment. We are on a mission to ensure that no qualified candidate is rejected by an ATS bot simply because of a poorly formatted document. We empower you to focus on your content while we handle the presentation.
               </p>
             </motion.div>
 
@@ -154,7 +213,7 @@ const About = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-white p-8 rounded-2xl shadow-lg"
+              className="bg-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100"
             >
               <div className="flex items-center mb-6">
                 <div className="bg-teal-100 p-3 rounded-lg mr-4">
@@ -163,9 +222,7 @@ const About = () => {
                 <h3 className="text-2xl font-bold text-gray-900">Our Vision</h3>
               </div>
               <p className="text-lg text-gray-600">
-                To become the global leader in technical education and internship programs, fostering 
-                innovation and excellence while empowering individuals to transform their aspirations 
-                into successful, fulfilling careers in technology.
+                To become the global standard for professional resume creation. We envision a world where creating a high-quality, industry-standard CV is not a skill you need to learn, but a tool you can access freely and instantly.
               </p>
             </motion.div>
           </div>
@@ -182,7 +239,7 @@ const About = () => {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Core Values</h2>
-            <p className="text-xl text-gray-600">The principles that guide everything we do</p>
+            <p className="text-xl text-gray-600">Built on principles that put your career first</p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -207,7 +264,7 @@ const About = () => {
       </section>
 
       {/* Why Viziopath */}
-      <section className="py-20 bg-blue-600 text-white">
+      <section className="py-20 bg-gradient-to-r from-blue-700 to-indigo-800 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -217,7 +274,7 @@ const About = () => {
           >
             <h2 className="text-4xl font-bold mb-6">Why Choose Viziopath?</h2>
             <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              We're not just another training platform. We're your career transformation partner.
+              We leverage technology to simplify your path to success.
             </p>
           </motion.div>
 
@@ -229,8 +286,8 @@ const About = () => {
               className="bg-white/10 backdrop-blur-sm p-6 rounded-xl"
             >
               <Award className="h-10 w-10 text-teal-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-3">Industry Recognition</h3>
-              <p className="text-blue-100">AICTE approved with recognition from LinkedIn and trusted by 300+ colleges worldwide.</p>
+              <h3 className="text-xl font-semibold mb-3">Precision Engineered</h3>
+              <p className="text-blue-100">Our underlying LaTeX engine ensures flawless alignment, typography, and structure that word processors can't match.</p>
             </motion.div>
 
             <motion.div
@@ -241,8 +298,8 @@ const About = () => {
               className="bg-white/10 backdrop-blur-sm p-6 rounded-xl"
             >
               <Users className="h-10 w-10 text-teal-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-3">Expert Mentorship</h3>
-              <p className="text-blue-100">Learn from industry professionals working at top tech companies like Google, Microsoft, and Amazon.</p>
+              <h3 className="text-xl font-semibold mb-3">Recruiter Approved</h3>
+              <p className="text-blue-100">Templates designed with direct feedback from HR professionals to ensure they pass the 6-second scan.</p>
             </motion.div>
 
             <motion.div
@@ -253,59 +310,13 @@ const About = () => {
               className="bg-white/10 backdrop-blur-sm p-6 rounded-xl"
             >
               <Globe className="h-10 w-10 text-teal-400 mb-4" />
-              <h3 className="text-xl font-semibold mb-3">Global Network</h3>
-              <p className="text-blue-100">Connect with a worldwide community of learners and professionals across 43 countries.</p>
+              <h3 className="text-xl font-semibold mb-3">Global Compatibility</h3>
+              <p className="text-blue-100">Accepted by Applicant Tracking Systems (ATS) and multinational corporations worldwide.</p>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Internship Methodology */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Methodology</h2>
-            <p className="text-xl text-gray-600">A proven 5-step process that ensures your success</p>
-          </motion.div>
-
-          <div className="space-y-8">
-            {methodology.map((item, index) => (
-              <motion.div
-                key={item.step}
-                initial={{ opacity: 0, x: index % 2 === 0 ? -30 : 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'} gap-8`}
-              >
-                <div className="flex-1">
-                  <div className="bg-white p-8 rounded-2xl shadow-lg">
-                    <div className="flex items-center mb-4">
-                      <span className="bg-blue-600 text-white text-2xl font-bold w-12 h-12 rounded-full flex items-center justify-center mr-4">
-                        {item.step}
-                      </span>
-                      <h3 className="text-2xl font-semibold text-gray-900">{item.title}</h3>
-                    </div>
-                    <p className="text-lg text-gray-600">{item.description}</p>
-                  </div>
-                </div>
-                <div className="flex-1">
-                  <img
-                    src={`https://images.pexels.com/photos/${3184291 + index}/pexels-photo-${3184291 + index}.jpeg?auto=compress&cs=tinysrgb&w=600`}
-                    alt={item.title}
-                    className="rounded-2xl shadow-xl"
-                  />
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
     </div>
   );
 };
