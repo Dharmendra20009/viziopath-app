@@ -65,8 +65,8 @@ const Contact = () => {
       icon: Phone,
       title: 'Phone Numbers',
       details: [
-        '+91 6203757233',
-        '+91 6203757233 (WhatsApp)'
+        '+91 9507629432',
+        '+91 9507629432 (WhatsApp)'
       ]
     },
     {
@@ -171,7 +171,7 @@ const Contact = () => {
                   <MessageSquare className="h-6 w-6 text-blue-600 mr-2" />
                   <h3 className="text-2xl font-bold text-gray-900">Send us a Message</h3>
                 </div>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
@@ -187,7 +187,7 @@ const Contact = () => {
                         required
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Email Address *
@@ -202,7 +202,7 @@ const Contact = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -216,7 +216,7 @@ const Contact = () => {
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       />
                     </div>
-                    
+
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
                         Subject *
@@ -237,7 +237,7 @@ const Contact = () => {
                       </select>
                     </div>
                   </div>
-                  
+
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       Message *
@@ -252,7 +252,7 @@ const Contact = () => {
                       required
                     />
                   </div>
-                  
+
                   <button
                     type="submit"
                     className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 transition-colors flex items-center justify-center"
@@ -301,7 +301,7 @@ const Contact = () => {
                     <span className="font-semibold text-green-800">Call Now</span>
                   </div>
                   <p className="text-green-700 text-sm mb-2">For immediate assistance</p>
-                  <p className="text-green-900 font-medium">+91 80 6218 1320</p>
+                  <p className="text-green-900 font-medium">+91 9507629432</p>
                 </div>
 
                 <div className="bg-blue-50 p-6 rounded-xl border border-blue-200">
@@ -310,7 +310,7 @@ const Contact = () => {
                     <span className="font-semibold text-blue-800">WhatsApp</span>
                   </div>
                   <p className="text-blue-700 text-sm mb-2">Quick chat support</p>
-                  <p className="text-blue-900 font-medium">+91 77758 10097</p>
+                  <p className="text-blue-900 font-medium">+91 9507629432</p>
                 </div>
               </div>
 

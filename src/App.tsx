@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import { FaWhatsapp } from 'react-icons/fa';
 import Home from './pages/Home';
 import About from './pages/About';
 import MOUs from './pages/MOUs';
@@ -32,6 +33,17 @@ function Layout({ children }: { children: React.ReactNode }) {
         {children}
       </main>
       {!isEditorPage && <Footer />}
+
+      {/* WhatsApp Floating Button */}
+      <a
+        href="https://wa.me/919507629432"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 bg-green-500 text-white p-4 rounded-full shadow-lg hover:bg-green-600 transition-all hover:scale-110 flex items-center justify-center animate-bounce"
+        title="Chat on WhatsApp"
+      >
+        <FaWhatsapp className="w-8 h-8" />
+      </a>
     </>
   );
 }
