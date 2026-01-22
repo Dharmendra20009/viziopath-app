@@ -5,7 +5,7 @@ import Footer from './components/Footer';
 import { FaWhatsapp } from 'react-icons/fa';
 import Home from './pages/Home';
 import About from './pages/About';
-import MOUs from './pages/MOUs';
+import MOCs from './pages/MOCs';
 import JobPortal from './pages/JobPortal';
 import Courses from './pages/Courses';
 import ResumeBuilder from './pages/ResumeBuilder';
@@ -74,9 +74,9 @@ function App() {
                   <About />
                 </ProtectedRoute>
               } />
-              <Route path="/mous" element={
+              <Route path="/mocs" element={
                 <ProtectedRoute>
-                  <MOUs />
+                  <MOCs />
                 </ProtectedRoute>
               } />
               <Route path="/jobportal" element={

@@ -22,7 +22,7 @@ const Header = () => {
   const navigation = [
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/about' },
-    { name: 'MOUs & Collabs', href: '/mous' },
+    { name: 'Resume Checker', href: '/mocs' },
     { name: 'Job Portal', href: '/jobportal' },
     { name: 'Courses & Trainings', href: '/speakers' },
     { name: 'Resume Templates', href: '/resumeTemplates' },
