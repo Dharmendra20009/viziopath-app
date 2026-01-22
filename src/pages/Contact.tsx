@@ -72,7 +72,7 @@ const Contact = () => {
       icon: Phone,
       title: 'Phone & WhatsApp',
       details: [
-        '+91 9507629432',
+        '+91 9507629432', '+91 6203757233',
         'Available 24/7 for urgent calls'
       ],
       color: "bg-green-50 text-green-600"
