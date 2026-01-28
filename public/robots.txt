@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /account/
+Disallow: /payment
+Disallow: /video
+Disallow: /apply
+Disallow: /my-projects
+
+Sitemap: https://viziopath.info/sitemap.xml

@@ -1,5 +1,6 @@
 
 import React, { useState, useRef } from 'react';
+import SEO from '../components/SEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
     Upload, FileText, CheckCircle, Zap,
@@ -168,8 +169,14 @@ const MOCs = () => {
         "Generating enhancing suggestions..."
     ];
 
+
     return (
         <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+            <SEO
+                title="Free Resume Checker - Check ATS Score Online for Free"
+                description="Upload your resume to check its ATS compatibility score instantly. Get free feedback on strengths and improvements for your CV."
+                keywords="free resume checker, ats resume checker, check resume score, cv scanner, viziopath resume checker"
+            />
             {/* Hero Section */}
             <section className="bg-gradient-to-br from-blue-900 to-blue-700 text-white pt-28 pb-12">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">

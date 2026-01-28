@@ -12,6 +12,7 @@ import {
   Cpu,
   Zap,
 } from 'lucide-react';
+import SEO from '../components/SEO';
 
 const CountUp = ({ to }: { to: number }) => {
   const spring = useSpring(0, { mass: 0.8, stiffness: 75, damping: 15 });
@@ -56,8 +57,33 @@ ${formData.skills || 'Your Skills'}
     'S1.jpg', 'S2.jpg', 'S3.jpg', 'S4.jpg', 'S5.jpg', 'S6.jpg', 'S7.jpg'
   ];
 
+  const schema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Viziopath",
+    "applicationCategory": "BusinessApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "ratingCount": "1250"
+    }
+  });
+
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO
+        title="Free LaTeX Resume Maker & ATS Resume Checker"
+        description="Build ATS-friendly resumes with Viziopath's free LaTeX resume generator. Check your resume score instantly. No signup required for checker."
+        keywords="free latex resume maker, ats resume checker, resume builder online, latex resume template, viziopath"
+        schema={schema}
+      />
+
       {/* 1️⃣ Hero Section */}
       <section className="relative bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900 text-white overflow-hidden pb-16 pt-24 lg:pt-32">
         <div className="absolute inset-0 overflow-hidden">

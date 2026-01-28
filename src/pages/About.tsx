@@ -2,8 +2,27 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Target, Eye, Users, Award, Globe, Lightbulb, CheckCircle, Clock, LayoutTemplate, Shield, Star, Rocket, Heart, Zap, Coffee } from 'lucide-react';
 
+import SEO from '../components/SEO';
+
 const About = () => {
 
+  const schema = JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "mainEntity": {
+      "@type": "Organization",
+      "name": "Viziopath",
+      "founder": {
+        "@type": "Person",
+        "name": "Dharmendra Gupta",
+        "jobTitle": "Founder & CEO",
+        "url": "https://www.linkedin.com/in/dharmendra-gupta-viziopath"
+      },
+      "description": "Viziopath is a free LaTeX resume maker and ATS resume checker."
+    }
+  });
+
+  // ... existing variants ...
   // Animation variants for staggered animations
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -67,6 +86,12 @@ const About = () => {
 
   return (
     <div className="min-h-screen bg-white overflow-hidden font-sans">
+      <SEO
+        title="About Viziopath - Founder Dharmendra Gupta | Free Resume Maker"
+        description="Learn about Viziopath and its founder Dharmendra Gupta. We provide free, ATS-friendly LaTeX resume tools to help students and professionals get hired."
+        keywords="about viziopath, dharmendra gupta founder, about dhamendra gupta, viziopath story, free resume maker mission"
+        schema={schema}
+      />
 
       {/* 1️⃣ Unique Hero Section with Abstract Background */}
       <section className="relative py-24 lg:py-32 overflow-hidden bg-slate-900 border-b border-white/10">
@@ -236,6 +261,11 @@ const About = () => {
                 <p>
                   So, Viziopath was born. We built a UI that feels like a simple form but outputs code-perfect documents. No learning curve, just results.
                 </p>
+                <div className="mt-8 pt-8 border-t border-slate-200">
+                  <p className="font-medium text-slate-800">
+                    <span className="font-bold text-blue-600">Dharmendra Gupta</span> is the Founder & CEO of Viziopath, a platform focused on free, ATS-friendly LaTeX resumes. He is dedicated to helping students and professionals crack their dream jobs through better documentation.
+                  </p>
+                </div>
               </div>
             </div>
 

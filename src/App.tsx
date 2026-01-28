@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -48,98 +49,101 @@ function Layout({ children }: { children: React.ReactNode }) {
   );
 }
 
+
 function App() {
   return (
-    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID"}>
-      <AuthProvider>
-        <Router>
-          <Layout>
-            <Routes>
-              {/* Public Routes (accessible to everyone, but redirect logged-in users away from auth pages) */}
-              <Route path="/login" element={
-                <PublicRoute>
-                  <Login />
-                </PublicRoute>
-              } />
-              <Route path="/signup" element={
-                <PublicRoute>
-                  <Signup />
-                </PublicRoute>
-              } />
+    <HelmetProvider>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID || "YOUR_GOOGLE_CLIENT_ID"}>
+        <AuthProvider>
+          <Router>
+            <Layout>
+              <Routes>
+                {/* Public Routes (accessible to everyone, but redirect logged-in users away from auth pages) */}
+                <Route path="/login" element={
+                  <PublicRoute>
+                    <Login />
+                  </PublicRoute>
+                } />
+                <Route path="/signup" element={
+                  <PublicRoute>
+                    <Signup />
+                  </PublicRoute>
+                } />
 
-              {/* Protected Routes (require login) */}
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={
-                <ProtectedRoute>
-                  <About />
-                </ProtectedRoute>
-              } />
-              <Route path="/mocs" element={
-                <ProtectedRoute>
-                  <MOCs />
-                </ProtectedRoute>
-              } />
-              <Route path="/jobportal" element={
-                <ProtectedRoute>
-                  <JobPortal />
-                </ProtectedRoute>
-              } />
+                {/* Protected Routes (require login) */}
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={
+                  <ProtectedRoute>
+                    <About />
+                  </ProtectedRoute>
+                } />
+                <Route path="/mocs" element={
+                  <ProtectedRoute>
+                    <MOCs />
+                  </ProtectedRoute>
+                } />
+                <Route path="/jobportal" element={
+                  <ProtectedRoute>
+                    <JobPortal />
+                  </ProtectedRoute>
+                } />
 
-              <Route path="/speakers" element={
-                <ProtectedRoute>
-                  <Courses />
-                </ProtectedRoute>
-              } />
+                <Route path="/speakers" element={
+                  <ProtectedRoute>
+                    <Courses />
+                  </ProtectedRoute>
+                } />
 
-              <Route path="/payment" element={
-                <ProtectedRoute>
-                  <Payment />
-                </ProtectedRoute>
-              } />
-              <Route path="/video" element={
-                <ProtectedRoute>
-                  <VideoPage />
-                </ProtectedRoute>
-              } />
-              <Route path="/apply" element={
-                <ProtectedRoute>
-                  <Apply />
-                </ProtectedRoute>
-              } />
-              <Route path="/contact" element={
-                <ProtectedRoute>
-                  <Contact />
-                </ProtectedRoute>
-              } />
+                <Route path="/payment" element={
+                  <ProtectedRoute>
+                    <Payment />
+                  </ProtectedRoute>
+                } />
+                <Route path="/video" element={
+                  <ProtectedRoute>
+                    <VideoPage />
+                  </ProtectedRoute>
+                } />
+                <Route path="/apply" element={
+                  <ProtectedRoute>
+                    <Apply />
+                  </ProtectedRoute>
+                } />
+                <Route path="/contact" element={
+                  <ProtectedRoute>
+                    <Contact />
+                  </ProtectedRoute>
+                } />
 
-              {/* Resume Builder Routes */}
-              <Route path="/admin/resume" element={
-                <ProtectedRoute>
-                  <ResumeManager />
-                </ProtectedRoute>
-              } />
-              <Route path="/resumeTemplates" element={
-                <ProtectedRoute>
-                  <ResumeGallery />
-                </ProtectedRoute>
-              } />
-              <Route path="/my-projects" element={
-                <ProtectedRoute>
-                  <MyProjects />
-                </ProtectedRoute>
-              } />
-              <Route path="/resume/:id" element={
-                <ProtectedRoute>
-                  <ResumeBuilder />
-                </ProtectedRoute>
-              } />
+                {/* Resume Builder Routes */}
+                <Route path="/admin/resume" element={
+                  <ProtectedRoute>
+                    <ResumeManager />
+                  </ProtectedRoute>
+                } />
+                <Route path="/resumeTemplates" element={
+                  <ProtectedRoute>
+                    <ResumeGallery />
+                  </ProtectedRoute>
+                } />
+                <Route path="/my-projects" element={
+                  <ProtectedRoute>
+                    <MyProjects />
+                  </ProtectedRoute>
+                } />
+                <Route path="/resume/:id" element={
+                  <ProtectedRoute>
+                    <ResumeBuilder />
+                  </ProtectedRoute>
+                } />
 
-              {/* <Route path="/ai-assistant" element={<AIAssistant />} /> */}
-            </Routes>
-          </Layout>
-        </Router>
-      </AuthProvider>
-    </GoogleOAuthProvider>
+                {/* <Route path="/ai-assistant" element={<AIAssistant />} /> */}
+              </Routes>
+            </Layout>
+          </Router>
+        </AuthProvider>
+      </GoogleOAuthProvider>
+    </HelmetProvider>
   );
 }
 
