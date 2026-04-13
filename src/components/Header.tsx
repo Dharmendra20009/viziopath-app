@@ -26,6 +26,7 @@ const Header = () => {
     { name: 'Job Portal', href: '/jobportal' },
     { name: 'Courses & Trainings', href: '/speakers' },
     { name: 'Resume Templates', href: '/resumeTemplates' },
+    { name: 'AI Resume', href: '/resume-processor' },
     { name: 'Contact Us', href: '/contact' },
     // { name: 'AI Assistant', href: '/ai-assistant' }, // Remove or comment this line
   ];
@@ -87,22 +88,7 @@ const Header = () => {
                 'Logout'
               )}
             </button>
-          ) : (
-            <>
-              <Link
-                to="/login"
-                className="text-sm font-semibold leading-6 text-white hover:text-indigo-300 transition-colors"
-              >
-                Log in
-              </Link>
-              <Link
-                to="/signup"
-                className="text-sm font-semibold leading-6 text-white bg-indigo-600 hover:bg-indigo-500 px-4 py-2 rounded-lg transition-colors"
-              >
-                Sign up
-              </Link>
-            </>
-          )}
+          ) : null}
         </div>
       </nav>
 
@@ -175,24 +161,7 @@ const Header = () => {
                       'Logout'
                     )}
                   </button>
-                ) : (
-                  <>
-                    <Link
-                      to="/login"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-white hover:bg-gray-800 w-full text-left"
-                    >
-                      Log in
-                    </Link>
-                    <Link
-                      to="/signup"
-                      onClick={() => setIsMenuOpen(false)}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-indigo-400 hover:bg-gray-800 w-full text-left"
-                    >
-                      Sign up
-                    </Link>
-                  </>
-                )}
+                ) : null}
               </div>
             </div>
           </div>

@@ -1,0 +1,220 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Viziopath Resume Processing Pipeline - S3, Lambda, DynamoDB, CloudWatch
+
+Globals:
+  Function:
+    Runtime: python3.12
+    Timeout: 120
+    MemorySize: 512
+    Environment:
+      Variables:
+        S3_BUCKET: !Ref ResumeBucket
+        DYNAMODB_TABLE: !Ref ResumeJobsTable
+        AWS_ACCOUNT_ID: !Ref AWS::AccountId
+
+Parameters:
+  AllowedOrigin:
+    Type: String
+    Default: http://localhost:5173
+    Description: CORS origin for the frontend
+
+Resources:
+  # -------------------------------------------------------
+  # S3 Bucket for resume uploads, parsed JSON, and output
+  # -------------------------------------------------------
+  ResumeBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub viziopath-resumes-${AWS::AccountId}
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders: ['*']
+            AllowedMethods: [GET, PUT, POST]
+            AllowedOrigins:
+              - !Ref AllowedOrigin
+            MaxAge: 3600
+      LifecycleConfiguration:
+        Rules:
+          - Id: CleanupUploads
+            Prefix: uploads/
+            Status: Enabled
+            ExpirationInDays: 7
+          - Id: CleanupOutput
+            Prefix: output/
+            Status: Enabled
+            ExpirationInDays: 30
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+
+  # -------------------------------------------------------
+  # DynamoDB Table for tracking job status
+  # -------------------------------------------------------
+  ResumeJobsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ResumeJobs
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: jobId
+          AttributeType: S
+      KeySchema:
+        - AttributeName: jobId
+          KeyType: HASH
+      TimeToLiveSpecification:
+        AttributeName: ttl
+        Enabled: true
+
+  # -------------------------------------------------------
+  # Lambda: Resume Parser (triggered by S3 upload)
+  # -------------------------------------------------------
+  ResumeParserFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: viziopath-resume-parser
+      Handler: handler.lambda_handler
+      CodeUri: functions/parser/
+      Description: Parses uploaded resumes into structured JSON
+      Events:
+        S3Upload:
+          Type: S3
+          Properties:
+            Bucket: !Ref ResumeBucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: prefix
+                    Value: uploads/
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref ResumeBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ResumeJobsTable
+        - LambdaInvokePolicy:
+            FunctionName: !Ref ResumeGeneratorFunction
+      Environment:
+        Variables:
+          GENERATOR_FUNCTION_NAME: !Ref ResumeGeneratorFunction
+
+  # -------------------------------------------------------
+  # Lambda: Resume Generator (invoked by parser)
+  # -------------------------------------------------------
+  ResumeGeneratorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: viziopath-resume-generator
+      Handler: handler.lambda_handler
+      CodeUri: functions/generator/
+      Description: Generates ATS-friendly PDF and DOCX from parsed JSON
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref ResumeBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ResumeJobsTable
+
+  # -------------------------------------------------------
+  # CloudWatch Alarms
+  # -------------------------------------------------------
+  ParserErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: viziopath-parser-errors
+      AlarmDescription: Fires when resume parser Lambda errors exceed threshold
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref ResumeParserFunction
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 3
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+
+  GeneratorErrorAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: viziopath-generator-errors
+      AlarmDescription: Fires when resume generator Lambda errors exceed threshold
+      Namespace: AWS/Lambda
+      MetricName: Errors
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref ResumeGeneratorFunction
+      Statistic: Sum
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 3
+      ComparisonOperator: GreaterThanOrEqualToThreshold
+      TreatMissingData: notBreaching
+
+  ParserDurationAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: viziopath-parser-duration
+      AlarmDescription: Fires when parser Lambda duration is too high
+      Namespace: AWS/Lambda
+      MetricName: Duration
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref ResumeParserFunction
+      ExtendedStatistic: p95
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 60000
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+
+  GeneratorDurationAlarm:
+    Type: AWS::CloudWatch::Alarm
+    Properties:
+      AlarmName: viziopath-generator-duration
+      AlarmDescription: Fires when generator Lambda duration is too high
+      Namespace: AWS/Lambda
+      MetricName: Duration
+      Dimensions:
+        - Name: FunctionName
+          Value: !Ref ResumeGeneratorFunction
+      ExtendedStatistic: p95
+      Period: 300
+      EvaluationPeriods: 1
+      Threshold: 60000
+      ComparisonOperator: GreaterThanThreshold
+      TreatMissingData: notBreaching
+
+  # -------------------------------------------------------
+  # CloudWatch Log Groups with retention
+  # -------------------------------------------------------
+  ParserLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${ResumeParserFunction}
+      RetentionInDays: 14
+
+  GeneratorLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${ResumeGeneratorFunction}
+      RetentionInDays: 14
+
+Outputs:
+  ResumeBucketName:
+    Description: S3 bucket for resume processing
+    Value: !Ref ResumeBucket
+
+  ResumeJobsTableName:
+    Description: DynamoDB table for job tracking
+    Value: !Ref ResumeJobsTable
+
+  ParserFunctionArn:
+    Description: ARN of the resume parser Lambda
+    Value: !GetAtt ResumeParserFunction.Arn
+
+  GeneratorFunctionArn:
+    Description: ARN of the resume generator Lambda
+    Value: !GetAtt ResumeGeneratorFunction.Arn

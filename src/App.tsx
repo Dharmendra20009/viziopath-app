@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import Header from './components/Header';
@@ -20,6 +20,7 @@ import Signup from './pages/Signup';
 import ResumeManager from './pages/admin/ResumeManager';
 import ResumeGallery from './pages/ResumeGallery';
 import MyProjects from './pages/MyProjects';
+import ResumeProcessor from './pages/ResumeProcessor';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
@@ -88,16 +89,8 @@ function App() {
             <Layout>
               <Routes>
                 {/* Public Routes (accessible to everyone, but redirect logged-in users away from auth pages) */}
-                <Route path="/login" element={
-                  <PublicRoute>
-                    <Login />
-                  </PublicRoute>
-                } />
-                <Route path="/signup" element={
-                  <PublicRoute>
-                    <Signup />
-                  </PublicRoute>
-                } />
+                <Route path="/login" element={<Navigate to="/" replace />} />
+                <Route path="/signup" element={<Navigate to="/" replace />} />
 
                 {/* Protected Routes (require login) */}
                 <Route path="/" element={<Home />} />
@@ -141,6 +134,13 @@ function App() {
                 <Route path="/contact" element={
                   <ProtectedRoute>
                     <Contact />
+                  </ProtectedRoute>
+                } />
+
+                {/* Resume Processor */}
+                <Route path="/resume-processor" element={
+                  <ProtectedRoute>
+                    <ResumeProcessor />
                   </ProtectedRoute>
                 } />
 

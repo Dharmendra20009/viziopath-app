@@ -1,0 +1,124 @@
+\documentclass[11pt,a4paper]{article}
+
+% ATS Optimization: Simple structure, standard fonts, no columns/textboxes
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx} % Times New Roman equivalent
+\usepackage[margin=0.75in]{geometry}
+\usepackage{titlesec}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+% Formatting
+\pagestyle{empty}
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Section Formatting
+\titleformat{\section}
+  {\large\bfseries\uppercase} % Format
+  {}                          % Label
+  {0em}                       % Sep
+  {}                          % Before-code
+  [\titlerule]                % After-code
+
+\titlespacing*{\section}{0pt}{12pt}{6pt}
+
+% Custom Commands
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\renewcommand\labelitemi{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\begin{document}
+
+%----------HEADER----------
+\begin{center}
+    \textbf{\Huge \scshape Firstname Lastname} \\ \vspace{2pt}
+    \small 123-456-7890 $|$ \href{mailto:email@example.com}{email@example.com} $|$ 
+    \href{https://linkedin.com/in/username}{linkedin.com/in/username} $|$
+    \href{https://github.com/username}{github.com/username}
+\end{center}
+
+
+%-----------EDUCATION-----------
+\section{Education}
+  \begin{itemize}[leftmargin=0.15in, label={}]
+    \resumeSubheading
+      {University Name}{City, State}
+      {Bachelor of Science in Computer Science}{Aug. 2018 -- May 2022}
+      \resumeItem{GPA: 3.8/4.0}
+      \resumeItem{Relevant Coursework: Data Structures, Algorithms, Database Systems, Operating Systems}
+  \end{itemize}
+
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \begin{itemize}[leftmargin=0.15in, label={}]
+
+    \resumeSubheading
+      {Software Engineer}{City, State}
+      {Tech Company}{June 2022 -- Present}
+      \begin{itemize}
+        \resumeItem{Developed and maintained web applications using React and Node.js.}
+        \resumeItem{Optimized database queries, reducing load times by 30\%.}
+        \resumeItem{Collaborated with cross-functional teams to define, design, and ship new features.}
+      \end{itemize}
+
+    \resumeSubheading
+      {Software Developer Intern}{City, State}
+      {Another Tech Company}{May 2021 -- Aug. 2021}
+      \begin{itemize}
+        \resumeItem{Assisted in the development of a mobile application using Flutter.}
+        \resumeItem{Implemented unit tests to ensure code quality and reliability.}
+        \resumeItem{Participated in code reviews and daily stand-up meetings.}
+      \end{itemize}
+
+  \end{itemize}
+
+
+%-----------PROJECTS-----------
+\section{Projects}
+  \begin{itemize}[leftmargin=0.15in, label={}]
+    \resumeItem{\textbf{Project Name} $|$ \emph{Python, Flask, React} \\
+    Designed and built a full-stack web application for managing tasks. Implemented user authentication and real-time updates.}
+    
+    \resumeItem{\textbf{Another Project} $|$ \emph{Java, Spring Boot} \\
+    Developed a RESTful API for an e-commerce platform. Integrated payment gateway and order processing system.}
+  \end{itemize}
+
+
+%-----------SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Languages}{: Java, Python, C/C++, SQL, JavaScript, HTML/CSS} \\
+     \textbf{Frameworks}{: React, Node.js, Flask, JUnit, WordPress, Material-UI} \\
+     \textbf{Developer Tools}{: Git, Docker, TravisCI, Google Cloud Platform, VS Code} \\
+    }}
+ \end{itemize}
+
+
+%-----------CERTIFICATIONS-----------
+\section{Certifications}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{AWS Certified Solutions Architect – Associate} \\
+     \textbf{Oracle Certified Professional, Java SE 8 Programmer}
+    }}
+ \end{itemize}
+
+\end{document}
