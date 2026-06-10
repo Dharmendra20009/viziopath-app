@@ -32,8 +32,7 @@ function Layout({ children }: { children: React.ReactNode }) {
 
   const whatsappNumbers = [
     { number: "6203757233", label: "Support 1" },
-    { number: "9507629432", label: "Support 2" },
-    { number: "9006259563", label: "Support 3" }
+    { number: "9455570657", label: "Support 2" }
   ];
 
   return (
@@ -52,7 +51,7 @@ function Layout({ children }: { children: React.ReactNode }) {
             {whatsappNumbers.map((item, index) => (
               <a
                 key={index}
-                href={`https://wa.me/91${item.number}`}
+                href={`https://wa.me/91${item.number}?text=Hello%20Viziopath%2C%20I%20want%20to%20inquire%20about%20your%20services.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white text-gray-800 px-4 py-2 rounded-lg shadow-lg hover:bg-green-50 flex items-center gap-2 transform transition-all hover:scale-105 border border-green-100"

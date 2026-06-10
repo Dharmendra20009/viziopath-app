@@ -73,8 +73,7 @@ const Contact = () => {
       title: 'Phone & WhatsApp',
       details: [
         '+91 6203757233',
-        '+91 9507629432',
-        '+91 9006259563',
+        '+91 9455570657',
         'Available 24/7 for urgent calls'
       ],
       color: "bg-green-50 text-green-600"
@@ -176,11 +175,30 @@ const Contact = () => {
               </div>
               <h3 className="text-lg font-bold text-gray-900 mb-3">{info.title}</h3>
               <div className="space-y-1">
-                {info.details.map((detail, i) => (
-                  <p key={i} className="text-gray-500 text-sm font-medium">
-                    {detail}
-                  </p>
-                ))}
+                {info.details.map((detail, i) => {
+                  const isPhoneNumber = detail.startsWith('+91');
+                  if (isPhoneNumber) {
+                    const cleanNumber = detail.replace(/[\s+-]/g, '');
+                    const waNumber = cleanNumber.startsWith('91') ? cleanNumber : `91${cleanNumber}`;
+                    return (
+                      <p key={i} className="text-gray-500 text-sm font-medium">
+                        <a
+                          href={`https://wa.me/${waNumber}?text=Hello%20Viziopath%2C%20I%20want%20to%20inquire%20about%20your%20services.`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:text-green-600 transition-colors underline decoration-dotted"
+                        >
+                          {detail}
+                        </a>
+                      </p>
+                    );
+                  }
+                  return (
+                    <p key={i} className="text-gray-500 text-sm font-medium">
+                      {detail}
+                    </p>
+                  );
+                })}
               </div>
             </motion.div>
           ))}

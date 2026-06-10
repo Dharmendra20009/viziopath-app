@@ -78,8 +78,28 @@ const Footer = () => {
               <p>viziopath</p>
               <p>Khushi Tola, Near Khiriya Ghat</p>
               <p>Betiiah, Bihar, 845438, India</p>
-              <p className="pt-2">Phone: +91 8210381000</p>
-              <p>WhatsApp: +91 6203757233</p>
+              <p className="pt-2">
+                WhatsApp:{" "}
+                <a
+                  href="https://wa.me/916203757233?text=Hello%20Viziopath%2C%20I%20want%20to%20inquire%20about%20your%20services."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-green-400 transition-colors"
+                >
+                  +91 6203757233
+                </a>
+              </p>
+              <p>
+                WhatsApp:{" "}
+                <a
+                  href="https://wa.me/919455570657?text=Hello%20Viziopath%2C%20I%20want%20to%20inquire%20about%20your%20services."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-green-400 transition-colors"
+                >
+                  +91 9455570657
+                </a>
+              </p>
               <p>Email: viziopath@gmail.com</p>
             </div>
           </div>
